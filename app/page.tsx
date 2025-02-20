@@ -1,4 +1,5 @@
 import React from "react";
+import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/components";
 
 export default function Home() {
   return (
@@ -27,6 +28,10 @@ export default function Home() {
             <p>some points here</p>
           </div>
         </div> */}
+
+        <div>
+          <LoginLink className="bg-black text-white p-2 rounded">Sign in</LoginLink>
+        </div>
 
     </main>
   );
