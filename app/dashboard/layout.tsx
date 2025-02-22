@@ -1,8 +1,10 @@
+"use client"
 import Link from 'next/link'
 import React from 'react'
-import sample from "@/public/sample.jpeg"
 import burn from "@/public/file.svg"
 import Image from 'next/image'
+import ProtectedRoute from '@/components/ProtectedRoute'
+import { useUser } from '@clerk/nextjs'
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
@@ -11,8 +13,12 @@ interface Dashboardlayoutprops {
 
 
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
+    
+    const { user } = useUser()
+
     return(
-        <main>
+        <ProtectedRoute>
+          <main>
             <div className='grid grid-cols-7 min-h-screen overflow-x-hidden'>
               <div className='col-start-1 col-end-2 border-black border-r'>
                 <div className='flex flex-col justify-between min-h-screen py-4 px-1'>
@@ -39,7 +45,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                         <p className='text-sm'>3</p>
                         </div>
                         <Link href={'/dashboard/me'}>
-                          <Image src={sample} alt='user_profile' className='rounded-[50%] size-7'/>
+                          <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-7'/>
                         </Link>
                     </div>
                 </div>
@@ -47,6 +53,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
               </div>
             </div>
         </main>
+        </ProtectedRoute>
     )
 }
 
