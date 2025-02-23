@@ -15,11 +15,12 @@ datasource db {
 }
 
 model User {
-  id String @id @default(cuid())
+  id String
   name String
   email String @unique
+  bio String
   github String?
-  twitter String?
+  linkedin String?
   role Role @default(Helper)
   credit UserCredit?
 
@@ -28,6 +29,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@id([id])
   // reqmade UserReqTeamtoJoin
   // reqcome TeamReqUsertoJoin
 }
