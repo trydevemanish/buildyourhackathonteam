@@ -6,8 +6,9 @@ export default function page() {
 
   async function handlefindUserData() {
     try {
+      let id = 43498;
 
-      const res = await fetch(`/api/fetchuserdetail`)
+      const res = await fetch(`/api/updateTeamName/${id}`)
 
       if(!res.ok){
         const errText = await res.text()

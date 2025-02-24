@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 
+// user can only change when he is not in a team.
+
 export async function PUT(req : Request){
     try {
 
@@ -37,6 +39,19 @@ export async function PUT(req : Request){
                     email : authUser?.emailAddresses[0].emailAddress,
                 }
             })
+        }
+
+        const checkIfuserisinteam = await prisma.teamMembers.findMany({
+            where : {
+                userId : authUser?.id
+            }
+        })
+
+        if(checkIfuserisinteam){
+            return NextResponse.json(
+                {message:`Cannot Update Role, User in already in a team.`},
+                {status:200}
+            )
         }
 
         const UpdatedRole = await prisma.user.update({

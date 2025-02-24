@@ -55,7 +55,7 @@ model TeamMembers {
   joinedAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([userId,teamId])
+  @@unique([id])
 }
 
 model Team {
@@ -74,7 +74,6 @@ model Team {
   projectdesc String @db.Text
   hackathonname String
   hackathondesc String @db.Text
-  hackathonlink String
 
   createdAt DateTime @default(now())
   lastUpdated DateTime @updatedAt

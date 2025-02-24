@@ -30,6 +30,9 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                           <Link href={'/dashboard/allteams'}>other teams to join</Link>
                         </p>
                         <p className={`cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
+                          <Link href={'/dashboard'}>team joined as member</Link>
+                        </p>
+                        <p className={`cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
                           <Link href={'/dashboard/otherdev'}>meet other developers</Link>
                         </p>
                     </div>
