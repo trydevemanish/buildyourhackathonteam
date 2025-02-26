@@ -4,20 +4,16 @@ import Coding from "@/public/coding.png"
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { RedirectToSignIn } from "@clerk/nextjs";
-
+// import { RedirectToSignIn } from "@clerk/nextjs";
 
 export default function Home() {
 
   const { isSignedIn } = useUser()
   const router = useRouter()
 
+  // need to change the route of the login page whwn i will deploy it .
   async function handleSignin() {
-      if(!isSignedIn){
-        return <RedirectToSignIn/>
-      } else {
-        router.push('/dashboard')
-      }
+    return isSignedIn ? router.push('/dashboard') : router.push('https://easy-meerkat-32.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard')
   }
 
   return (
@@ -40,17 +36,6 @@ export default function Home() {
         <div className="flex justify-center items-center py-8">
             <button className="text-sm bg-black text-white rounded-md border border-black px-7 py-1 hover:bg-white hover:text-black">Get Started</button>
         </div>
-
-        {/* <div className="grid grid-cols-2 py-16">
-          <div className="col-start-1 col-end-2">
-            <Image src={Sample} alt="sample" className="h-96" />
-          </div>
-          <div className="col-start-2 col-end-3">
-            <p className={`text-4xl`}>Build Your Hackathon team</p>
-            <p>Connect with learning developer.</p>
-            <p>some points here</p>
-          </div>
-        </div> */}
 
     </main>
   );

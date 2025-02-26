@@ -6,23 +6,6 @@ export default function page() {
 
   async function handlefindUserData() {
     try {
-      let id = 43498;
-
-      const res = await fetch(`/api/updateTeamName/${id}`)
-
-      if(!res.ok){
-        const errText = await res.text()
-        console.error(errText);
-        return ;
-      }
-      
-      const data = await res.json()
-
-      if(!data){
-        console.error(`Failed converting in json`)
-      }
-
-      console.log(data)
       
     } catch (error) {
       console.error("Issue Occured :",error)

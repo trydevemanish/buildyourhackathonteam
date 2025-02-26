@@ -1,20 +1,55 @@
 "use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import burn from "@/public/file.svg"
 import Image from 'next/image'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import { useUser } from '@clerk/nextjs'
+import { SignOutButton } from "@clerk/nextjs"
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
 }
 
-
+// find user from the database , if user is there nothinh to do , if not create a new user
 
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     
     const { user } = useUser()
+    
+    useEffect(() => {
+      createUser()
+    },[user])
+
+    async function createUser(){
+      try {
+
+        console.log('Database url: ',process.env.DATABASE_URL)
+        console.log('Direct url: ',process.env.DIRECT_URL)
+
+        const res = await fetch('/api/findandcreateUser',{
+          method : 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          }
+        })
+
+        if(!res.ok){
+          const errTxt = await res.text()
+          console.log(errTxt)
+          return ;
+        }
+
+        const result = await res.json()
+
+        console.log(result?.message)
+        console.log(result)
+        
+      } catch (error) {
+        console.log(`Failed to create User: ${error}`)
+      }
+    }
+    
 
     return(
         <ProtectedRoute>
@@ -36,7 +71,9 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                           <Link href={'/dashboard/otherdev'}>meet other developers</Link>
                         </p>
                     </div>
-                    <button className='bg-black text-white px-6 py-1 text-xs rounded'>logout</button>
+                    <div className='bg-black flex justify-center text-white px-6 py-1 text-xs rounded'>
+                      <SignOutButton />
+                    </div>
                 </div>
               </div>
               <div className='col-start-2 col-end-8'>
