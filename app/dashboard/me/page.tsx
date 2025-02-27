@@ -1,11 +1,12 @@
+"use client"
 import React from 'react'
 import Image from 'next/image'
 import sample from "@/public/sample.jpeg"
 import { DialogDemoTextArea,DialogDemoInput,DialogDemoSelect } from '@/components/EditBox'
-// import { useUser } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
 
 export default function page() {
-  // const { user } = useUser()d
+  const { user } = useUser()
   return (
    <div className='px-16 py-10'>
      <div className='flex flex-col gap-y-3 text-xs'>
@@ -13,11 +14,11 @@ export default function page() {
         <span className='text-xl'>Welcome, </span>
         <span className='text-base'>Manish</span>
       </p>
-        <Image src={sample} alt='user_profile' className='rounded-[50%] size-14 '/>
+        <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-14 '/>
 
       <div className='flex items-center gap-2'>
         <DialogDemoTextArea props={{ nameOfProp: 'Description' }} />
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod, perspiciatis voluptas iusto architecto expedita, similique corrupti quos accusantium dolorem aut eius omnis! Eligendi pariatur reprehenderit alias. Assumenda excepturi vel est!</p>
+        <p>Add a small intro of youself .</p>
       </div>
 
       <div className='flex items-center gap-2'>

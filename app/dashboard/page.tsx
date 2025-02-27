@@ -1,28 +1,75 @@
 "use client"
-import React from 'react'
+import React,{ useEffect, useState } from 'react'
 import Link from 'next/link'
+import Teamcard from '@/components/Teamcard'
+import { TeamCardInfoType } from '@/types/types'
+import { MessagesSquare } from 'lucide-react'
 
-export default function page() {
+export default function Page() {
 
-  async function handlefindUserData() {
-    try {
-      
-    } catch (error) {
-      console.error("Issue Occured :",error)
+  const [teamDataFromBackend,setTeamDataFromBackend] = useState([])
+
+  useEffect(() => {
+    const handlefindUserData = async() => {
+      try {
+
+        const res = await fetch('/api/fetchallteamCreatedbyuser')
+  
+        if(!res.ok){
+          const errText = await res.text()
+          console.log(errText)
+          return;
+        }
+  
+        const data = await res.json()
+  
+        console.log(data?.message)
+
+        setTeamDataFromBackend(data?.data)
+  
+        
+      } catch (error) {
+        console.error("Issue Occured :",error)
+      }
     }
-  }
+    // handlefindUserData()
+  },[])
 
   return (
-      <div>
-        <div className='flex flex-col gap-4 justify-center items-center mt-40'>
-          <p>No prev team built, Create new team !</p>
+    <main>
+      {teamDataFromBackend?.length > 0 ? 
+        <section>
+          <div className='flex justify-end items-center gap-3 px-3 border py-1'>
+            <button className='bg-black inline text-white px-8 py-[6px] text-xs rounded'>
+              <Link href="/dashboard/createteam">
+                <span className='opacity-80 hover:opacity-100'>+ create one </span>
+              </Link>
+            </button>
+            <MessagesSquare className='size-7 rounded bg-neutral-200 px-2 py-1 cursor-pointer' />
+          </div> 
+          <div className='flex gap-5 px-8 py-2 overflow-y-auto scrollbar-hide'>
+            {
+              teamDataFromBackend.map((teamdata : TeamCardInfoType, idx : number) => (
+                <Teamcard key={idx} /> // need to send data here
+              ))
+            }
+          </div>
+        </section>
+        : 
+        <div className='flex flex-col gap-3 justify-center items-center mt-40'>
+          <p className='font-semibold'>No prev team found</p>
+          <p className='opacity-70 text-sm'>Create new team to get started !</p>
           <button className='bg-black text-white px-8 py-1 text-xs rounded'>
             <Link href="/dashboard/createteam">
-              create one 
+              <p className='flex gap-3'>
+                 <span>+</span>
+                 <span>Create Team</span>
+              </p> 
             </Link>
           </button>
-          <button onClick={handlefindUserData}>User data</button>
-        </div>
-      </div>
+        </ div>
+       }
+      
+    </main>
   )
 }

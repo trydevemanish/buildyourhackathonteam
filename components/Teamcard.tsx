@@ -1,14 +1,6 @@
 import React from 'react'
+import { TeamCardInfoType } from '@/types/types'
 
-type TeamCardInfoType = {
-    teamName : string;
-    leadername : string;
-    projectname : string;
-    projectdesc : string;
-    hackathonname : string;
-    hackathondesc : string;
-    onClick? : () => void;
-}
 // { props } : {props : TeamCardInfoType}
 export default function Teamcard(){
   return (

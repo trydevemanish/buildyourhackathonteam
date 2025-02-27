@@ -24,9 +24,6 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     async function createUser(){
       try {
 
-        console.log('Database url: ',process.env.DATABASE_URL)
-        console.log('Direct url: ',process.env.DIRECT_URL)
-
         const res = await fetch('/api/findandcreateUser',{
           method : 'POST',
           headers: {
@@ -43,7 +40,6 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
         const result = await res.json()
 
         console.log(result?.message)
-        console.log(result)
         
       } catch (error) {
         console.log(`Failed to create User: ${error}`)
@@ -65,7 +61,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                           <Link href={'/dashboard/allteams'}>other teams to join</Link>
                         </p>
                         <p className={`cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
-                          <Link href={'/dashboard'}>team joined as member</Link>
+                          <Link href={'/dashboard/teamjoined'}>team joined as member</Link>
                         </p>
                         <p className={`cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
                           <Link href={'/dashboard/otherdev'}>meet other developers</Link>
@@ -81,7 +77,9 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                     <p className={`text-xs`}>buildyourhackathonteam</p>
                     <div className='flex items-center gap-4'>
                         <div className='flex items-center'>
-                        <Image src={burn} alt='token' className='size-3' />
+                        <Link href={`/dashboard/usercredit`}>
+                          <Image src={burn} alt='token' className='size-3 cursor-pointer'/>
+                        </Link>
                         <p className='text-sm'>3</p>
                         </div>
                         <Link href={'/dashboard/me'}>
