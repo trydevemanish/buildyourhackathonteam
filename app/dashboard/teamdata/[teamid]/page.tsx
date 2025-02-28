@@ -2,19 +2,19 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import sample from "@/public/sample.jpeg"
-import { getURL } from 'next/dist/shared/lib/utils'
 import { TeamCardInfoType } from '@/types/types'
+import { useParams } from 'next/navigation'
 
 export default function Page() {
 
   const [teamdata,setTeamData] = useState({} as TeamCardInfoType)
-  const url = getURL().split('/')
-
+  const { teamid } = useParams()
+  
   useEffect(() => {
     const findTeamData = async() => {
       try {
 
-        const res = await fetch(`/api/findteambyid/${url[3]}`)
+        const res = await fetch(`/api/findteambyid/${teamid}`)
 
         if(!res.ok){
           const errtext = await res.text()

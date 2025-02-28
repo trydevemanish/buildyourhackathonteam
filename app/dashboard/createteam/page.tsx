@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TeamFormationSchema } from '@/Schema/CheckTeamFormationSchema'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LucideAsterisk } from 'lucide-react'
@@ -16,6 +16,12 @@ import {
   } from "@/components/ui/form"
 
 export default function Page() {
+    const [usercredit,setUserCredit] = useState('')
+
+    useEffect(() => {
+        //when this page will load automaticaaly user intital credit will be fetched.
+        findUserTotalCredit()
+    },[])
 
     const form = useForm<z.infer<typeof TeamFormationSchema>>({
         resolver : zodResolver(TeamFormationSchema),
@@ -46,9 +52,65 @@ export default function Page() {
 
             const data = await res.json()
             console.log(data?.message)
+
+            // call this func to subtract the user credit by 1.
+            subtractCredit()
             
         } catch (error) {
             console.log(error ?? "Failed To create Team")
+        }
+    }
+
+    async function subtractCredit() {
+        try {
+
+            const res = await fetch(`/api/subractcredit`,{
+                method : 'PUT',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({ inititalCredit : usercredit })
+            })
+
+            if(!res.ok){
+                const errtext = await res.text()
+                console.log(errtext)
+                return ;
+            }
+
+            const data = await res.json()
+            console.log(data?.message)
+            
+        } catch (error) {
+            console.log(`Failed to update userCredit: ${error}`)
+        }
+    }
+
+    async function findUserTotalCredit(){
+        try {
+           
+          const res = await fetch(`/api/findusercredit`)
+  
+          if(!res.ok){
+            const errtext = await res.text()
+            console.log(errtext)
+            return;
+          }
+  
+          const data = await res.json()
+  
+          if(!data){
+            console.log('Failed to covert res to json')
+            return;
+          }
+
+          console.log(data?.message)
+          console.log('data',data)
+          // need to set the user credit data here 
+          //   setUserCredit(data)
+          
+        } catch (error) {
+          console.log(`Failed to create User: ${error}`)
         }
     }
 

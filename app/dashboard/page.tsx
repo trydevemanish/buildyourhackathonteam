@@ -1,7 +1,7 @@
 "use client"
 import React,{ useEffect, useState } from 'react'
 import Link from 'next/link'
-import Teamcard from '@/components/Teamcard'
+import Teamcard from '@/components/TeamcardForteamleader'
 import { TeamCardInfoType } from '@/types/types'
 import { MessagesSquare } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -51,9 +51,7 @@ export default function Page() {
           <div className='flex gap-5 px-8 py-2 overflow-y-auto scrollbar-hide'>
             {
               teamDataFromBackend.map((teamdata : TeamCardInfoType, idx : number) => (
-                <section key={idx} onClick={() => router.push(`/dashboard/teamdata/${teamdata?.id}`)}>
-                  <Teamcard props={teamdata} />
-                </section>
+                <Teamcard props={teamdata} key={idx} />
               ))
             }
           </div>

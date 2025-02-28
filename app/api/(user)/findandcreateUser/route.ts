@@ -40,8 +40,30 @@ export async function POST(req:Request) {
           }
         })
 
+        // assigning User credit here
+        const initialcredit = await prisma.userCredit.create({
+            data : {
+                initialCredit : 3,
+                userid:userdatareceived?.id
+            }
+        })
+
+        if(!user){
+          return NextResponse.json(
+            {error:`Issue occured when creating user`},
+            {status:400}
+          )
+        }
+
+        if(!initialcredit){
+            return NextResponse.json(
+                {error:'Issue ocuured when creating user initial credit'},
+                {status:400}
+            )
+        }
+
         return NextResponse.json(
-          {message:`User Created:`,Data:user},
+          {message:`User Created:`,usercreatedData:user,userInitialCredit:initialcredit},
           {status:201}
         )
     

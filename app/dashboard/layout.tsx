@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import burn from "@/public/file.svg"
 import Image from 'next/image'
 import ProtectedRoute from '@/components/ProtectedRoute'
@@ -14,14 +14,16 @@ interface Dashboardlayoutprops {
 // find user from the database , if user is there nothinh to do , if not create a new user
 
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
+    const [userCredit,setUserCredit] = useState('')
     
     const { user } = useUser()
     
+    // useefeect to fins user if no user create one.
     useEffect(() => {
-      createUser()
+      FindorcreateUser()
     },[user])
 
-    async function createUser(){
+    async function FindorcreateUser(){
       try {
 
         const res = await fetch('/api/findandcreateUser',{
@@ -40,6 +42,37 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
         const result = await res.json()
 
         console.log(result?.message)
+        
+      } catch (error) {
+        console.log(`Failed to create User: ${error}`)
+      }
+    }
+
+    //useeffect to fetch total credit.
+    useEffect(() => {
+      // findUserTotalCredit()
+    },[])
+
+    async function findUserTotalCredit(){
+      try {
+         
+        const res = await fetch(`/api/findusercredit`)
+
+        if(!res.ok){
+          const errtext = await res.text()
+          console.log(errtext)
+          return;
+        }
+
+        const data = await res.json()
+
+        if(!data){
+          console.log('Failed to covert res to json')
+          return;
+        }
+
+        console.log(data?.message)
+        console.log('data',data)
         
       } catch (error) {
         console.log(`Failed to create User: ${error}`)
