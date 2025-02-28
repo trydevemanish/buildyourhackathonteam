@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react"
 import Teamcard from "@/components/Teamcard"
 import { TeamCardInfoType } from "@/types/types"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function Page() {
   const [eveyteamdata,setEveryTeamData] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     const fetchEveyTeam = async() => {
@@ -23,7 +24,7 @@ export default function Page() {
 
       setEveryTeamData(data?.data)
     }
-    // fetchEveyTeam()
+    fetchEveyTeam()
   },[])
 
 
@@ -39,7 +40,9 @@ export default function Page() {
               eveyteamdata.length > 0 ? 
               <div className="flex gap-2 flex-wrap justify-center pt-2">
                 {eveyteamdata.map((teamdata : TeamCardInfoType, idx : number) => (
-                  <Teamcard key={idx} />
+                  <section key={idx} onClick={() => router.push(`/dashboard/teamdata/${teamdata?.id}`)}>
+                    <Teamcard props={teamdata} />
+                  </section>
                 ))}
               </div>
               : 

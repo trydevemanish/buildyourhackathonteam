@@ -1,32 +1,64 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import sample from "@/public/sample.jpeg"
+import { getURL } from 'next/dist/shared/lib/utils'
+import { TeamCardInfoType } from '@/types/types'
 
-export default function page() {
+export default function Page() {
+
+  const [teamdata,setTeamData] = useState({} as TeamCardInfoType)
+  const url = getURL().split('/')
+
+  useEffect(() => {
+    const findTeamData = async() => {
+      try {
+
+        const res = await fetch(`/api/findteambyid/${url[3]}`)
+
+        if(!res.ok){
+          const errtext = await res.text()
+          console.log(errtext)
+          return;
+        }
+
+        const data = await res.json()
+        console.log(data?.message)
+
+        setTeamData(data?.data)
+        
+      } catch (error) {
+        console.log(`Failed: ${error}`)
+      }
+    }
+
+    findTeamData()
+  },[])
+
   return (
     <div className='px-8 py-4'>
-      <p className='text-lg text-center'>Welcome to team: cortex.</p>
+      <p className='text-lg text-center'>Welcome to team: {teamdata?.teamname}.</p>
       <p className='text-[12px] opacity-65 text-center'>by: Dev kumar ( leader ).</p>
 
       <div className='flex flex-col gap-7 px-16 py-9'>
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Project name : </p>
-          <p className='opacity-80 text-[12px]'> Building Ai agents for hotel room allotment.</p>
+          <p className='opacity-80 text-[12px]'> {teamdata?.projectname}</p>
         </div>
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Project desc : </p>
-          <p className='opacity-80 text-[12px]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, quam mollitia. Illo vero id tempore laboriosam qui cupiditate laborum hic soluta quos debitis, eveniet veniam voluptatibus reprehenderit quae. Ea, consectetur!.</p>
+          <p className='opacity-80 text-[12px]'>{teamdata?.projectdesc}</p>
         </div>
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Hackathon Name : </p>
-          <p className='opacity-80 text-[12px]'>krishtix hackfest 2025</p>
+          <p className='opacity-80 text-[12px]'>{teamdata?.hackathonname}</p>
         </div>
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Hackathon desc : </p>
-          <p className='opacity-80 text-[12px]'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora consequatur aut aperiam, odit nobis similique veritatis quod assumenda aspernatur! Officiis quidem commodi distinctio repellendus. Atque enim distinctio recusandae maiores adipisci.</p>
+          <p className='opacity-80 text-[12px]'>{teamdata?.hackathondesc}</p>
         </div>
 
         <div className='flex flex-col gap-1'>

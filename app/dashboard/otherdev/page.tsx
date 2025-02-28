@@ -11,7 +11,7 @@ export default function Page() {
     const FetchdeveloperData = async() => {
       try {
 
-        const res = await fetch('/api')
+        const res = await fetch('/api/findallusers')
 
         if(!res.ok){
           const errtext = await res.text()
@@ -28,7 +28,8 @@ export default function Page() {
          console.log(`failed: ${error}`)
       }
     }
-  })
+    // FetchdeveloperData()
+  },[])
 
   return (
     <div>

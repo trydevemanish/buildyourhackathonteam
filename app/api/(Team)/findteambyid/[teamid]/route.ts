@@ -5,7 +5,7 @@ export async function GET(req:Request) {
     try {
 
         const url = new URL(req.url)
-        const teamid = url.pathname.split('/')[3]
+        const teamid = url.pathname.split('/')
 
         if(!teamid){
             return NextResponse.json(
@@ -16,7 +16,7 @@ export async function GET(req:Request) {
 
         const teamdata = await prisma.team.findUnique({
             where : {
-                id : teamid
+                id : teamid[3]
             }
         })
 

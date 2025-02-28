@@ -1,10 +1,13 @@
 export type TeamCardInfoType = {
-    teamName : string;
+    id:string;
+    category:string;
+    teamname : string;
     leadername : string;
     projectname : string;
     projectdesc : string;
     hackathonname : string;
     hackathondesc : string;
-    onClick? : () => void;
+    createdat? : string;
+    lastUpdated? : string;
+    maxteamsize? : number;
 }
-

@@ -4,10 +4,12 @@ import Link from 'next/link'
 import Teamcard from '@/components/Teamcard'
 import { TeamCardInfoType } from '@/types/types'
 import { MessagesSquare } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
 
   const [teamDataFromBackend,setTeamDataFromBackend] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     const handlefindUserData = async() => {
@@ -26,13 +28,12 @@ export default function Page() {
         console.log(data?.message)
 
         setTeamDataFromBackend(data?.data)
-  
         
       } catch (error) {
         console.error("Issue Occured :",error)
       }
     }
-    // handlefindUserData()
+    handlefindUserData()
   },[])
 
   return (
@@ -50,7 +51,9 @@ export default function Page() {
           <div className='flex gap-5 px-8 py-2 overflow-y-auto scrollbar-hide'>
             {
               teamDataFromBackend.map((teamdata : TeamCardInfoType, idx : number) => (
-                <Teamcard key={idx} /> // need to send data here
+                <section key={idx} onClick={() => router.push(`/dashboard/teamdata/${teamdata?.id}`)}>
+                  <Teamcard props={teamdata} />
+                </section>
               ))
             }
           </div>
