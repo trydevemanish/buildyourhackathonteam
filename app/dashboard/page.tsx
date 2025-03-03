@@ -3,7 +3,7 @@ import React,{ useEffect, useState } from 'react'
 import Link from 'next/link'
 import Teamcard from '@/components/TeamcardForteamleader'
 import { TeamCardInfoType } from '@/types/types'
-import { MessagesSquare } from 'lucide-react'
+// import { MessagesSquare } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export default function Page() {
@@ -46,7 +46,7 @@ export default function Page() {
                 <span className='opacity-80 hover:opacity-100'>+ create one </span>
               </Link>
             </button>
-            <MessagesSquare className='size-7 rounded bg-neutral-200 px-2 py-1 cursor-pointer' />
+            {/* <MessagesSquare className='size-7 rounded bg-neutral-200 px-2 py-1 cursor-pointer' /> */}
           </div> 
           <div className='flex gap-5 px-8 py-2 overflow-y-auto scrollbar-hide'>
             {

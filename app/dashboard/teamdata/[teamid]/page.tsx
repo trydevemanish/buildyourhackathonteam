@@ -4,6 +4,8 @@ import Image from 'next/image'
 import sample from "@/public/sample.jpeg"
 import { TeamCardInfoType } from '@/types/types'
 import { useParams } from 'next/navigation'
+import { MessagesSquare } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Page() {
 
@@ -41,9 +43,12 @@ export default function Page() {
       <p className='text-[12px] opacity-65 text-center'>by: Dev kumar ( leader ).</p>
 
       <div className='flex flex-col gap-7 px-16 py-9'>
-        <div className='flex flex-col gap-1'>
-          <p className='text-sm'>Project name : </p>
-          <p className='opacity-80 text-[12px]'> {teamdata?.projectname}</p>
+        <div className='flex justify-between'>
+          <div className='flex flex-col gap-1'>
+            <p className='text-sm'>Project name : </p>
+            <p className='opacity-80 text-[12px]'> {teamdata?.projectname}</p>
+          </div>
+          <Link href={`/dashboard/${teamdata?.id}/ch/${teamdata?.teamname}`}><MessagesSquare className='size-7 rounded bg-neutral-200 px-2 hover:bg-neutral-300 py-1 cursor-pointer' /></Link>
         </div>
 
         <div className='flex flex-col gap-1'>
@@ -76,6 +81,7 @@ export default function Page() {
         </div>
 
       </div>
+
     </div>
   )
 }
