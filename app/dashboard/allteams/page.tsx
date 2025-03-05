@@ -35,10 +35,10 @@ export default function Page() {
             <p className="text-[11px] opacity-65">Send a request to leader to join a team.</p>
         </div>
 
-        <section>
+        <section className="overflow-y-auto scrollbar-hide">
             {
               eveyteamdata.length > 0 ? 
-              <div className="flex gap-2 flex-wrap justify-center pt-2">
+              <div className="flex flex-wrap gap-5 px-8 py-2">
                 {eveyteamdata.map((teamdata : TeamCardInfoType, idx : number) => (
                   <section key={idx} onClick={() => router.push(`/dashboard/teamdata/${teamdata?.id}`)}>
                     <Teamcard props={teamdata} />

@@ -21,7 +21,11 @@ model User {
   linkedin    String?
   teamcreated Team[]
   teamjoined  TeamMembers[]
+  requestsSent userReqtojointeam[] @relation(name: "RequestingUser")
+  requestsReceived userReqtojointeam[] @relation(name: "TeamLeader")
   credit      UserCredit?
+
+  leaderRejectUserReqtoJoinTeam leaderRejectUserReqtoJoinTeam[]
 }
 
 model UserCredit {
@@ -49,6 +53,7 @@ model Team {
   maxteamsize   Int           @default(5)
   category      categoryName  @default(Dev)
   leaderid      String
+  leadername    String
   projectname   String
   projectdesc   String
   hackathonname String
@@ -57,12 +62,31 @@ model Team {
   lastUpdated   DateTime      @updatedAt
   leader        User          @relation(fields: [leaderid], references: [id])
   members       TeamMembers[]
+  userReqtojointeam userReqtojointeam[]
 }
 
 enum categoryName {
   ML
   Dev
   Web_3
+}
+
+model userReqtojointeam {
+  id String @id @default(cuid())
+  team Team @relation(fields: [teamid],references: [id])
+  teamid String
+  user User @relation(name: "RequestingUser",fields: [userid],references: [id])
+  userid String
+  leader   User   @relation(name: "TeamLeader",fields: [leaderid], references: [id]) // Team leader
+  leaderid String
+  createdAt     DateTime      @default(now())
+  lastUpdated   DateTime      @updatedAt
+}
+
+model leaderRejectUserReqtoJoinTeam {
+  id String @id @default(cuid())
+  user User @relation(fields: [userid],references: [id])
+  userid String
 }
 
 enum Role {

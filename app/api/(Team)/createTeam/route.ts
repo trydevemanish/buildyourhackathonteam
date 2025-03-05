@@ -27,6 +27,7 @@ export async function POST(req:Request) {
             data : {
                 teamname : teamname,
                 leaderid : clerkUser?.id,
+                leadername:clerkUser?.firstName || 'not mentioned',
                 projectname:projectname,
                 projectdesc : projectdesc,
                 hackathonname : hackathonname,

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import { useUser } from '@clerk/nextjs'
 import { SignOutButton } from "@clerk/nextjs"
+import { Bell } from 'lucide-react'
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
@@ -109,11 +110,16 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                 <div className='flex justify-between px-3 py-1 items-center border-b border-black'>
                     <p className={`text-xs`}>buildyourhackathonteam</p>
                     <div className='flex items-center gap-4'>
-                        <div className='flex items-center'>
-                        <Link href={`/dashboard/usercredit`}>
-                          <Image src={burn} alt='token' className='size-3 cursor-pointer'/>
-                        </Link>
-                        <p className='text-sm'>3</p>
+                        <div className='flex gap-4 items-center'>
+                          <Link href={`/dashboard/notification`}>
+                            <Bell className='size-5 rounded cursor-pointer hover:bg-neutral-200 p-1' />
+                          </Link>
+                          <div className='flex items-center'>
+                            <Link href={`/dashboard/notification`}>
+                              <Image src={burn} alt='token' className='size-3 cursor-pointer'/>
+                            </Link>
+                            <p className='text-sm'>3</p>
+                          </div>
                         </div>
                         <Link href={'/dashboard/me'}>
                           <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-7'/>

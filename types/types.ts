@@ -1,5 +1,6 @@
 export type TeamCardInfoType = {
     id:string;
+    leaderid:string;
     category:string;
     teamname : string;
     leadername : string;

@@ -8,7 +8,7 @@ import { MessagesSquare } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Page() {
-
+  const [checkReqSend,setCheckingReqSend] = useState(false)
   const [teamdata,setTeamData] = useState({} as TeamCardInfoType)
   const { teamid } = useParams()
   
@@ -33,9 +33,38 @@ export default function Page() {
         console.log(`Failed: ${error}`)
       }
     }
-
+    
     findTeamData()
   },[])
+  
+
+  async function handleSendReqtoTeamLeadertoJoinTeam() {
+    try {
+      setCheckingReqSend(true)
+
+      const res = await fetch(`/api/createJoinTeamReq`,{
+        method : 'POST',
+        headers : {
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({ teamid : teamdata.id, leaderid : teamdata.leaderid })
+      })
+
+      if(!res.ok){
+        const errText = await res.text()
+        console.log(errText)
+        return;
+      }
+      
+      const data = await res.json()
+      console.log(data?.message)
+
+    } catch (error) {
+      console.log(`Issue ocuured while sending req: ${error}`)
+    } finally {
+      setCheckingReqSend(false)
+    }
+  }
 
   return (
     <div className='px-8 py-4'>
@@ -77,7 +106,9 @@ export default function Page() {
         </div>
 
         <div>
-          <button className='bg-black text-white text-xs px-9 py-1 rounded'>send a request !</button>
+          <button className='bg-black text-white text-xs px-9 py-1 rounded' onClick={handleSendReqtoTeamLeadertoJoinTeam}>
+            {checkReqSend ? 'sending...' : 'send req!'}
+          </button>
         </div>
 
       </div>
