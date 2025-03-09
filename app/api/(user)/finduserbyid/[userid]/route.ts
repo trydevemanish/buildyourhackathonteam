@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function POST(req:Request) {
+export async function GET(req:Request) {
    try {
        
         const url = new URL(req.url)
@@ -18,6 +18,10 @@ export async function POST(req:Request) {
         const user = await prisma.user.findUnique({
           where: {
             id : userid
+          },
+          include : {
+            teamcreated : true,
+            teamjoined : true,
           }
         })
 

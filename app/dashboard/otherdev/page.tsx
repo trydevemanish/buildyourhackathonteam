@@ -2,17 +2,28 @@
 import React, { useEffect, useState } from 'react'
 import ProfileCard from '@/components/ProfileCard'
 import { Search,User,IdCardIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+
+type UserData = {
+  id : string,
+  name:string,
+  email:string,
+  role:string,
+}
 
 export default function Page() {
   const [fetchdevdata,setfetchdevdata] = useState([])
   const [showInUserTableType,setShowInUserTableType] = useState(true)
 
+  const router = useRouter()
+
+  // fetch All User data ( will be adding the paging options after learning it )
   useEffect(() => {
     const FetchdeveloperData = async() => {
       try {
 
         const res = await fetch('/api/findallusers')
-
+ 
         if(!res.ok){
           const errtext = await res.text()
           console.log(errtext)
@@ -22,13 +33,13 @@ export default function Page() {
         const data = await res.json()
         console.log(data?.message)
 
-        setfetchdevdata(data)
+        setfetchdevdata(data?.data)
         
       } catch (error) {
          console.log(`failed: ${error}`)
       }
     }
-    // FetchdeveloperData()
+    FetchdeveloperData()
   },[])
 
   return (
@@ -52,30 +63,37 @@ export default function Page() {
 
       {showInUserTableType ? 
         <div>
-          <div className='grid grid-cols-5 py-2 text-sm overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)]'>
+          <div className='grid grid-cols-5 py-2 text-sm overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)] border-b'>
             <p className='col-start-1 col-end-2 text-center'>Serial</p>
-            <p className='col-start-2 col-end-3 text-center'>Username</p>
+            <p className='col-start-2 col-end-3 text-center'>Name</p>
             <p className='col-start-3 col-end-4 text-center'>Email</p>
             <p className='col-start-4 col-end-5 text-center'>Role</p>
             <p className='col-start-5 col-end-6 text-center'>Message</p>
           </div>
 
           {fetchdevdata.length > 0 ? 
-            <div className='grid grid-cols-5 py-1'>
-              <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>1</p>
-              <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>Manish</p>
-              <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>msh17679@gmail.com</p>
-              <p className='col-start-4 col-end-5 text-center opacity-70 text-xs'>backend</p>
-              <div className='col-start-5 col-end-6 flex justify-center cursor-pointer'>
-                <p className='bg-black text-white px-8 py-1 rounded text-xs'>invite</p>
-              </div>
-          </div> : 
-          <div className='flex justify-center items-center h-[calc(95vh-8rem)]'>
-            <section>
-              <p className='opacity-80'>No Data found.</p>
-              <p className='opacity-80 text-center text-sm '>Try again !</p>
-            </section>
-          </div>
+            <div>
+              {
+                fetchdevdata.map((data : UserData,idx : number) => (
+                  <div className='grid grid-cols-5 items-center py-2 border-b cursor-pointer' key={data?.id || idx} onClick={() => router.push(`/dashboard/user/u/${data?.id}`)}>
+                    <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>
+                    <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>{data?.name}</p>
+                    <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>{data?.email}</p>
+                    <p className='col-start-4 col-end-5 text-center opacity-70 text-xs'>{data?.role}</p>
+                    <div className='col-start-5 col-end-6 flex justify-center cursor-pointer'>
+                      <p className='bg-black text-white px-8 py-1 rounded text-[9px]'>invite</p>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+            : 
+            <div className='flex justify-center items-center h-[calc(95vh-8rem)]'>
+              <section>
+                <p className='opacity-80'>No Data found.</p>
+                <p className='opacity-80 text-center text-sm '>Try again !</p>
+              </section>
+            </div>
           } 
         </div> 
         : //on flase show in profile card
