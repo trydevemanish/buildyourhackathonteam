@@ -19,13 +19,19 @@ model User {
   bio         String?
   maxteamlimit   Int @default(3)
   linkedin    String?
+
+  credit      UserCredit?
   teamcreated Team[]
   teamjoined  TeamMembers[]
-  requestsSent userReqtojointeam[] @relation(name: "RequestingUser")
-  requestsReceived userReqtojointeam[] @relation(name: "TeamLeader")
-  credit      UserCredit?
 
-  leaderRejectUserReqtoJoinTeam leaderRejectUserReqtoJoinTeam[]
+  // Requests sent by the user to join teams  
+  requestsSent userReqtojointeam[] @relation(name: "RequestingUser")
+  // Requests received by the user (as team leader)
+  requestsReceived userReqtojointeam[] @relation(name: "TeamLeader")
+  //leader req user to join their their team 
+  LeaderReqUserToJoinThereTeam LeaderReqUserToJoinThereTeam[] @relation(name: "leaderRequesting")
+  // User whom req is made
+  UserWhomReqisMadetoJoinTeam LeaderReqUserToJoinThereTeam[] @relation(name: "userwhomereqismade")
 }
 
 model UserCredit {
@@ -63,6 +69,7 @@ model Team {
   leader        User          @relation(fields: [leaderid], references: [id])
   members       TeamMembers[]
   userReqtojointeam userReqtojointeam[]
+  leaderreqUserToJoinTeam LeaderReqUserToJoinThereTeam[]
 }
 
 enum categoryName {
@@ -81,12 +88,29 @@ model userReqtojointeam {
   leaderid String
   createdAt     DateTime      @default(now())
   lastUpdated   DateTime      @updatedAt
+  status reqStatus @default(PENDING)
+  rejectionmsg String?
 }
 
-model leaderRejectUserReqtoJoinTeam {
+
+model LeaderReqUserToJoinThereTeam {
   id String @id @default(cuid())
-  user User @relation(fields: [userid],references: [id])
+  leader User @relation(name:"leaderRequesting",fields: [leaderid],references: [id])
+  leaderid String
+  user User @relation(name:"userwhomereqismade",fields: [userid],references: [id])
   userid String
+  team Team @relation(fields: [teamid],references: [id])
+  teamid String
+  createdAt DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+  status reqStatus @default(PENDING)
+  rejectionmsg String?
+}
+
+enum reqStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 enum Role {

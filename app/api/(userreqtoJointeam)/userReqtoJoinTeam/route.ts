@@ -5,48 +5,48 @@ import { currentUser } from "@clerk/nextjs/server";
 export async function POST(req:Request) {
     try {
 
-        const clerkUser = await currentUser()
-        
-        if(!clerkUser){
-            return NextResponse.json(
-                {error:`UnAuthorisied User`},
-                {status:401}
-            )
-        }
+        const { leaderid,teamid } = await req.json()
 
-        const { teamid,leaderid } = await req.json()
-
-        if(!teamid && !leaderid){
+        if(!leaderid && !teamid){
             return NextResponse.json(
-                {error:`Invalid prop`},
+                {error:`Invalid properties received`},
                 {status:400}
             )
         }
 
-        const reqCreated = await prisma.userReqtojointeam.create({
+        const clerkuser = await currentUser()
+
+        if(!clerkuser){
+            return NextResponse.json(
+                {error:'Unauthoriseied User'},
+                {status:400}
+            )
+        }
+
+        const userreqCreated = await prisma.userReqtojointeam.create({
             data : {
                 leaderid : leaderid,
-                teamid : teamid,
-                userid : clerkUser?.id
+                userid : clerkuser?.id,
+                teamid : teamid
             }
         })
 
-        if(!reqCreated){
+        if(!userreqCreated){
             return NextResponse.json(
-                {error:`Failed to create req. `},
+                {message:'Failed to create Use req to Join team'},
                 {status:400}
             )
         }
 
         return NextResponse.json(
-            {message:'Req generated success.',data:reqCreated},
+            {message:'Req Made',data:userreqCreated},
             {status:201}
         )
+
         
     } catch (error) {
-        console.log(`Issue Occured for creating req: ${error}`)
         return NextResponse.json(
-            {error : `Issue Occured for creating req: ${error}`},
+            {error:`Failed to make req to the leader: ${error}`},
             {status:500}
         )
     }

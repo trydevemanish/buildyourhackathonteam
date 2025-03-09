@@ -36,31 +36,31 @@ export default function Page() {
     
     findTeamData()
   },[])
-  
 
-  async function handleSendReqtoTeamLeadertoJoinTeam() {
+  async function UserMadeaReqToTheTeamLeaderToJoinThereTeam(){
     try {
+
       setCheckingReqSend(true)
 
-      const res = await fetch(`/api/createJoinTeamReq`,{
+      const res = await fetch(`/api/userReqtoJoinTeam`,{
         method : 'POST',
         headers : {
-          'Content-Type': 'application/json'
+          'Content-Type' : 'application/json'
         },
-        body : JSON.stringify({ teamid : teamdata.id, leaderid : teamdata.leaderid })
-      })
+        body : JSON.stringify({ leaderid: teamdata.leaderid ,teamid: teamdata.id })
+      }) 
 
       if(!res.ok){
-        const errText = await res.text()
-        console.log(errText)
+        console.log(await res.text())
         return;
       }
-      
-      const data = await res.json()
-      console.log(data?.message)
 
+      const data  = await res.json()
+
+      console.log(data?.message)
+      
     } catch (error) {
-      console.log(`Issue ocuured while sending req: ${error}`)
+      console.log(`Failed to make req to leader: ${error}`)
     } finally {
       setCheckingReqSend(false)
     }
@@ -106,7 +106,7 @@ export default function Page() {
         </div>
 
         <div>
-          <button className='bg-black text-white text-xs px-9 py-1 rounded' onClick={handleSendReqtoTeamLeadertoJoinTeam}>
+          <button className='bg-black text-white text-xs px-9 py-1 rounded' onClick={UserMadeaReqToTheTeamLeaderToJoinThereTeam}>
             {checkReqSend ? 'sending...' : 'send req!'}
           </button>
         </div>

@@ -115,7 +115,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                             <Bell className='size-5 rounded cursor-pointer hover:bg-neutral-200 p-1' />
                           </Link>
                           <div className='flex items-center'>
-                            <Link href={`/dashboard/notification`}>
+                            <Link href={`/dashboard/usercredit`}>
                               <Image src={burn} alt='token' className='size-3 cursor-pointer'/>
                             </Link>
                             <p className='text-sm'>3</p>
