@@ -158,13 +158,13 @@ export default function Page() {
             <div>
               {
                 fetchdevdata.map((data : UserData,idx : number) => (
-                  <div className='grid grid-cols-5 items-center py-2 border-b cursor-pointer' key={data?.id || idx} onClick={() => router.push(`/dashboard/user/u/${data?.id}`)}>
+                  <div className='grid grid-cols-5 items-center py-2 border-b cursor-pointer' key={data?.id || idx}>
                     <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>
                     <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>{data?.name}</p>
                     <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>{data?.email}</p>
                     <p className='col-start-4 col-end-5 text-center opacity-70 text-xs'>{data?.role}</p>
-                    <div className='col-start-5 col-end-6 flex justify-center cursor-pointer'>
-                      <p className='bg-black text-white px-8 py-1 rounded text-[9px]'>invite</p>
+                    <div className='col-start-5 col-end-6 flex justify-center cursor-pointer' onClick={() => router.push(`/dashboard/user/u/${data?.id}`)}>
+                      <p className='bg-black text-white px-8 py-1 rounded text-[9px]'>view detail</p>
                     </div>
                   </div>
                 ))

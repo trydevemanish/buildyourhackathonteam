@@ -66,10 +66,16 @@ model Team {
   hackathondesc String
   createdAt     DateTime      @default(now())
   lastUpdated   DateTime      @updatedAt
+  teamstatus    Teamstatus    @default(Active)
   leader        User          @relation(fields: [leaderid], references: [id])
   members       TeamMembers[]
   userReqtojointeam userReqtojointeam[]
   leaderreqUserToJoinTeam LeaderReqUserToJoinThereTeam[]
+}
+
+enum Teamstatus { 
+  Active
+  Closed
 }
 
 enum categoryName {

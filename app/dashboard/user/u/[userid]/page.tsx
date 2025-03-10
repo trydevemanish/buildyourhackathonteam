@@ -3,6 +3,17 @@ import React, { useEffect, useState } from 'react'
 import Sample from '@/public/sample.jpeg'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 type teamCreatedData = {
     id:string;
@@ -28,7 +39,10 @@ type Userdata = {
 
 export default function Page() {
     const [userdata,setUserData] = useState({} as Userdata)
+    const [teamcreatedData,setTeamCreatedData] = useState([])
+    const [selectedTeamId,setSelectedTeamID] = useState('')
     const {userid} = useParams()
+    const { user } = useUser()
 
     useEffect(() => {
         const fetchUserData = async() => {
@@ -43,8 +57,6 @@ export default function Page() {
 
                 const data  = await res.json()
 
-                console.log(data)
-
                 setUserData(data?.Data)
                 
             } catch (error) {
@@ -54,6 +66,55 @@ export default function Page() {
         fetchUserData() 
     },[])
 
+    // this useeffect will help me find all the team leader has created.
+    useEffect(() => {
+        const fetchLoginUserData = async() => {
+            try {
+
+                const res = await fetch(`/api/finduserbyid/${user?.id}`)
+
+                if(!res.ok){
+                    console.log(await res.text())
+                    return;
+                }
+
+                const data  = await res.json()
+
+                setTeamCreatedData(data?.Data?.teamcreated)
+                
+            } catch (error) {
+                console.log(`Issue Occured while fetching user detail: ${error}`)
+            }
+        }
+        fetchLoginUserData()  
+    })
+
+    async function handleMakeAreqBytheLeadertoTheUserTojointheirteam(selectedTeamId:string) {
+        try {
+
+            // the one issue arise here i as the leader, how will i send the team id , what if i have multiple team ,then how to pass the team id in which i want to add the user
+
+            const res = await fetch('/api/leaderrequsertojointeam',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({ userid:userid,teamid:selectedTeamId })
+            })
+
+            if(!res.ok){
+                console.log(await res.text())
+                return;
+            }
+
+            const data = await res.json()
+            console.log(data?.message)
+
+        } catch (error) {
+            console.log(`Issue Occured while making req to the user: ${error}`)
+        }
+    }
+
   return (
     <div className='px-16 py-10'>
         <div className='flex flex-col gap-y-3 text-xs'>
@@ -62,7 +123,24 @@ export default function Page() {
                 <span className='text-base'>{userdata?.name}</span>
             </p>
             <Image src={Sample} alt='user_profile' className='rounded-[50%] size-14 '/>
-            <p>{userdata?.bio}</p>
+            <div className='flex justify-between'>
+                <p>{userdata?.bio}</p>
+                <div className='flex gap-7 items-center'>
+                    <Select onValueChange={(value) => setSelectedTeamID(value)}>
+                        <SelectTrigger className="w-[100px] h-7 text-xs shadow-none border-none focus:outline-white outline-white">
+                        <SelectValue placeholder="Select Team" />
+                        </SelectTrigger>
+                        <SelectContent>
+                        <SelectGroup className='text-[9px]'>
+                            {teamcreatedData.map((teamdata:teamCreatedData,idx:number) => (
+                                <SelectItem className='text-[12px]' value={`${teamdata?.id}`} key={idx}>{teamdata?.projectname}</SelectItem>
+                            ))}
+                        </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <button className='bg-black text-[9px] text-white px-8 py-1 rounded shadow' onClick={() => handleMakeAreqBytheLeadertoTheUserTojointheirteam(selectedTeamId)}>invite to join team</button>
+                </div>
+            </div>
             <p>Role: {userdata?.role}</p>
 
             <div className='flex items-center justify-between'>
