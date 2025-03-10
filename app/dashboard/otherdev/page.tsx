@@ -3,17 +3,22 @@ import React, { useEffect, useState } from 'react'
 import ProfileCard from '@/components/ProfileCard'
 import { Search,User,IdCardIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { UserData } from '@/types/types'
 
-type UserData = {
-  id : string,
-  name:string,
-  email:string,
-  role:string,
-}
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function Page() {
   const [fetchdevdata,setfetchdevdata] = useState([])
   const [showInUserTableType,setShowInUserTableType] = useState(true)
+  const [value,setvalue] = useState('')
 
   const router = useRouter()
 
@@ -42,6 +47,69 @@ export default function Page() {
     FetchdeveloperData()
   },[])
 
+  const handleSearchRoute = async(e: React.ChangeEvent<HTMLInputElement>) => {
+      setvalue(e.target.value)
+
+      const interval = setInterval(async() => {
+        try {
+
+          const res = await fetch(`/api/finduserbyname`,{
+            method : 'GET',
+            headers : {
+              'Content-Type':'application/json'
+            },
+            body:JSON.stringify({ text : e.target.value })
+          })
+    
+          if(!res.ok){
+            console.log(await res.text())
+            return;
+          }
+    
+          const data = await res.json()
+          
+          console.log(data?.message)
+    
+          setfetchdevdata(data?.data)
+          
+        } catch (error) {
+          console.log(`Issue Ocuured while searching Users: ${error}`)
+        }
+      }, 3000);
+
+      clearInterval(interval)
+  }
+
+
+  const findUserWithTheirRole = async(value:'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design') => {
+    try {
+
+      const res = await fetch(`/api/findUserbyrole`,{
+        method : 'GET',
+        headers : {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({ role:value })
+      })
+
+      if(!res.ok){
+        console.log(await res.text())
+        return;
+      }
+
+      const data = await res.json()
+
+      console.log(data?.message)
+
+      setfetchdevdata(data?.data)
+      
+    } catch (error) {
+      console.log(`Issue Occured while finding Users with their role: ${error}`)
+    }
+  }
+
+
+
   return (
     <div>
       <div className='flex justify-between items-center px-3 py-1 border'>
@@ -51,14 +119,29 @@ export default function Page() {
             <p className='text-xs opacity-40'>invite them to your hackathon team.</p>
           </section>
           <section className='flex items-center gap-1 border rounded px-3 py-1 '>
-            <User className='size-5 border-r px-1 hover:bg-neutral-200 rounded' onClick={() => setShowInUserTableType(true)} />
+            <User className='size-5  border-r px-1 hover:bg-neutral-200 rounded' onClick={() => setShowInUserTableType(true)} />
             <IdCardIcon className='size-5 px-1 hover:bg-neutral-200 rounded' onClick={() => setShowInUserTableType(false)}/>
-          </section>
-        </div>
-        <div className='flex items-center'>
-          <input type='text' placeholder='Search by role/name' className='text-xs w-56 px-3 border-b py-1 focus:outline-none' />
-          <Search className='size-6 rounded hover:bg-neutral-200 p-1 cursor-pointer' />
-        </div>
+            </section>
+              </div>
+              <div className='flex items-center border-b'>
+                <Select onValueChange={findUserWithTheirRole}>
+                  <SelectTrigger className="w-[100px] h-7 text-xs shadow-none border-none focus:outline-white outline-white">
+                    <SelectValue placeholder="Select role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup className='text-[9px]'>
+                      <SelectLabel>Fruits</SelectLabel>
+                      <SelectItem value="Helper">Helper</SelectItem>
+                      <SelectItem value="ML_eng">ML_eng</SelectItem>
+                      <SelectItem value="Frontend_dev">Frontend_dev</SelectItem>
+                      <SelectItem value="Backend_dev">Backend_dev</SelectItem>
+                      <SelectItem value="Design">Design</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <input type='text' placeholder='Search by role/name' className='text-xs w-56 px-3 py-1 focus:outline-none' value={value} onChange={handleSearchRoute} />
+                {/* <Search className='size-6 rounded hover:bg-neutral-200 p-1 cursor-pointer'  /> */}
+              </div>
       </div>
 
       {showInUserTableType ? 
@@ -97,10 +180,12 @@ export default function Page() {
           } 
         </div> 
         : //on flase show in profile card
-        <div className='flex flex-wrap items-center justify-center gap-5 py-3'>
+        <div>
           {fetchdevdata.length > 0 ? 
-            <div>
-              <ProfileCard />
+            <div className='flex flex-wrap items-center justify-center gap-5 py-3'>
+              {fetchdevdata.map((data:UserData,idx:number) => (
+                <ProfileCard props={data} key={idx} />
+              ))}
             </div> : 
             <div className='flex justify-center items-center h-[calc(95vh-8rem)]'>
             <section>
