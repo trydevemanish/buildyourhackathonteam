@@ -87,7 +87,7 @@ export default function Page() {
             }
         }
         fetchLoginUserData()  
-    })
+    },[])
 
     async function handleMakeAreqBytheLeadertoTheUserTojointheirteam(selectedTeamId:string) {
         try {

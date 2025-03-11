@@ -95,6 +95,7 @@ model userReqtojointeam {
   createdAt     DateTime      @default(now())
   lastUpdated   DateTime      @updatedAt
   status reqStatus @default(PENDING)
+  requesttype requestType @default(user_to_Leader)
   rejectionmsg String?
 }
 
@@ -110,7 +111,13 @@ model LeaderReqUserToJoinThereTeam {
   createdAt DateTime @default(now())
   lastUpdated DateTime @updatedAt
   status reqStatus @default(PENDING)
+  requesttype requestType @default(leader_to_User)
   rejectionmsg String?
+}
+
+enum requestType {
+  leader_to_User
+  user_to_Leader
 }
 
 enum reqStatus {

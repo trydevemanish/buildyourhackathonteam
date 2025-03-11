@@ -34,7 +34,7 @@ export async function PUT(req:Request) {
         }
 
         return NextResponse.json(
-            {message:'User Rejected to join team',data:rejectedreq},
+            {message:'Leader Rejected to join team',data:rejectedreq},
             {status:200}
         )
 
