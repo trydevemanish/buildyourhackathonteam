@@ -1,24 +1,38 @@
 "use client"
 import React from "react";
-import Coding from "@/public/coding.png"
-import Image from "next/image";
-import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-// import { RedirectToSignIn } from "@clerk/nextjs";
+// import Coding from "@/public/coding.png"
+// import Image from "next/image";
+// import { useUser } from "@clerk/nextjs";
+// import { useRouter } from "next/navigation";
+import Navbar from "@/components/LandingPage/Navbar";
+import About from "@/components/LandingPage/About";
+import Faq from "@/components/LandingPage/Faq";
+import Footer from "@/components/LandingPage/Footer";
+import Header from "@/components/LandingPage/Header";
+
 
 export default function Home() {
 
-  const { isSignedIn } = useUser()
-  const router = useRouter()
+  // const { isSignedIn } = useUser()
+  // const router = useRouter()
 
   // need to change the route of the login page whwn i will deploy it .
-  async function handleSignin() {
-    return isSignedIn ? router.push('/dashboard') : router.push('https://easy-meerkat-32.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard')
-  }
+  // async function handleSignin() {
+  //   return isSignedIn ? router.push('/dashboard') : router.push('https://easy-meerkat-32.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard')
+  // }
 
   return (
-    <main>
-        <div className="flex justify-between items-center p-2">
+    <main className="py-2">
+        <Navbar />
+        <Header />
+        <About />
+        <Faq />
+        <Footer />
+    </main>
+  );
+}
+
+{/* <div className="flex justify-between items-center p-2">
             <div className="text-xs flex gap-1">
               <p>buildyourhackathonteam</p>
               <Image src={Coding} alt="icon" className="size-4" />
@@ -35,8 +49,4 @@ export default function Home() {
         </p>
         <div className="flex justify-center items-center py-8">
             <button className="text-sm bg-black text-white rounded-md border border-black px-7 py-1 hover:bg-white hover:text-black">Get Started</button>
-        </div>
-
-    </main>
-  );
-}
+        </div> */}

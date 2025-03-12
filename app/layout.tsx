@@ -14,9 +14,9 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-export const inter = Inter({
+const inter = Inter({
   subsets :["latin"],
-  weight: '700'
+  weight: '400'
 })
 
 const geistMono = Geist_Mono({
@@ -38,7 +38,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
         >
           {/* <SignedOut>
           <SignInButton />
