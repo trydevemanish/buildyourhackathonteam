@@ -1,9 +1,7 @@
 "use client"
 import Link from 'next/link'
-import React, { use, useEffect, useState } from 'react'
-import burn from "@/public/file.svg"
+import React, { useEffect, useState } from 'react'
 import { CrumpledPaperIcon } from '@radix-ui/react-icons'
-import Image from 'next/image'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import { useUser } from '@clerk/nextjs'
 import { SignOutButton } from "@clerk/nextjs"
@@ -16,7 +14,7 @@ interface Dashboardlayoutprops {
 // find user from the database , if user is there nothinh to do , if not create a new user
 
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
-    const [userCredit,setUserCredit] = useState('')
+    const [userCredit,setUserCredit] = useState<number>()
     
     const { user } = useUser()
     
@@ -52,7 +50,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
 
     //useeffect to fetch total credit.
     useEffect(() => {
-      // findUserTotalCredit()
+      findUserTotalCredit()
     },[])
 
     async function findUserTotalCredit(){
@@ -74,7 +72,8 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
         }
 
         console.log(data?.message)
-        console.log('data',data)
+
+        setUserCredit(data?.data?.initialCredit)
         
       } catch (error) {
         console.log(`Failed to create User: ${error}`)
@@ -119,7 +118,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                             <Link href={`/dashboard/usercredit`}>
                               <CrumpledPaperIcon className='size-3 cursor-pointer' />
                             </Link>
-                            <p className='text-xs'>3</p>
+                            <p className='text-xs'>{userCredit}</p>
                           </div>
                         </div>
                         <Link href={'/dashboard/me'}>

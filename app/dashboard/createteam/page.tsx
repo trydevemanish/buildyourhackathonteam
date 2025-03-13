@@ -21,7 +21,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 
 export default function Page() {
-    const [usercredit,setUserCredit] = useState('')
+    const [usercredit,setUserCredit] = useState<number>()
     const [loading,setloading] = useState(false)
     const router = useRouter()
 
@@ -38,6 +38,11 @@ export default function Page() {
         try {
 
             setloading(true)
+
+            if(usercredit == 0){
+                console.log('User is out of credit.')
+                return;
+            }
 
             const res = await fetch(`/api/createTeam`,{
                 method : 'POST',
@@ -78,7 +83,7 @@ export default function Page() {
     async function subtractCredit() {
         try {
 
-            const res = await fetch(`/api/subractcredit`,{
+            const res = await fetch(`/api/subtractcredit`,{
                 method : 'PUT',
                 headers : {
                     'Content-Type':'application/json'
@@ -120,9 +125,9 @@ export default function Page() {
           }
 
           console.log(data?.message)
-          console.log('data',data)
+          
           // need to set the user credit data here 
-          //   setUserCredit(data)
+          setUserCredit(data?.data?.initialCredit)
           
         } catch (error) {
           console.log(`Failed to create User: ${error}`)
@@ -138,7 +143,7 @@ export default function Page() {
             <p className='text-lg'>Build your hackathon team.</p>
             <p className='text-[10px] opacity-55'>Note: * options are mandatory.</p>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
                     <div className='pt-7 flex flex-col gap-6'>
 
                         <FormField

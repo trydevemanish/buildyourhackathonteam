@@ -4,11 +4,11 @@ import { Label } from '@radix-ui/react-label'
 import React,{useEffect, useState} from 'react'
 
 export default function Page() {
-  const [usercredit,setUserCredit] = useState('')
+  const [usercredit,setUserCredit] = useState<number>()
   const [showWaringLimitText,setShowWarningLimittext] = useState(false)
 
   useEffect(() => {
-    // findUserTotalCredit()
+    findUserTotalCredit()
   },[])
 
   async function findUserTotalCredit(){
@@ -30,23 +30,25 @@ export default function Page() {
       }
 
       console.log(data?.message)
-      console.log('data',data)
+
       // need to set the user credit data here 
-      //   setUserCredit(data)
+      setUserCredit(data?.data?.initialCredit)
       
     } catch (error) {
       console.log(`Failed to create User: ${error}`)
     }
   }
 
+  // check if user credit is 0 or not.
   async function handlefunctionAddCredit() {
-    if(Number(usercredit) == 0){
+    if(usercredit == 0){
       AddCredit()
     } else {
-      setShowWarningLimittext(!showWaringLimitText)
+      setShowWarningLimittext((prev) => !prev)
     }
   }
 
+  // add credit to user profile.
   async function AddCredit(){
     try {
 
@@ -61,6 +63,7 @@ export default function Page() {
        }
 
        const data = await res.json()
+       
        console.log(data?.message)
       
     } catch (error) {

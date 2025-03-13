@@ -1,6 +1,7 @@
 "use client"
 import React,{ useState,useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 
 type  userReqLeaderToJoinTeamNotification = {
   id : string,
@@ -28,6 +29,7 @@ export default function Page() {
   const [leaderAcceptedUserinvitation,setLeaderAcceptedUserinvitation] = useState(false)
   const [leaderRejectedUserinvitation,setLeaderRejectedUserinvitation] = useState(false)
 
+  const router = useRouter()
   const { user } = useUser()
 
   useEffect(() => {
@@ -213,11 +215,11 @@ export default function Page() {
             <p>Notification page.</p>
       </div>
       {/* this section will show the req that user made to leader to join team . */}
-      <section className='text-xs flex flex-col'>
+      <section className='text-xs flex flex-col overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
         {userReqTeamToJoinData?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
             <div key={idx}>
               {user?.id == data?.leaderid && 
-                <div className='grid grid-cols-5 px-8 items-center py-1 gap-3 border-b'>
+                <div className='grid grid-cols-5 px-8 items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.userid}`)}>
                   <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
                   <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
                   <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
@@ -247,7 +249,7 @@ export default function Page() {
         {leaderInviteUser?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
             <div key={idx}>
               {user?.id == data?.userid && 
-                <div className='grid grid-cols-5 px-8 items-center py-1 gap-3 border-b'>
+                <div className='grid grid-cols-5 px-8 items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.leaderid}`)}>
                   <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
                   <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
                   <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
