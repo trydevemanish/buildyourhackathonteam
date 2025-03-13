@@ -19,6 +19,7 @@ model User {
   bio         String?
   maxteamlimit   Int @default(3)
   linkedin    String?
+  profileurl String?
 
   credit      UserCredit?
   teamcreated Team[]
@@ -63,6 +64,7 @@ model Team {
   projectname   String
   projectdesc   String
   hackathonname String
+  hackathonlink String
   hackathondesc String
   createdAt     DateTime      @default(now())
   lastUpdated   DateTime      @updatedAt

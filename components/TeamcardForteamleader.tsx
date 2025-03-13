@@ -36,11 +36,11 @@ export default function Teamcard(
     }
 
   return (
-    <div className='border border-black inline-block px-2 py-1 rounded cursor-pointer' onClick={() => router.push(`/dashboard/teamdata/${props?.id}`)}>
+    <div className='border border-black inline-block px-2 py-1 shadow shadow-neutral-100 rounded cursor-pointer' onClick={() => router.push(`/dashboard/teamdata/${props?.id}`)}>
         <div className='px-4 py-3 inline-block text-xs w-64 '>
             <div className='flex flex-col gap-1'>
                 <div className='flex justify-between items-center'>
-                    <p>team: {props?.teamname}</p>
+                    <p>Team: {props?.teamname}</p>
                     <button className='bg-black text-white px-4 rounded text-[10px] py-1' onClick={handledeleteteam}>Delete</button>
                 </div>
                 <p>leader: {props?.leadername}</p>
@@ -50,7 +50,7 @@ export default function Teamcard(
                 <p>{props?.hackathondesc}</p>
             </div>
         </div>
-        <p className='text-[10px] opacity-50 text-right'>created at: {props?.createdat}</p>
+        <p className='text-[10px] opacity-50 text-right'>created at: {props?.createdAt}</p>
     </div>
   )
 }

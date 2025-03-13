@@ -17,6 +17,9 @@ export async function GET(req:Request) {
         const teamdata = await prisma.team.findUnique({
             where : {
                 id : teamid[3]
+            },
+            include : {
+                members : true
             }
         })
 

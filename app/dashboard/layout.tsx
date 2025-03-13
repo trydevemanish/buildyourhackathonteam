@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import React, { use, useEffect, useState } from 'react'
 import burn from "@/public/file.svg"
+import { CrumpledPaperIcon } from '@radix-ui/react-icons'
 import Image from 'next/image'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import { useUser } from '@clerk/nextjs'
@@ -87,17 +88,17 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
             <div className='grid grid-cols-7 min-h-screen overflow-x-hidden'>
               <div className='col-start-1 col-end-2 border-black border-r'>
                 <div className='flex flex-col justify-between min-h-screen py-4 px-1'>
-                    <div className='flex flex-col text-xs'>
-                        <p className={`cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
+                    <div className='flex flex-col text-[11px]'>
+                        <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
                           <Link href={'/dashboard'}>your team</Link>
                         </p>
-                        <p className={` cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
+                        <p className={` cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
                           <Link href={'/dashboard/allteams'}>other teams to join</Link>
                         </p>
-                        <p className={`cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
+                        <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
                           <Link href={'/dashboard/teamjoined'}>team joined as member</Link>
                         </p>
-                        <p className={`cursor-pointer hover:bg-neutral-100 py-1 px-2 rounded`}>
+                        <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
                           <Link href={'/dashboard/otherdev'}>meet other developers</Link>
                         </p>
                     </div>
@@ -112,17 +113,17 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                     <div className='flex items-center gap-4'>
                         <div className='flex gap-4 items-center'>
                           <Link href={`/dashboard/notification`}>
-                            <Bell className='size-5 rounded cursor-pointer hover:bg-neutral-200 p-1' />
+                            <Bell className='size-5 rounded cursor-pointer hover:bg-purple-200 p-1' />
                           </Link>
-                          <div className='flex items-center'>
+                          <div className='flex items-center hover:bg-purple-100 rounded p-1'>
                             <Link href={`/dashboard/usercredit`}>
-                              <Image src={burn} alt='token' className='size-3 cursor-pointer'/>
+                              <CrumpledPaperIcon className='size-3 cursor-pointer' />
                             </Link>
-                            <p className='text-sm'>3</p>
+                            <p className='text-xs'>3</p>
                           </div>
                         </div>
                         <Link href={'/dashboard/me'}>
-                          <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-7'/>
+                          <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-7 hover:grayscale'/>
                         </Link>
                     </div>
                 </div>
