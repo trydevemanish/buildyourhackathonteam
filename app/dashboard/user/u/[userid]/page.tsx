@@ -4,6 +4,7 @@ import Sample from '@/public/sample.jpeg'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
+import { teamCreatedData,WholeUserdata } from '@/types/types'
 
 import {
   Select,
@@ -15,30 +16,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-type teamCreatedData = {
-    id:string;
-    teamname:string;
-    projectname:string;
-    category:string;
-}
-
-type Userdata = {
-    id:string;
-    name:string;
-    bio:string;
-    createdAt:string;
-    github:string;
-    linkedin:string;
-    email:string;
-    role:string;
-    teamcreated : [teamCreatedData],
-    teamjoined : [
-        length : number,
-    ];
-}
+// Userdata
 
 export default function Page() {
-    const [userdata,setUserData] = useState({} as Userdata)
+    const [userdata,setUserData] = useState({} as WholeUserdata)
     const [teamcreatedData,setTeamCreatedData] = useState([])
     const [selectedTeamId,setSelectedTeamID] = useState('')
     const {userid} = useParams()

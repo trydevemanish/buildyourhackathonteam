@@ -65,6 +65,7 @@ export default function Page() {
             // call this func to subtract the user credit by 1.
             subtractCredit()
 
+            router.refresh()
             router.push('/dashboard')
             
         } catch (error) {
