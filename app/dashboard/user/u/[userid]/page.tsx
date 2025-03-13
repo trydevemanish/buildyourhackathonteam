@@ -5,13 +5,14 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { teamCreatedData,WholeUserdata } from '@/types/types'
+import Skeletonsize from '@/components/Skeletonsize'
 
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
+//   SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -22,12 +23,15 @@ export default function Page() {
     const [userdata,setUserData] = useState({} as WholeUserdata)
     const [teamcreatedData,setTeamCreatedData] = useState([])
     const [selectedTeamId,setSelectedTeamID] = useState('')
+    const [fetchinguserdata,setFetchingUserData] = useState(false)
     const {userid} = useParams()
     const { user } = useUser()
 
     useEffect(() => {
         const fetchUserData = async() => {
             try {
+
+                setFetchingUserData(true)
 
                 const res = await fetch(`/api/finduserbyid/${userid}`)
 
@@ -42,6 +46,8 @@ export default function Page() {
                 
             } catch (error) {
                 console.log(`Issue Occured while fetching user detail: ${error}`)
+            } finally { 
+                setFetchingUserData(false)
             }
         }
         fetchUserData() 
@@ -51,6 +57,8 @@ export default function Page() {
     useEffect(() => {
         const fetchLoginUserData = async() => {
             try {
+
+                setFetchingUserData(true)
 
                 const res = await fetch(`/api/finduserbyid/${user?.id}`)
 
@@ -65,6 +73,8 @@ export default function Page() {
                 
             } catch (error) {
                 console.log(`Issue Occured while fetching user detail: ${error}`)
+            } finally {
+                setFetchingUserData(false)
             }
         }
         fetchLoginUserData()  
@@ -99,13 +109,25 @@ export default function Page() {
   return (
     <div className='px-16 py-10'>
         <div className='flex flex-col gap-y-3 text-xs'>
-            <p>
+            <div>
                 <span className='text-xl'>Hi this is, </span>
-                <span className='text-base'>{userdata?.name}</span>
-            </p>
+                <span className='text-base'>
+                    {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                        <>
+                            {userdata?.name ? userdata?.name : 'new user'}
+                        </>
+                    }
+                </span>
+            </div>
             <Image src={Sample} alt='user_profile' className='rounded-[50%] size-14 '/>
             <div className='flex justify-between'>
-                <p>{userdata?.bio}</p>
+                <div>
+                    {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                        <>
+                            {userdata?.bio ? userdata?.bio : 'No bio added.'}
+                        </>
+                    }
+                </div>
                 <div className='flex gap-7 items-center'>
                     <Select onValueChange={(value) => setSelectedTeamID(value)}>
                         <SelectTrigger className="w-[100px] h-7 text-xs shadow-none border-none focus:outline-white outline-white">
@@ -122,19 +144,42 @@ export default function Page() {
                     <button className='bg-black text-[9px] text-white px-8 py-1 rounded shadow' onClick={() => handleMakeAreqBytheLeadertoTheUserTojointheirteam(selectedTeamId)}>invite to join team</button>
                 </div>
             </div>
-            <p>Role: {userdata?.role}</p>
+            <div>
+                {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                    <>
+                        <span>Role: {userdata?.role ? userdata?.role : 'undefined role'}</span>
+                    </>
+                }
+            </div>
 
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-2'>
-                    <p>{userdata?.email ?? 'Email not mentioned'}</p>
+                    <div>
+                        {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                            <>
+                                {userdata?.email ? userdata?.email : 'No email added.'}
+                            </>
+                        }
+                    </div>
                 </div>
 
                 <div className='flex items-center gap-2'>
-                    <p>{userdata?.github ?? 'Github not mentioned'}</p>
+                    <div>
+                        {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                            <>
+                                {userdata?.github ? userdata?.github : 'No github added.'}
+                            </>
+                        }
+                    </div>
                 </div>
 
                 <div className='flex items-center gap-2'>
-                    <p>{userdata?.linkedin ?? 'Linkedin not mentioned'}</p>
+                    <div>{fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                            <>
+                                {userdata?.linkedin ? userdata?.linkedin : 'No linkedin added.'}
+                            </>
+                        }
+                    </div>
                 </div>
             </div>
 
@@ -153,14 +198,18 @@ export default function Page() {
                        </div>
 
                        <div>
-                        {userdata?.teamcreated.map((data : teamCreatedData,idx : number) => (
-                            <div className='grid grid-cols-4 items-center py-2 border-b cursor-pointer' key={data?.id || idx}>
-                            <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>
-                            <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>{data?.teamname}</p>
-                            <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>{data?.category}</p>
-                            <p className='col-start-4 col-end-5 text-center opacity-70 text-xs'>{data?.projectname}</p>
-                          </div>
-                        ))}
+                        {fetchinguserdata ? <Skeletonsize data={{ w:300,h:15 }} /> : 
+                            <>
+                            {userdata?.teamcreated.map((data : teamCreatedData,idx : number) => (
+                                <div className='grid grid-cols-4 items-center py-2 border-b' key={data?.id || idx}>
+                                <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>
+                                <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>{data?.teamname}</p>
+                                <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>{data?.category}</p>
+                                <p className='col-start-4 col-end-5 text-center opacity-70 text-xs'>{data?.projectname}</p>
+                                </div>
+                            ))}
+                            </>
+                        }
                        </div>
                     </section>   
                        :

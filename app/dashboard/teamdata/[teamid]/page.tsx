@@ -6,7 +6,8 @@ import { TeamCardInfoType } from '@/types/types'
 import { useParams } from 'next/navigation'
 import { MessagesSquare } from 'lucide-react'
 import Link from 'next/link'
-import { Skeleton } from "@/components/ui/skeleton"
+// import { Skeleton } from "@/components/ui/skeleton"
+import Skeletonsize from '@/components/Skeletonsize'
 import { useUser } from '@clerk/nextjs'
 
 export default function Page() {
@@ -81,24 +82,25 @@ export default function Page() {
         <div className='flex justify-between'>
           <div className='flex flex-col gap-1'>
             <p className='text-sm'>Project name : </p> 
-            <p className='opacity-80 text-[12px]'>{teamdata?.projectname ? teamdata?.projectname : <Skeleton className='w-20 h-4 rounded' />  }</p>
+            <p className='opacity-80 text-[12px]'>{teamdata?.projectname ? teamdata?.projectname :  <Skeletonsize data={{ w:100,h:10 }} />  }
+            </p> 
           </div>
           <Link href={`/dashboard/${teamdata?.id}/ch/${teamdata?.teamname}`}><MessagesSquare className='size-7 rounded bg-neutral-200 px-2 hover:bg-neutral-300 py-1 cursor-pointer' /></Link>
         </div> 
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Project desc : </p>
-          <p className='opacity-80 text-[12px]'>{teamdata?.projectdesc ? teamdata?.projectdesc : <Skeleton className='w-20 h-4 rounded' />}</p>
+          <p className='opacity-80 text-[12px]'>{teamdata?.projectdesc ? teamdata?.projectdesc : <Skeletonsize data={{ w:100,h:10 }} />}</p>
         </div>
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Hackathon Name : </p>
-          <p className='opacity-80 text-[12px]'>{teamdata?.hackathonname ? teamdata?.hackathonname : <Skeleton className='w-20 h-4 rounded' /> }</p>
+          <p className='opacity-80 text-[12px]'>{teamdata?.hackathonname ? teamdata?.hackathonname : <Skeletonsize data={{ w:100,h:10 }} /> }</p>
         </div>
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Hackathon desc : </p>
-          <p className='opacity-80 text-[12px]'>{teamdata?.hackathondesc ? teamdata?.hackathondesc : <Skeleton className='w-20 h-4 rounded' /> }</p>
+          <p className='opacity-80 text-[12px]'>{teamdata?.hackathondesc ? teamdata?.hackathondesc : <Skeletonsize data={{ w:100,h:10 }} /> }</p>
         </div>
 
         <div className='flex flex-col gap-1'>
