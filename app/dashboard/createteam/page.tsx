@@ -2,8 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import { TeamFormationSchema } from '@/Schema/CheckTeamFormationSchema'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LucideAsterisk } from 'lucide-react'
+import { Loader2, LucideAsterisk } from 'lucide-react'
 import { useForm} from "react-hook-form"
+import CreateTeam from '@/public/createteam.jpg'
+import { CodeSandboxLogoIcon } from '@radix-ui/react-icons'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { z } from "zod"
 import {
     Form,
@@ -14,9 +18,12 @@ import {
     FormLabel,
     FormMessage,
   } from "@/components/ui/form"
+import { Textarea } from '@/components/ui/textarea'
 
 export default function Page() {
     const [usercredit,setUserCredit] = useState('')
+    const [loading,setloading] = useState(false)
+    const router = useRouter()
 
     useEffect(() => {
         //when this page will load automaticaaly user intital credit will be fetched.
@@ -29,6 +36,8 @@ export default function Page() {
 
     const onSubmit = async(values: z.infer<typeof TeamFormationSchema>) => {
         try {
+
+            setloading(true)
 
             const res = await fetch(`/api/createTeam`,{
                 method : 'POST',
@@ -55,9 +64,13 @@ export default function Page() {
 
             // call this func to subtract the user credit by 1.
             subtractCredit()
+
+            router.push('/dashboard')
             
         } catch (error) {
             console.log(error ?? "Failed To create Team")
+        } finally {
+            setloading(false)
         }
     }
 
@@ -79,6 +92,7 @@ export default function Page() {
             }
 
             const data = await res.json()
+
             console.log(data?.message)
             
         } catch (error) {
@@ -115,109 +129,118 @@ export default function Page() {
     }
 
   return (
-    <div>
-        <div className='px-16 py-10'>
-            <p className='text-base'>Build your hackathon team.</p>
+    <div className='grid grid-cols-2 overflow-y-auto scrollbar-hide max-h-[calc(96vh-1rem)] '>
+        <div className='col-start-1 col-end-2'>
+             <Image src={CreateTeam} alt="createTeam" className='object-contain'/>
+        </div>
+        <div className='col-start-2 col-end-3 py-16 px-16'>
+            <p className='text-lg'>Build your hackathon team.</p>
             <p className='text-[10px] opacity-55'>Note: * options are mandatory.</p>
             <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <div className='pt-7 flex flex-col gap-4'>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <div className='pt-7 flex flex-col gap-6'>
 
-                    <FormField
-                        control={form.control}
-                        name="teamname"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel className='flex gap-1'>
-                                <LucideAsterisk className='size-3' color='red' />
-                                <span className='font-normal'>Team Name :</span> 
-                            </FormLabel>
-                            <FormControl>
-                                <input placeholder="Enter team name:" {...field} className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
-                            </FormControl>
-                            <FormDescription />
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="teamname"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel className='flex gap-1'>
+                                    <LucideAsterisk className='size-3' color='red' />
+                                    <span className='font-normal'>Team Name :</span> 
+                                </FormLabel>
+                                <FormControl>
+                                    <input placeholder="Enter team name:" {...field} className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                </FormControl>
+                                <FormDescription />
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="projectname"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel className='flex gap-1'>
-                                <LucideAsterisk className='size-3' color='red' />
-                                <span className='font-normal'>Project Name :</span> 
-                            </FormLabel>
-                            <FormControl>
-                                <input {...field} placeholder='Enter Project name:' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
-                            </FormControl>
-                            <FormDescription />
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="projectname"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel className='flex gap-1'>
+                                    <LucideAsterisk className='size-3' color='red' />
+                                    <span className='font-normal'>Project Name :</span> 
+                                </FormLabel>
+                                <FormControl>
+                                    <input {...field} placeholder='Enter Project name:' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                </FormControl>
+                                <FormDescription />
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="projectdesc"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel className='flex gap-1'>
-                                <LucideAsterisk className='size-3' color='red' />
-                                <span className='font-normal'>Project Description :</span> 
-                            </FormLabel>
-                            <FormControl>
-                                <input {...field} placeholder='Elaborate Project detail:' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
-                            </FormControl>
-                            <FormDescription />
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-
-                    <FormField
-                        control={form.control}
-                        name="hackathonname"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel className='flex gap-1'>
-                                <LucideAsterisk className='size-3' color='red' />
-                                <span className='font-normal'>Hackathon Name :</span> 
-                            </FormLabel>
-                            <FormControl>
-                                <input {...field} placeholder='Enter Hackthon name:' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
-                            </FormControl>
-                            <FormDescription />
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="projectdesc"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel className='flex gap-1'>
+                                    <LucideAsterisk className='size-3' color='red' />
+                                    <span className='font-normal'>Project Description :</span> 
+                                </FormLabel>
+                                <FormControl>
+                                    <Textarea {...field} placeholder='Elaborate Project detail:' className='border border-black focus:outline-none text-[9px] px-2 w-96 ml-3 placeholder:text-xs py-2' />
+                                </FormControl>
+                                <FormDescription />
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
 
-                    <FormField
-                        control={form.control}
-                        name="hackathondesc"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel className='flex gap-1'>
-                                <LucideAsterisk className='size-3' color='red' />
-                                <span className='font-normal'>Hackathon Desc:</span> 
-                            </FormLabel>
-                            <FormControl>
-                                <input {...field} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
-                            </FormControl>
-                            <FormDescription />
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="hackathonname"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel className='flex gap-1'>
+                                    <LucideAsterisk className='size-3' color='red' />
+                                    <span className='font-normal'>Hackathon Name :</span> 
+                                </FormLabel>
+                                <FormControl>
+                                    <input {...field} placeholder='Enter Hackthon name:' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                </FormControl>
+                                <FormDescription />
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                </div>
-                <button className='bg-black text-white px-12 text-xs rounded py-1 mt-6'>Create team</button>
-            </form>
+
+                        <FormField
+                            control={form.control}
+                            name="hackathondesc"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel className='flex gap-1'>
+                                    <LucideAsterisk className='size-3' color='red' />
+                                    <span className='font-normal'>Hackathon Desc:</span> 
+                                </FormLabel>
+                                <FormControl>
+                                    <Textarea {...field} rows={4} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b border-black focus:outline-none text-[9px] px-2 w-96 placeholder:text-xs py-2 ml-3' />
+                                </FormControl>
+                                <FormDescription />
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                    </div>
+                    {loading ? 
+                    <Loader2 className='size-3 animate-spin' /> : 
+                    <button className='bg-black flex gap-1 text-white px-12 text-xs rounded py-2 items-center mt-6'>
+                        <CodeSandboxLogoIcon className='size-3' />
+                        <span> Create team</span>
+                    </button>
+                    }
+                </form>
             </Form>
         </div>
     </div>
