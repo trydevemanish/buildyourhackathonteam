@@ -18,7 +18,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     
     const { user } = useUser()
     
-    // useefeect to fins user if no user create one.
+    // useefeect to find user if no user create one.
     useEffect(() => {
       FindorcreateUser()
     },[user])

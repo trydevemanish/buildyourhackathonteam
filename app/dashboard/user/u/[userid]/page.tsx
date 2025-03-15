@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { teamCreatedData,WholeUserdata } from '@/types/types'
-import Skeletonsize from '@/components/Skeletonsize'
 
 import {
   Select,
@@ -16,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Skeleton } from '@/components/ui/skeleton'
 
 // Userdata
 
@@ -112,7 +112,7 @@ export default function Page() {
             <div>
                 <span className='text-xl'>Hi this is, </span>
                 <span className='text-base'>
-                    {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                    {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
                         <>
                             {userdata?.name ? userdata?.name : 'new user'}
                         </>
@@ -122,7 +122,7 @@ export default function Page() {
             <Image src={Sample} alt='user_profile' className='rounded-[50%] size-14 '/>
             <div className='flex justify-between'>
                 <div>
-                    {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                    {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
                         <>
                             {userdata?.bio ? userdata?.bio : 'No bio added.'}
                         </>
@@ -145,7 +145,7 @@ export default function Page() {
                 </div>
             </div>
             <div>
-                {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
                     <>
                         <span>Role: {userdata?.role ? userdata?.role : 'undefined role'}</span>
                     </>
@@ -155,7 +155,7 @@ export default function Page() {
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-2'>
                     <div>
-                        {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                        {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
                             <>
                                 {userdata?.email ? userdata?.email : 'No email added.'}
                             </>
@@ -165,7 +165,7 @@ export default function Page() {
 
                 <div className='flex items-center gap-2'>
                     <div>
-                        {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                        {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
                             <>
                                 {userdata?.github ? userdata?.github : 'No github added.'}
                             </>
@@ -174,7 +174,7 @@ export default function Page() {
                 </div>
 
                 <div className='flex items-center gap-2'>
-                    <div>{fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                    <div>{fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
                             <>
                                 {userdata?.linkedin ? userdata?.linkedin : 'No linkedin added.'}
                             </>
@@ -198,7 +198,7 @@ export default function Page() {
                        </div>
 
                        <div>
-                        {fetchinguserdata ? <Skeletonsize data={{ w:300,h:15 }} /> : 
+                        {fetchinguserdata ? <Skeleton className='rounded w-full h-4' /> : 
                             <>
                             {userdata?.teamcreated.map((data : teamCreatedData,idx : number) => (
                                 <div className='grid grid-cols-4 items-center py-2 border-b' key={data?.id || idx}>

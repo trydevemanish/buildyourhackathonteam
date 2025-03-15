@@ -54,7 +54,7 @@ export default function Page() {
         throw new Error(`Issue occured while fetching notification: ${error}`)
       }
     }
-    // findAllNotificationReqTypq_U_t_L()
+    findAllNotificationReqTypq_U_t_L()
   },[leaderAcceptedUserinvitation,leaderRejectedUserinvitation])
 
   // this useeffect will fetch the notification data where user is invited by leader to join team
@@ -79,7 +79,7 @@ export default function Page() {
           throw new Error(`Issue occured while fetching notification: ${error}`)
         }
     }
-    // fetchallNotificationReqType_L_T_U()
+    fetchallNotificationReqType_L_T_U()
   },[userAcceptedLeaderinvitation,userRejectedLeaderinvitation])
 
   // hanlde accept req

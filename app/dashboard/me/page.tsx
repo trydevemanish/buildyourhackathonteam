@@ -4,7 +4,6 @@ import { DialogDemoTextArea,DialogDemoInput,DialogDemoSelect } from '@/component
 import { useUser } from '@clerk/nextjs'
 import { WholeUserdata,teamCreatedData } from '@/types/types'
 import { Skeleton } from "@/components/ui/skeleton"
-import Skeletonsize from '@/components/Skeletonsize'
 
 export default function page() {
   const { user } = useUser()
@@ -45,7 +44,7 @@ export default function page() {
         <div>
           <span className='text-xl'>Welcome, </span>
           <span className='text-sm'>
-            {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10  }} /> : 
+            {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
               <>
                 {userdata?.name ? userdata?.name : 'new user'}
               </>
@@ -57,7 +56,7 @@ export default function page() {
         <div className='flex items-center gap-2'>
           <DialogDemoTextArea props={{ nameOfProp: 'Description' }} />
           <div>
-            {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10  }} /> : 
+            {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
               <>
                   {userdata?.bio ? userdata?.bio : 'Add a small intro of youself .'}
               </>
@@ -68,7 +67,7 @@ export default function page() {
         <div className='flex items-center gap-2'>
           <DialogDemoSelect props={{ nameOfProp: 'Role' }} />
           <div>
-            {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10  }} /> : 
+            {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
               <>
                   <span>Role: {userdata?.role ? userdata?.role : 'undefined role'}</span>
                   <span className="text-[9px] font-normal pl-5">*Note: you only have 5 chances to change it.</span>
@@ -81,7 +80,7 @@ export default function page() {
           <div className='flex items-center gap-2'>
             <DialogDemoInput props={{ nameOfProp: 'Email' }} />
             <div>
-              {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10  }} /> : 
+              {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
                 <>
                     {userdata?.email ? userdata?.email : 'No email added.'}
                 </>
@@ -92,7 +91,7 @@ export default function page() {
           <div className='flex items-center gap-2'>
             <DialogDemoInput props={{ nameOfProp: 'Github' }} />
             <div>
-              {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+              {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
                 <>
                   {userdata?.github ? userdata?.github : 'No github added.'}
                 </>
@@ -103,7 +102,7 @@ export default function page() {
           <div className='flex items-center gap-2'>
             <DialogDemoInput props={{ nameOfProp: 'Linkedin' }} />
             <div>
-              {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+              {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
                 <>
                   {userdata?.linkedin ? userdata?.linkedin : 'No linkedin added.'}
                 </>
@@ -115,7 +114,7 @@ export default function page() {
         <div className='py-9 border-t flex flex-col gap-5'>
             <p>Joined At: {userdata?.createdAt}</p>
             <p>Team Joined: 
-              {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+              {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
                 <>
                   {userdata?.teamjoined?.length}
                 </>
@@ -133,7 +132,7 @@ export default function page() {
                     </div>
 
                     <div>
-                    {fetchinguserdata ? <Skeletonsize data={{ w:100,h:10 }} /> : 
+                    {fetchinguserdata ? <Skeleton className='rounded w-20 h-8' /> : 
                       <>
                         {userdata?.teamcreated.map((data : teamCreatedData,idx : number) => (
                           <div className='grid grid-cols-4 items-center py-2 border-b' key={data?.id || idx}>
@@ -148,7 +147,7 @@ export default function page() {
                     </div>
                 </section>   
                     :
-                    <p>No team created.</p>
+                    <p className="py-4">No team created.</p>
                 }
             </div>
         </div>

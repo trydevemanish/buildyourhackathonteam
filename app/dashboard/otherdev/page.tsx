@@ -1,9 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import ProfileCard from '@/components/ProfileCard'
-import { Search,User,IdCardIcon } from 'lucide-react'
+import { User,IdCardIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { UserData } from '@/types/types'
+import NoteamcreatedYet from '@/public/noteamcreatedyet.jpg'
+import Image from "next/image"
 
 import {
   Select,
@@ -114,9 +116,9 @@ export default function Page() {
     <div>
       <div className='flex justify-between items-center px-3 py-1 border'>
         <div className='text-base flex items-center gap-3'>
-          <section>
-            <p className='text-xs font-semibold opacity-55'>Connect with other devs.</p>
-            <p className='text-xs opacity-40'>invite them to your hackathon team.</p>
+          <section >
+            <p className='text-xs font-semibold'>Connect with other devs.</p>
+            <p className='text-xs opacity-70'>invite them to your hackathon team.</p>
           </section>
           <section className='flex items-center gap-1 border rounded px-3 py-1 '>
             <User className='size-5  border-r px-1 hover:bg-neutral-200 rounded' onClick={() => setShowInUserTableType(true)} />
@@ -145,7 +147,7 @@ export default function Page() {
       </div>
 
       {showInUserTableType ? 
-        <div>
+        <div className="overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)]">
           <div className='grid grid-cols-5 py-2 text-sm overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)] border-b'>
             <p className='col-start-1 col-end-2 text-center'>Serial</p>
             <p className='col-start-2 col-end-3 text-center'>Name</p>
@@ -158,7 +160,7 @@ export default function Page() {
             <div>
               {
                 fetchdevdata.map((data : UserData,idx : number) => (
-                  <div className='grid grid-cols-5 items-center py-2 border-b cursor-pointer' key={data?.id || idx}>
+                  <div className='grid grid-cols-5 items-center py-2 border-b' key={data?.id || idx}>
                     <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>
                     <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>{data?.name}</p>
                     <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>{data?.email}</p>
@@ -172,7 +174,8 @@ export default function Page() {
             </div>
             : 
             <div className='flex justify-center items-center h-[calc(95vh-8rem)]'>
-              <section>
+              <section className='flex flex-col gap-3 justify-center items-center min-h-[calc(96vh-14rem)]'>
+              <Image src={NoteamcreatedYet} alt='noteam' className='w-60 h-40 animate-pulse'/>
                 <p className='opacity-80'>No Data found.</p>
                 <p className='opacity-80 text-center text-sm '>Try again !</p>
               </section>

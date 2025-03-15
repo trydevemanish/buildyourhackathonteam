@@ -14,9 +14,35 @@ export async function PUT(req:Request) {
             )
         }
 
+        const { name,cardno,cvv,expiry } = await req.json()
+
+        if(cardno != 987654321000){
+            return NextResponse.json(
+                {message:'Invalid Cardno.'},
+                {status:400}
+            )
+        }
+
+        if(cvv != 987){
+            return NextResponse.json(
+                {message:'Invalid cvv.'},
+                {status:400}
+            )
+        }
+
+        if(expiry != 10/2000){
+            return NextResponse.json(
+                {message:'Invalid expiry no.'},
+                {status:400}
+            )
+        }
+
         const updatedCredit = await prisma.userCredit.update({
             where: {
-                userid : clerkuser?.id
+                userid : clerkuser?.id,
+                user : { 
+                    name : name
+                }
             },
             data: {
                 initialCredit : 3
@@ -25,7 +51,7 @@ export async function PUT(req:Request) {
 
         if(!updatedCredit){
             return NextResponse.json(
-                {error:'Failed to Update user credit.'},
+                {error:'Invalid Name passed.'},
                 {status:400}
             )
         }
