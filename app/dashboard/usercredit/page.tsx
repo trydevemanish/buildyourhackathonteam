@@ -2,7 +2,7 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@radix-ui/react-label'
 import React,{useEffect, useState} from 'react'
-
+import toast from "react-hot-toast"
 
 export default function Page() {
   const [usercredit,setUserCredit] = useState<number>()
@@ -64,6 +64,8 @@ export default function Page() {
         }
        })
 
+       toast.loading('adding credit to acc.')
+
        const res = await fetch(`/api/addmorecreditafterbuying`,{
         method: 'POST',
         headers : {
@@ -81,6 +83,8 @@ export default function Page() {
        const data = await res.json()
        
        console.log(data?.message)
+
+       toast.success(data?.message)
       
     } catch (error) {
       console.log(`Issue Ocuured While Adding More Credit: ${error}`)

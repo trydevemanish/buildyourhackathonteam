@@ -4,6 +4,7 @@ import { TeamCardInfoType } from '@/types/types'
 import { useUser } from '@clerk/nextjs'
 import { CircleOff } from 'lucide-react'
 import { useRouter } from "next/navigation"
+import toast from 'react-hot-toast'
 
 export default function Teamcard({ props } : { props : TeamCardInfoType }){
   const router = useRouter()
@@ -12,6 +13,8 @@ export default function Teamcard({ props } : { props : TeamCardInfoType }){
   // i as a user making the req to the tweam leader to join their team
   async function UserMadeaReqToTheTeamLeaderToJoinThereTeam(){
     try {
+
+      toast.loading('Sending req.')
 
       const res = await fetch(`/api/userReqtoJoinTeam`,{
         method : 'POST',
@@ -28,10 +31,11 @@ export default function Teamcard({ props } : { props : TeamCardInfoType }){
 
       const data  = await res.json()
 
-      console.log(data?.message)
+      toast.success(data?.message)
       
     } catch (error) {
       console.log(`Failed to make req to leader: ${error}`)
+      toast.error(`Failed to make req to leader.`)
     }
   }
 

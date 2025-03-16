@@ -8,6 +8,7 @@ import { MessagesSquare } from 'lucide-react'
 import { Skeleton } from "@/components/ui/skeleton"
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 export default function Page() {
   const [checkReqSend,setCheckingReqSend] = useState(false)
@@ -47,6 +48,8 @@ export default function Page() {
 
       setCheckingReqSend(true)
 
+      toast.loading('Sending req to leader.')
+
       const res = await fetch(`/api/userReqtoJoinTeam`,{
         method : 'POST',
         headers : {
@@ -63,6 +66,8 @@ export default function Page() {
       const data  = await res.json()
 
       console.log(data?.message)
+
+      toast.success(data?.message)
       
     } catch (error) {
       console.log(`Failed to make req to leader: ${error}`)
@@ -74,6 +79,9 @@ export default function Page() {
   // only move if user is in team
   async function movetoChatPage() {
     try {
+
+      toast.loading('moving to chat page.')
+
       const res = await fetch(`/api/checkUserisInteam/${teamdata?.id}`,{
         method : 'POST',
         headers : {

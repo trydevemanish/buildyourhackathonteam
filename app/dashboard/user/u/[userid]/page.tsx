@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Skeleton } from '@/components/ui/skeleton'
+import toast from 'react-hot-toast'
 
 // Userdata
 
@@ -85,6 +86,8 @@ export default function Page() {
 
             // the one issue arise here i as the leader, how will i send the team id , what if i have multiple team ,then how to pass the team id in which i want to add the user
 
+            toast.loading('Sending invitation to user')
+
             const res = await fetch('/api/leaderrequsertojointeam',{
                 method:'POST',
                 headers:{
@@ -100,6 +103,8 @@ export default function Page() {
 
             const data = await res.json()
             console.log(data?.message)
+
+            toast.loading(data?.message)
 
         } catch (error) {
             console.log(`Issue Occured while making req to the user: ${error}`)

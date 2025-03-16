@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import toast from 'react-hot-toast'
 
 export default function Page() {
   const [fetchdevdata,setfetchdevdata] = useState([])
@@ -55,6 +56,8 @@ export default function Page() {
       const interval = setInterval(async() => {
         try {
 
+          toast.loading('fetching user')
+
           const res = await fetch(`/api/finduserbyname`,{
             method : 'GET',
             headers : {
@@ -74,6 +77,8 @@ export default function Page() {
     
           setfetchdevdata(data?.data)
           
+          toast.success('fetched user.')
+
         } catch (error) {
           console.log(`Issue Ocuured while searching Users: ${error}`)
         }
@@ -85,6 +90,8 @@ export default function Page() {
 
   const findUserWithTheirRole = async(value:'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design') => {
     try {
+
+      toast.loading('fetching user with role.')
 
       const res = await fetch(`/api/findUserbyrole`,{
         method : 'GET',
@@ -104,6 +111,8 @@ export default function Page() {
       console.log(data?.message)
 
       setfetchdevdata(data?.data)
+
+      toast.success('Fetched.')
       
     } catch (error) {
       console.log(`Issue Occured while finding Users with their role: ${error}`)

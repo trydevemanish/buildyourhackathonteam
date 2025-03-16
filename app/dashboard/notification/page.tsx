@@ -2,6 +2,7 @@
 import React,{ useState,useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 type  userReqLeaderToJoinTeamNotification = {
   id : string,
@@ -110,7 +111,9 @@ export default function Page() {
 
             const data = await res.json()
 
+            
             console.log(data?.message)
+            toast.success('Req accept by leader.')
             setLeaderAcceptedUserinvitation((prev) => !prev)
 
             return;
@@ -134,8 +137,12 @@ export default function Page() {
             }
 
             const data = await res.json()
-
+            
+            
             console.log(data?.message)
+            
+            
+            toast.success(data?.message)
             setUserAcceptedLeaderinvitation((prev) => !prev)
 
             return;
@@ -174,6 +181,8 @@ export default function Page() {
 
             const data = await res.json()
             console.log(data?.message)
+
+            toast.error('req decliend by leader.')
             setLeaderRejectedUserinvitation((prev) => !prev)
 
             return;
@@ -198,6 +207,9 @@ export default function Page() {
 
             const data = await res.json()
             console.log(data?.message)
+
+            toast.error('req declined by user.')
+
             setUserRejectedLeaderinvitation((prev) => !prev)
 
             return;

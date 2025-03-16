@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono,Inter } from "next/font/google";
 import "./globals.css";
 import {
-  ClerkProvider,
-  // SignInButton,
-  // SignedIn,
-  // SignedOut,
-  // UserButton
+  ClerkProvider
 } from '@clerk/nextjs'
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,12 +37,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
         >
-          {/* <SignedOut>
-          <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn> */}
+          <Toaster position="top-center" toastOptions={{ className:'bg-black px-8 text-xs text-white rounded shadow' }} />
           {children}
         </body>
       </html>

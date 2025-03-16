@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label"
 import { Edit3 } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
+import toast from "react-hot-toast"
 
 type propsProperties = {
   nameOfProp : string;
@@ -33,15 +34,93 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
   const [linkedin,setLinkedin] = useState('')
 
   async function handleEmailUpdate(){
-    console.log('Email:', email)
+    // console.log('Email:', email)
+    try {
+
+      toast.loading('updating email.')
+
+      const res =  await fetch('/api/updateEmail',{
+        method: 'PUT',
+        headers : {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({ email : email })
+      })
+      
+      if(!res.ok){
+        toast.error(await res.text())
+        console.log(await res.text())
+        return ;
+      }
+
+      const data = await res.json()
+
+      toast.success(data?.message)
+
+    } catch (error) {
+      console.log(`Issue Ocuured while updating email : ${error}.`)
+      toast.error('Issue Ocuured while updating email.')
+    }
   }
 
   async function handleGithubUpdate() {
-    console.log('Github: ',github)
+    // console.log('Github: ',github)
+    try {
+
+      toast.loading('updating github.')
+
+      const res =  await fetch('/api/updateGithub',{
+        method: 'PUT',
+        headers : {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({ github : github })
+      })
+      
+      if(!res.ok){
+        console.log(await res.text())
+        toast.error(await res.text())
+        return ;
+      }
+
+      const data = await res.json()
+
+      toast.success(data?.message)
+
+    } catch (error) {
+      console.log(`Issue Ocuured while updating github. ${error}`)
+      toast.error('Issue Ocuured while updating github')
+    }
   }
 
   async function handleLinkedinUpdate() {
-    console.log("Linkedin: ",linkedin)
+    // console.log("Linkedin: ",linkedin)
+    try {
+
+      toast.loading('updating Linkedin.')
+
+      const res =  await fetch('/api/updateLinkedin',{
+        method: 'PUT',
+        headers : {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({ linkedin : linkedin })
+      })
+      
+      if(!res.ok){
+        console.log(await res.text())
+        toast.error(await res.text())
+        return ;
+      }
+
+      const data = await res.json()
+
+      toast.success(data?.message)
+
+    } catch (error) {
+      console.log(`Issue Ocuured while updating linkedin. :${error}`)
+      toast.error('Issue Ocuured while updating linkedin')
+    }
   }
 
   async function handleInputFunction() {
@@ -101,7 +180,35 @@ export function DialogDemoTextArea({props} : {props : propsProperties}) {
   const [description, setDescription] = useState('')
 
   async function handledescriptionChanges(){
-    console.log(description)
+    // console.log(description)
+
+    try {
+
+      toast.loading('updating description.')
+
+      const res =  await fetch('/api/updatedesc',{
+        method: 'PUT',
+        headers : {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({ description : description })
+      })
+      
+      if(!res.ok){
+        console.log(await res.text())
+        toast.error(await res.text())
+        return ;
+      }
+
+      const data = await res.json()
+
+      toast.success(data?.message)
+
+    } catch (error) {
+      console.log(`Issue Ocuured while updating description. :${error}`)
+      toast.error('Issue Ocuured while updating description')
+    }
+
   }
 
   return (
@@ -139,6 +246,36 @@ export function DialogDemoTextArea({props} : {props : propsProperties}) {
 
 export function DialogDemoSelect({props} : {props : propsProperties}) {
 
+  async function updateRole(role:'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design') {
+    try {
+
+      toast.loading('updating role.')
+
+      const res =  await fetch('/api/changeUserRole',{
+        method: 'PUT',
+        headers : {
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({ role : role })
+      })
+      
+      if(!res.ok){
+        console.log(await res.text())
+        toast.error(await res.text())
+        return ;
+      }
+
+      const data = await res.json()
+
+      toast.success(data?.message)
+
+    } catch (error) {
+      console.log(`Issue Ocuured while updating Role. :${error}`)
+      toast.error('Issue Ocuured while updating Role')
+    }
+  }
+
+
   return (
     <div className="cursor-pointer">
     <Dialog>
@@ -160,13 +297,13 @@ export function DialogDemoSelect({props} : {props : propsProperties}) {
               id={`${props.nameOfProp}`}
               className="col-span-3"
             /> */}
-            <Select>
+            <Select onValueChange={updateRole}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select a Role" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Fruits</SelectLabel>
+                  <SelectLabel>Role</SelectLabel>
                   <SelectItem value="Helper">Helper</SelectItem>
                   <SelectItem value="ML_eng">ML_eng</SelectItem>
                   <SelectItem value="Frontend_dev">Frontend_dev</SelectItem>

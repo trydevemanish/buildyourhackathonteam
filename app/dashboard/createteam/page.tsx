@@ -19,6 +19,7 @@ import {
     FormMessage,
   } from "@/components/ui/form"
 import { Textarea } from '@/components/ui/textarea'
+import toast from 'react-hot-toast'
 
 export default function Page() {
     const [usercredit,setUserCredit] = useState<number>()
@@ -38,6 +39,8 @@ export default function Page() {
         try {
 
             setloading(true)
+
+            toast.loading('creating team.')
 
             if(usercredit == 0){
                 console.log('User is out of credit.')
@@ -66,6 +69,8 @@ export default function Page() {
 
             const data = await res.json()
             console.log(data?.message)
+
+            toast.success(data?.message)
 
             // call this func to subtract the user credit by 1.
             subtractCredit()
