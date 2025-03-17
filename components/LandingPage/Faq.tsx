@@ -48,12 +48,12 @@ type Accordion = {
 export default function Faq() {
   return (
     <section className='bg-gradient-to-b from-white via-purple-200 to-white'>
-      <div className='px-36 py-8'>
+      <div className='xs:px-4 md:px-36 py-8'>
         <p className='pb-4'>
           <span className='text-3xl'>FAQ </span>
           <span className='opacity-70 text-sm'>(frequently asked questions).</span>
         </p>
-        <Accordion type="single" collapsible className='px-32 py-6'>
+        <Accordion type="single" collapsible className=' xs:px-8 md:px-32 py-6'>
           {accordian.map((accordiandata:Accordion,idx : number) => (
             <AccordionItem value={accordiandata?.value} key={idx}>
               <AccordionTrigger className='text-xs'>{accordiandata?.AccordionTrigger}</AccordionTrigger>

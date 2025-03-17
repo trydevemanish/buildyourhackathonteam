@@ -9,6 +9,14 @@ export default {
   ],
   theme: {
   	extend: {
+		screens: {
+			'xs': '315px',  
+			'3xl': '1800px', 
+			'4xl': '2200px', 
+			'5xl': '2600px', 
+        	'6xl': '3000px',
+			'7xl' :'3800px',
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -77,7 +85,12 @@ export default {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+		fontFamily : {
+			opensans: ["var(--font-opensans)"],
+			mono: ["var(--font-roboto-mono)"],
+			inter:["var(--font-inter)"]
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

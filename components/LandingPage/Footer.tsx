@@ -6,10 +6,10 @@ import { GitHubLogoIcon,TwitterLogoIcon,LinkedInLogoIcon,CodeSandboxLogoIcon } f
 
 export default function Footer() {
   return (
-    <section className='px-36 py-10'>
-      <div className='grid grid-cols-2'>
+    <section className='xs:px-10 md:px-36 py-10'>
+      <div className='xs:flex xs:flex-col xs:gap-10  md:grid md:grid-cols-2'>
 
-        <div className='col-start-1 col-end-2'>
+        <div className=' md:col-start-1 md:col-end-2 xs:flex xs:items-center xs:flex-col xs:gap-3'>
           <div className='flex items-center gap-2'>
             <Image src={Coding} alt='logo' className='size-5' />
             <p className={`font-semibold text-xs `}>Buildyourhackathonteam</p>
@@ -27,7 +27,7 @@ export default function Footer() {
             </div>
             <button className='bg-purple-500 px-8 py-2 text-xs rounded text-white'>Get started.</button>
         </div>
-      </div>
+      </div> 
     </section>
   )
 }

@@ -1,44 +1,72 @@
 import React from 'react'
-import think from '@/public/think.jpg'
 import teams from '@/public/teams.png'
 import Image from 'next/image'
 import Otherdev from '@/public/otherdev.png'
+import { PersonIcon,CodeIcon,CrumpledPaperIcon,ComponentInstanceIcon,CodeSandboxLogoIcon } from '@radix-ui/react-icons'
+import { Users,InspectIcon } from 'lucide-react'
 
 export default function About() {
   return (
-    <section className='py-10 px-36'>
-      <div className='flex'>
-        <Image src={think} alt='think' className=' size-24' />
-        <div className='flex gap-2 items-end'>
-          <h1 className='text-4xl'>Why ? </h1>
-        </div>
-      </div>
+    <section className='py-10 xs:px-4 md:px-36'>
 
       <div className='py-8 flex flex-col gap-10'>
 
-        <div className='grid grid-cols-2 gap-16 py-4'>
-          <div className='col-start-1 col-end-2 py-10 px-10'>
-            <h1 className='text-2xl'>
+        <div className='xs:flex xs:flex-col md:grid md:grid-cols-2 gap-16 py-4'>
+          <div className='col-start-1 col-end-2 py-10 px-10'> 
+            <h1 className='text-3xl font-opensans font-bold'>
               <span>Finding the right team with</span> 
               <span className='text-purple-500'> ease!</span>
             </h1>
-            <p className='text-sm opacity-70 py-8'>Hard to find people with similar interests/skills.</p>
+            <div className='text-sm opacity-70 flex flex-col gap-3 py-12 px-8'>
+              <p className='flex gap-3 items-center'>
+                <span><PersonIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
+                <span>Hard to find people with similar interests/skills.</span>
+              </p>
+              <p className='flex gap-3 items-center'>
+                <span><CodeIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
+                <span>Join Impresive Hackathon teams.</span>
+              </p>
+              <p className='flex gap-3 items-center'>
+                <span><ComponentInstanceIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
+                <span>Callaborate with others.</span>
+              </p>
+            </div>
           </div>
-          <Image src={teams} alt='teams' className='col-start-2 col-end-3 border' />
+          <div className="flex justify-center xs:px-8 col-start-2 col-end-3 md:px-0 md:justify-start">
+          <Image src={teams} alt='teams' className='border md:h-auto rounded-l-[2.5rem] rounded-t-[2.5rem]' />
+          </div>
         </div>
 
-        <div className='grid grid-cols-2 gap-16 py-4'>
-          <Image src={Otherdev} alt='otherdev' className='col-start-1 col-end-2 border' />
+        <div className='xs:flex xs:flex-col md:grid md:grid-cols-2 gap-16 py-4'>
+        <div className="flex justify-center xs:px-8 col-start-1 col-end-2 md:px-0 md:justify-start">
+          <Image src={Otherdev} alt='otherdev' className='border rounded-r-[2.5rem] rounded-t-[2.5rem]' />
+        </div>
           <div className='col-start-2 col-end-3 py-10 px-10'>
-            <h1 className='text-2xl'>
+            <h1 className='text-2xl font-opensans font-bold'>
               <span>Connect with </span> 
               <span className='text-purple-500'> like-minded people </span>
             </h1>
-            <p className='text-sm opacity-70 py-8'>without awkward face-to-face interactions.</p>
+            <div className='text-sm opacity-70 flex flex-col gap-3 py-12 px-8'>
+              <p className='flex gap-3 items-center'>
+                  <span><Users className='size-8 bg-purple-200 p-2 rounded '/></span>
+                  <span>without awkward face-to-face interactions.</span>
+              </p>
+              <p className='flex gap-3 items-center'>
+                  <span><InspectIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
+                  <span>Invite them to join your team.</span>
+              </p>
+              <p className='flex gap-3 items-center'>
+                  <span><CodeSandboxLogoIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
+                  <span>Create Your Own team.</span>
+              </p>
+              <p className='flex gap-3 items-center'>
+                  <span><CrumpledPaperIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
+                  <span>Req for more credit.</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <p className='bg-purple-500 text-xs rounded cursor-pointer text-white px-8 py-2 inline-block'>Show more.</p>
     </section>
   )
 }

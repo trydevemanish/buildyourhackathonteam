@@ -30,6 +30,7 @@ export default function Teamcard(
             }
 
             const data  = await res.json()
+
             console.log(data?.message)
 
             toast.success('team deleted')
@@ -48,14 +49,15 @@ export default function Teamcard(
                     <button className='bg-black text-white px-4 rounded text-[10px] py-1' onClick={handledeleteteam}>Delete</button>
                 </div>
                 <div onClick={() => {
-                  toast.loading('moving to team Data.')
                   router.push(`/dashboard/teamdata/${props?.id}`)
                 }} >
-                  <p>leader: {props?.leadername}</p>
-                  <p>Project name: {props?.projectname}</p>
-                  <p>Project desc: {props?.projectdesc}</p>
-                  <p>Hackathon name: {props?.hackathonname}</p>
-                  <p>{props?.hackathondesc}</p>
+                  <div className='flex flex-col gap-2'>
+                    <p>leader: <span className='opacity-70'>{props?.leadername}</span></p>
+                    <p>Project name: <span className='opacity-70'>{props?.projectname}</span></p>
+                    <p>Project desc: <span className='opacity-70'>{props?.projectdesc}</span></p>
+                    <p>Hackathon name: <span className='opacity-70'>{props?.hackathonname}</span></p>
+                    <p>Proj desc: <span className='opacity-70'>{props?.hackathondesc}</span></p>
+                  </div>
                 </div>
             </div>
         </div>

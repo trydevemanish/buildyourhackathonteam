@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { AirplayIcon } from 'lucide-react'
 
 export default function Page() {
   const [checkReqSend,setCheckingReqSend] = useState(false)
@@ -48,8 +49,6 @@ export default function Page() {
 
       setCheckingReqSend(true)
 
-      toast.loading('Sending req to leader.')
-
       const res = await fetch(`/api/userReqtoJoinTeam`,{
         method : 'POST',
         headers : {
@@ -76,11 +75,33 @@ export default function Page() {
     }
   }
 
+  async function DeleteTeam() {
+    try {
+    
+      const res = await fetch(`/api/deleteTeam/${teamdata?.id}`,{
+          method: 'DELETE'
+      })
+      
+      if(!res.ok){
+          const errtext = await res.json()
+          console.log(errtext?.error)
+          return;
+      }
+
+      const data  = await res.json()
+
+      console.log(data?.message)
+
+      toast.success('team deleted')
+      
+    } catch (error) {
+        console.log(`Issue occured deleting user: ${error}`)
+    }
+  }
+
   // only move if user is in team
   async function movetoChatPage() {
     try {
-
-      toast.loading('moving to chat page.')
 
       const res = await fetch(`/api/checkUserisInteam/${teamdata?.id}`,{
         method : 'POST',
@@ -109,6 +130,7 @@ export default function Page() {
     }
   }
 
+  
   return (
     <div className='px-8 py-4 overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
       <div>
@@ -120,25 +142,27 @@ export default function Page() {
         <div className='flex justify-between'>
           <div className='flex flex-col gap-1'>
             <p className='text-sm'>Project name : </p> 
-            <p className='opacity-80 text-[12px]'>{teamdata?.projectname ? teamdata?.projectname :   <Skeleton className='rounded w-20 h-4' />  }
-            </p> 
+            <div className='opacity-80 text-[12px]'>{teamdata?.projectname ? teamdata?.projectname :   <Skeleton className='rounded w-20 h-4' />  }
+            </div> 
           </div>
-          <MessagesSquare onClick={movetoChatPage} className='size-7 rounded bg-purple-100 px-2 hover:bg-purple-300 py-1 cursor-pointer' />
+          <div className='flex items-center gap-6'>
+            <AirplayIcon onClick={() => router.push(`/dashboard/teampage/${teamdata?.id}`)}  className='size-7 rounded bg-purple-100 px-2 hover:bg-purple-300 py-1 cursor-pointer'/>
+            <MessagesSquare onClick={movetoChatPage} className='size-7 rounded bg-purple-100 px-2 hover:bg-purple-300 py-1 cursor-pointer' />
+          </div>
         </div>   
-
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Project desc : </p>
-          <p className='opacity-80 text-[12px]'>{teamdata?.projectdesc ? teamdata?.projectdesc :  <Skeleton className='rounded w-20 h-4' />}</p>
+          <div className='opacity-80 text-[12px]'>{teamdata?.projectdesc ? teamdata?.projectdesc :  <Skeleton className='rounded w-20 h-4' />}</div>
         </div>
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Hackathon Name : </p>
-          <p className='opacity-80 text-[12px]'>{teamdata?.hackathonname ? teamdata?.hackathonname :  <Skeleton className='rounded w-20 h-4' /> }</p>
+          <div className='opacity-80 text-[12px]'>{teamdata?.hackathonname ? teamdata?.hackathonname :  <Skeleton className='rounded w-20 h-4' /> }</div>
         </div>
 
         <div className='flex flex-col gap-1'>
           <p className='text-sm'>Hackathon desc : </p>
-          <p className='opacity-80 text-[12px]'>{teamdata?.hackathondesc ? teamdata?.hackathondesc :  <Skeleton className='rounded w-20 h-4' /> }</p>
+          <div className='opacity-80 text-[12px]'>{teamdata?.hackathondesc ? teamdata?.hackathondesc :  <Skeleton className='rounded w-20 h-4' /> }</div>
         </div>
 
         <div className='flex flex-col gap-1'>
@@ -152,8 +176,8 @@ export default function Page() {
         </div>
 
         <div>
-          <button className='bg-black text-white text-xs px-9 py-1 rounded' onClick={UserMadeaReqToTheTeamLeaderToJoinThereTeam}>
-            {user?.id === teamdata?.leaderid ? 'Delete' : <>{checkReqSend ? 'sending...' : 'send req!'}</> }
+          <button className='bg-black text-white text-xs px-9 py-1 rounded'>
+            {user?.id === teamdata?.leaderid ? <div onClick={DeleteTeam}>delete</div> : <div onClick={UserMadeaReqToTheTeamLeaderToJoinThereTeam}>{checkReqSend ? 'sending...' : 'send req!'}</div> }
           </button>
         </div>
 

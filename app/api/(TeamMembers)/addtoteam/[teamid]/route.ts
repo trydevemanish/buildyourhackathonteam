@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function POST(req:Request) {
     try {
@@ -14,23 +15,26 @@ export async function POST(req:Request) {
             )
         }
 
-        // const newMember = await prisma.teamMembers.create({
-        //     data:{
-        //         teamId : teamId,
-        //     }
-        // })
+        const clerkUser = await currentUser()
 
-        // if(!newMember){
-        //     return NextResponse.json(
-        //         {message : 'Something went wrong while adding user to team'},
-        //         {status:400}
-        //     )
-        // }
+        const newMember = await prisma.teamMembers.create({
+            data:{
+                teamId : teamId,
+                userId : clerkUser?.id!,
+            }
+        })
 
-        // return NextResponse.json(
-        //     {message : 'User Added to team.',data : newMember},
-        //     {status:201}
-        // )
+        if(!newMember){
+            return NextResponse.json(
+                {message : 'Something went wrong while adding user to team'},
+                {status:400}
+            )
+        }
+
+        return NextResponse.json(
+            {message : 'User Added to team.',data : newMember},
+            {status:201}
+        )
         
     } catch (error) {
         console.log(`Failed To Add User to Team: ${error}`)

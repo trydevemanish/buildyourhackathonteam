@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono,Inter } from "next/font/google";
+import { Open_Sans, Roboto_Mono } from 'next/font/google'
 import "./globals.css";
 import {
   ClerkProvider
@@ -13,13 +14,28 @@ const geistSans = Geist({
 
 const inter = Inter({
   subsets :["latin"],
-  weight: '400'
+  weight: '400',
+  variable : '--font-inter'
 })
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  //👇 Add variable to our object
+  variable: '--font-opensans',
+})
+
+//👇 Configure the object for our second font
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+})
 
 export const metadata: Metadata = {
   title: "buildyourhackathonteam",
@@ -35,7 +51,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
+          className={`${geistSans.variable} ${openSans.variable} ${robotoMono.variable} ${geistMono.variable} ${inter.variable} antialiased`}
         >
           <Toaster position="top-center" toastOptions={{ className:'bg-black px-8 text-xs text-white rounded shadow' }} />
           {children}

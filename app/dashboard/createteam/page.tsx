@@ -74,6 +74,7 @@ export default function Page() {
 
             // call this func to subtract the user credit by 1.
             subtractCredit()
+            addAsALeaderInteam(data?.data?.id)
 
             router.refresh()
             router.push('/dashboard')
@@ -108,6 +109,33 @@ export default function Page() {
             
         } catch (error) {
             console.log(`Failed to update userCredit: ${error}`)
+        }
+    }
+
+    // add memebr to the team as a leader
+    async function addAsALeaderInteam(teamid:string) {
+        try{
+
+        const res = await fetch(`/api/addtoteam/${teamid}`,{
+          method : 'POST',
+          headers : {
+            'Content-Type':'application/json'
+          },
+          body : JSON.stringify({ teamid:teamid })
+        })
+
+        if(!res.ok){
+            console.log(await res.text())
+            return;
+        }
+
+        const data = await res.json()
+
+        console.log(data?.message)
+        toast.success('added to team as leader.')
+
+        } catch(error){
+            console.log(`Issue Coccured while Adding as a team Member : ${error}`)
         }
     }
 

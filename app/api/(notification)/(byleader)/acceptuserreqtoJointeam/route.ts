@@ -14,19 +14,29 @@ export async function PUT(req:Request) {
             )
         }
 
-        // adding user to the team member
-        const addtoteam = await prisma.teamMembers.create({
-            data : {
+        //check if user is already in team or not.
+        const checkIfUserIsMember = await prisma.teamMembers.findFirst({
+            where : {
                 teamId : teamid,
                 userId : userid
             }
         })
 
-        if(!addtoteam){
-            return NextResponse.json(
-                {error:'Issue in adding user to the team'},
-                {status:400}
-            )
+        if(!checkIfUserIsMember){
+            // adding user to the team member
+            const addtoteam = await prisma.teamMembers.create({
+                data : {
+                    teamId : teamid,
+                    userId : userid
+                }
+            })
+
+            if(!addtoteam){
+                return NextResponse.json(
+                    {error:'Issue in adding user to the team'},
+                    {status:400}
+                )
+            }
         }
 
         // updating the status in the req section
