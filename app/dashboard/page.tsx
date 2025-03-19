@@ -13,7 +13,7 @@ export default function Page() {
   const [loading,setLoading] = useState(false)
 
   useEffect(() => {
-    const handlefindUserData = async() => {
+    const handlefindUserCreatedTeamData = async() => {
       try {
         setLoading(true)
         const res = await fetch('/api/fetchallteamCreatedbyuser')
@@ -36,7 +36,7 @@ export default function Page() {
         setLoading(false)
       }
     }
-    handlefindUserData()
+    handlefindUserCreatedTeamData()
   },[])
 
   return (

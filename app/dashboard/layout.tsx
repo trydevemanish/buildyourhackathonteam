@@ -3,9 +3,10 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { CrumpledPaperIcon } from '@radix-ui/react-icons'
 import ProtectedRoute from '@/components/ProtectedRoute'
+import SideBarComp from '@/components/SideBarComp'
 import { useUser } from '@clerk/nextjs'
-import { SignOutButton } from "@clerk/nextjs"
-import { Bell } from 'lucide-react'
+import { Bell, Sidebar } from 'lucide-react'
+import SidebarForSmSc from '@/components/SidebarForSmSc'
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
@@ -15,6 +16,7 @@ interface Dashboardlayoutprops {
 
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     const [userCredit,setUserCredit] = useState<number>()
+    const [showSidebar,setShowSideBar] = useState(false)
     
     const { user } = useUser()
     
@@ -84,31 +86,20 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     return(
         <ProtectedRoute>
           <main>
-            <div className='grid grid-cols-7 min-h-screen overflow-x-hidden'>
-              <div className='col-start-1 col-end-2 border-black border-r'>
-                <div className='flex flex-col justify-between min-h-screen py-4 px-1'>
-                    <div className='flex flex-col text-[11px]'>
-                        <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
-                          <Link href={'/dashboard'}>your team</Link>
-                        </p>
-                        <p className={` cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
-                          <Link href={'/dashboard/allteams'}>other teams to join</Link>
-                        </p>
-                        <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
-                          <Link href={'/dashboard/teamjoined'}>team joined as member</Link>
-                        </p>
-                        <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`}>
-                          <Link href={'/dashboard/otherdev'}>meet other developers</Link>
-                        </p>
-                    </div>
-                    <div className='bg-black flex justify-center text-white px-6 py-1 text-xs rounded'>
-                      <SignOutButton />
-                    </div>
-                </div>
+            <div className='xs:block  md:grid md:grid-cols-7 min-h-screen overflow-x-hidden'>
+              <div className='col-start-1 col-end-2 border-black border-r md:visible md:block  xs:hidden xs:invisible'>
+                <SideBarComp />
               </div>
+              {showSidebar ? 
+              <div className='xs:visible xs:block  md:hidden md:invisible'>
+                <SidebarForSmSc showSidebar={showSidebar} setShowSideBar={setShowSideBar} />
+              </div> : 
               <div className='col-start-2 col-end-8'>
                 <div className='flex justify-between px-3 py-1 items-center border-b border-black'>
-                    <p className={`text-xs`}>buildyourhackathonteam</p>
+                    {/* show this on large screen and hide on small screen */}
+                    <p className={`text-xs xs:hidden xs:invisible md:visible md:block  `}>buildyourhackathonteam</p>
+                    {/* show this on smalll screen and hide this on small scrren  */}
+                    <Sidebar className='size-4 md:hidden md:invisible xs:visible xs:block font-bold' onClick={() => setShowSideBar(!showSidebar)} />
                     <div className='flex items-center gap-4'>
                         <div className='flex gap-4 items-center'>
                           <Link href={`/dashboard/notification`}>
@@ -128,6 +119,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                 </div>
                 {props.children}
               </div>
+            }
             </div>
         </main>
         </ProtectedRoute>
