@@ -127,57 +127,61 @@ export default function Page() {
         <div className='text-base flex items-center gap-3'>
           <section >
             <p className='text-xs font-semibold'>Connect with other devs.</p>
-            <p className='text-xs opacity-70'>invite them to your hackathon team.</p>
+            <p className='text-xs opacity-70 xs:hidden xs:invisible md:visible md:block'>invite them to your hackathon team.</p>
           </section>
-          <section className='flex items-center gap-1 border rounded px-3 py-1 '>
-            <User className='size-5  border-r px-1 hover:bg-neutral-200 rounded' onClick={() => setShowInUserTableType(true)} />
+          <section className='flex items-center gap-1 border rounded px-3 py-1 xs:hidden xs:invisible md:visible md:flex'>
+            <User className='size-5 border-r px-1 hover:bg-neutral-200 rounded' onClick={() => setShowInUserTableType(true)} />
             <IdCardIcon className='size-5 px-1 hover:bg-neutral-200 rounded' onClick={() => setShowInUserTableType(false)}/>
-            </section>
-              </div>
-              <div className='flex items-center border-b'>
-                <Select onValueChange={findUserWithTheirRole}>
-                  <SelectTrigger className="w-[100px] h-7 text-xs shadow-none border-none focus:outline-white outline-white">
-                    <SelectValue placeholder="Select role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup className='text-[9px]'>
-                      <SelectLabel>Fruits</SelectLabel>
-                      <SelectItem value="Helper">Helper</SelectItem>
-                      <SelectItem value="ML_eng">ML_eng</SelectItem>
-                      <SelectItem value="Frontend_dev">Frontend_dev</SelectItem>
-                      <SelectItem value="Backend_dev">Backend_dev</SelectItem>
-                      <SelectItem value="Design">Design</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <input type='text' placeholder='Search by role/name' className='text-xs w-56 px-3 py-1 focus:outline-none' value={value} onChange={handleSearchRoute} />
-                {/* <Search className='size-6 rounded hover:bg-neutral-200 p-1 cursor-pointer'  /> */}
-              </div>
+          </section>
+        </div>
+        <div className='flex items-center border-b'>
+          <Select onValueChange={findUserWithTheirRole}>
+            <SelectTrigger className="w-[100px] h-7 text-xs shadow-none border-none focus:outline-white outline-white">
+              <SelectValue placeholder="Select role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup className='text-[9px]'>
+                <SelectLabel>Fruits</SelectLabel>
+                <SelectItem value="Helper">Helper</SelectItem>
+                <SelectItem value="ML_eng">ML_eng</SelectItem>
+                <SelectItem value="Frontend_dev">Frontend_dev</SelectItem>
+                <SelectItem value="Backend_dev">Backend_dev</SelectItem>
+                <SelectItem value="Design">Design</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <input type='text' placeholder='Search by role/name' className='text-xs w-56 px-3 py-1 focus:outline-none' value={value} onChange={handleSearchRoute} />
+          {/* <Search className='size-6 rounded hover:bg-neutral-200 p-1 cursor-pointer'  /> */}
+        </div>
       </div>
 
       {showInUserTableType ? 
         <div className="overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)]">
-          <div className='grid grid-cols-5 py-2 text-sm overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)] border-b'>
-            <p className='col-start-1 col-end-2 text-center'>Serial</p>
-            <p className='col-start-2 col-end-3 text-center'>Name</p>
-            <p className='col-start-3 col-end-4 text-center'>Email</p>
-            <p className='col-start-4 col-end-5 text-center'>Role</p>
-            <p className='col-start-5 col-end-6 text-center'>Message</p>
+          <div className="overflow-x-auto scrollbar-hide w-full">
+            <div className='grid grid-cols-5 py-2 text-sm  min-w-[600px] overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)] border-b'>
+                <p className='col-start-1 col-end-2 text-center whitespace-nowrap'>Serial</p>
+                <p className='col-start-2 col-end-3 text-center whitespace-nowrap'>Name</p>
+                <p className='col-start-3 col-end-4 text-center whitespace-nowrap'>Email</p>
+                <p className='col-start-4 col-end-5 text-center whitespace-nowrap'>Role</p>
+                <p className='col-start-5 col-end-6 text-center whitespace-nowrap'>Message</p>
+            </div>
           </div>
 
           {fetchdevdata.length > 0 ? 
             <div>
               {
                 fetchdevdata.map((data : UserData,idx : number) => (
-                  <div className='grid grid-cols-5 items-center py-2 border-b' key={data?.id || idx}>
-                    <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>
-                    <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>{data?.name}</p>
-                    <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>{data?.email}</p>
-                    <p className='col-start-4 col-end-5 text-center opacity-70 text-xs'>{data?.role}</p>
+                <div className="overflow-x-auto scrollbar-hide w-full" key={data?.id || idx}>
+                  <div className='grid grid-cols-5 items-center py-2  min-w-[600px]  border-b'>
+                    <p className='col-start-1 col-end-2 text-center opacity-70 text-xs whitespace-nowrap'>{idx + 1}</p>
+                    <p className='col-start-2 col-end-3 text-center opacity-70 text-xs whitespace-nowrap'>{data?.name}</p>
+                    <p className='col-start-3 col-end-4 text-center opacity-70 text-xs whitespace-nowrap'>{data?.email}</p>
+                    <p className='col-start-4 col-end-5 text-center opacity-70 text-xs whitespace-nowrap'>{data?.role}</p>
                     <div className='col-start-5 col-end-6 flex justify-center cursor-pointer' onClick={() => router.push(`/dashboard/user/u/${data?.id}`)}>
-                      <p className='bg-black text-white px-8 py-1 rounded text-[9px]'>view detail</p>
+                      <p className='bg-black text-white px-8 py-1 rounded text-[9px] whitespace-nowrap'>view detail</p>
                     </div>
                   </div>
+                </div> 
                 ))
               }
             </div>
