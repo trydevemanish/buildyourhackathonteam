@@ -16,6 +16,7 @@ export async function DELETE(req:Request) {
 
         const newurl = new URL(req.url)
         const teamId = newurl.pathname.split('/')[3]
+        const teammemberid = newurl.pathname.split('/')[4]
 
         if(!teamId){
             return NextResponse.json(
@@ -26,6 +27,7 @@ export async function DELETE(req:Request) {
 
         const leaveTeam = await prisma.teamMembers.delete({
             where:{
+                id:teammemberid,
                 teamId : teamId,
                 userId : clerkUser?.id
             }

@@ -1,10 +1,10 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { TeamCardInfoType } from '@/types/types'
-import Teamcard from '@/components/Teamcard'
 import Image from 'next/image'
 import Friend from '@/public/noteam.avif'
+import TeamCardUserJoin from '@/components/TeamCardUserJoin'
+import { TeamJoinedByUserDetail } from '@/types/types'
 
 export default function Page() {
     const [fetchteamJoinedData, setfetchTeamJoinedData] = useState([])
@@ -23,6 +23,7 @@ export default function Page() {
 
                 const data = await res.json()
                 console.log(data?.message)
+                console.log(data)
 
                 setfetchTeamJoinedData(data?.data)
                 
@@ -31,15 +32,16 @@ export default function Page() {
             }
         }
         fetchJoinedTeam()
-    })
+    },[])
+
   return (
     <main>
          {
             fetchteamJoinedData.length > 0 ? 
-            <div className="flex gap-2 flex-wrap justify-center pt-2">
-            {fetchteamJoinedData.map((teamdata : TeamCardInfoType, idx : number) => (
-                <Teamcard key={idx} props={teamdata} />
-            ))}
+            <div className="flex xs:flex-col md:flex-row gap-2 flex-wrap xs:px-4 md:px-6 pt-2">
+                {fetchteamJoinedData.map((teamdata : TeamJoinedByUserDetail, idx : number) => (
+                    <TeamCardUserJoin key={idx} props={teamdata} />
+                ))}
             </div>
             : 
             <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(97vh-3rem)]'>

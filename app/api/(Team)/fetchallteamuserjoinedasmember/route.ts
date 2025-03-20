@@ -20,6 +20,9 @@ export async function GET(req:Request) {
         const userjoinedteamsasmembers = await prisma.teamMembers.findMany({
             where : {
                 userId : clerkUser?.id
+            },
+            include : {
+                team : true
             }
         })
 

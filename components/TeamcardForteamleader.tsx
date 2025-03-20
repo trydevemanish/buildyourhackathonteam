@@ -17,8 +17,6 @@ export default function Teamcard(
     async function handledeleteteam() {
         try {
 
-            toast.loading('deleting team.')
-
             const res = await fetch(`/api/deleteTeam/${props?.id}`,{
                 method: 'DELETE'
             })
@@ -34,6 +32,8 @@ export default function Teamcard(
             console.log(data?.message)
 
             toast.success('team deleted')
+
+            router.refresh()
             
         } catch (error) {
             console.log(`Issue occured deleting user: ${error}`)

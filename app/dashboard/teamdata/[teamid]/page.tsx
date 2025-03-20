@@ -32,7 +32,6 @@ export default function Page() {
 
         const data = await res.json()
         console.log(data?.message)
-        console.log(data)
 
         setTeamData(data?.data)
         
@@ -84,7 +83,8 @@ export default function Page() {
       
       if(!res.ok){
           const errtext = await res.json()
-          console.log(errtext?.error)
+          console.log(errtext)
+          toast.error(errtext)
           return;
       }
 
@@ -138,7 +138,7 @@ export default function Page() {
         <p className='text-[12px] opacity-65 text-center'>by: Dev kumar ( leader ).</p>
       </div>
 
-      <div className='flex flex-col gap-7 px-16 py-9'>
+      <div className='flex flex-col gap-7 xs:px-4 md:px-16 py-9'>
         <div className='flex justify-between'>
           <div className='flex flex-col gap-1'>
             <p className='text-sm'>Project name : </p> 

@@ -41,3 +41,16 @@ export type WholeUserdata = {
         length : number,
     ];
 }
+
+export type TeamJoinedByUserDetail = {
+    joinedAt:string,
+    team : {
+        id:string,
+        teamname : string,
+        leadername :string,
+        projectname:string,
+        projectdesc : string,
+        hackathonname : string;
+        hackathondesc:string
+    }
+}

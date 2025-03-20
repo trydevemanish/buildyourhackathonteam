@@ -40,8 +40,6 @@ export default function Page() {
 
             setloading(true)
 
-            toast.loading('creating team.')
-
             if(usercredit == 0){
                 console.log('User is out of credit.')
                 return;
@@ -68,6 +66,7 @@ export default function Page() {
             }
 
             const data = await res.json()
+            
             console.log(data?.message)
 
             toast.success(data?.message)

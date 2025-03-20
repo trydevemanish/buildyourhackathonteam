@@ -19,7 +19,8 @@ export async function GET(req:Request) {
                 teamId : teamid
             },
             include  :{
-                user : true
+                user : true,
+                team : true
             }
         })
 

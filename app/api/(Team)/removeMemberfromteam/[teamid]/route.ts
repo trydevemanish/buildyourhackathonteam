@@ -20,6 +20,7 @@ export async function DELETE(req:Request) {
 
         const newurl = new URL(req.url)
         const teamid = newurl.pathname.split('/')[3]
+        const teammemberid = newurl.pathname.split('/')[4]
 
         //check if user is leader
         const checkUserisleader = await prisma.team.findUnique({
@@ -36,10 +37,13 @@ export async function DELETE(req:Request) {
             )
         }
 
+        // const id = '2'
+
        const removeUser = await prisma.teamMembers.delete({
             where : {
+                id: teammemberid,
                 teamId : teamid,
-                userId : useridToberemoved
+                userId : useridToberemoved,
             }
        })
 
