@@ -10,9 +10,7 @@ export async function POST(req:Request) {
         const url = new URL(req.url)
         const teamid = url.pathname.split('/')
 
-        const {message} = await req.json()
-
-        console.log('message: ',message)
+        const { message} = await req.json()
 
         if(!message){
             return NextResponse.json(
@@ -32,11 +30,11 @@ export async function POST(req:Request) {
 
         const addmsg = await ChatModel.create({
             teamid : teamid[3],
-            senderid : clerkUser?.firstName,
-            createdAt : Date.now().toLocaleString(),
+            sendername : clerkUser?.firstName,
+            createdAt : Date.now(),
             message : message
         })
-
+        
         if(!addmsg){
             return NextResponse.json(
                 {error:'Issue in added msg to DB'},

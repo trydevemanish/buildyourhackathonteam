@@ -64,8 +64,6 @@ export default function Page() {
         }
        })
 
-       toast.loading('adding credit to acc.')
-
        const res = await fetch(`/api/addmorecreditafterbuying`,{
         method: 'POST',
         headers : {
@@ -77,6 +75,7 @@ export default function Page() {
        if(!res.ok){
         const errtext = await res.text()
         console.log(errtext)
+        toast.error(errtext)
         return;
        }
 
@@ -92,9 +91,9 @@ export default function Page() {
   }
 
   return (
-    <main className='grid grid-cols-2'>
+    <main className='xs:flex xs:flex-col xs:gap-10 xs:py-10 md:py-0  md:grid md:grid-cols-2 overflow-y-auto scrollbar-hide max-h-[calc(97ch-2rem)]'>
       <div className='col-start-1 col-end-2'>
-        <div className='flex flex-col justify-center items-center min-h-[calc(97vh-5rem)]'>
+        <div className='flex flex-col justify-center items-center md:min-h-[calc(97vh-5rem)]'>
           <p>
             <span className='text-2xl'>Welcome,</span>
             <span className='opacity-80 text-sm'> Manish</span>
@@ -104,7 +103,7 @@ export default function Page() {
         </div>
       </div>
         {/* this will be the form for the credit options  */}
-      <div className='col-start-2 col-end-3 flex flex-col gap-8 justify-center items-center min-h-[calc(97vh-5rem)]'>
+      <div className='col-start-2 col-end-3 flex flex-col gap-8 justify-center items-center md:min-h-[calc(97vh-5rem)]'>
           <p className='text-center text-sm opcaity-60 pt-2 flex flex-col gap-4'>
             <span className='text-xs font-semibold'>Buildyourhackathonteam.</span>
             <span>Fill out this form to buy more credit.</span>

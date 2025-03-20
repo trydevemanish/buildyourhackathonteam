@@ -167,11 +167,11 @@ export default function Page() {
     }
 
   return (
-    <div className='grid grid-cols-2 overflow-y-auto scrollbar-hide max-h-[calc(96vh-1rem)] '>
-        <div className='col-start-1 col-end-2'>
+    <div className='xs:block md:grid md:grid-cols-2 overflow-y-auto scrollbar-hide max-h-[calc(96vh-1rem)] '>
+        <div className='md:col-start-1 md:col-end-2 xs:hidden xs:invisible md:visible md:block'>
              <Image src={CreateTeam} alt="createTeam" className='object-contain'/>
         </div>
-        <div className='col-start-2 col-end-3 py-16 px-16'>
+        <div className='col-start-2 col-end-3 py-16 xs:px-4 md:px-16'>
             <p className='text-lg'>Build your hackathon team.</p>
             <p className='text-[10px] opacity-55'>Note: * options are mandatory.</p>
             <Form {...form}>

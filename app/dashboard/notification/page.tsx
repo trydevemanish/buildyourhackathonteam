@@ -231,26 +231,30 @@ export default function Page() {
         {userReqTeamToJoinData?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
             <div key={idx}>
               {user?.id == data?.leaderid && 
-                <div className='grid grid-cols-5 px-8 items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.userid}`)}>
-                  <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
-                  <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
-                  <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
-                  <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
+                <div className="overflow-x-auto scrollbar-hide w-full">
+                  <div className='grid grid-cols-5 min-w-[600px] px-8 items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.userid}`)}>
+                    <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
+                    <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
+                    <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
+                    <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
 
-                  <div className='col-start-5 col-end-6'>
-                    <div className='flex justify-center gap-2 '>
-                        <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
-                        <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
+                    <div className='col-start-5 col-end-6'>
+                      <div className='flex justify-center gap-2 '>
+                          <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
+                          <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               }
               {user?.id == data?.userid && 
-                <div className='grid grid-cols-4 items-center py-1 gap-3 border-b' key={idx}>
-                    <p className='opacity-70 text-[9px] col-start-1 col-end-2'>{data?.createdAt}</p>
-                    <p className='col-start-2 col-end-3'>{data?.rejectionmsg ?? 'no msg now'}</p>
-                    <p className='col-start-3 col-end-4'>status: {data?.status}</p>
-                    <p className='col-start-4 col-end-5'>reqtype: {data?.requesttype}</p>
+                <div className="overflow-x-auto scrollbar-hide w-full" key={idx}>
+                  <div className='grid grid-cols-4 items-center min-w-[600px] py-1 gap-3 border-b'>
+                      <p className='opacity-70 text-[9px] col-start-1 col-end-2'>{data?.createdAt}</p>
+                      <p className='col-start-2 col-end-3'>{data?.rejectionmsg ?? 'no msg now'}</p>
+                      <p className='col-start-3 col-end-4'>status: {data?.status}</p>
+                      <p className='col-start-4 col-end-5'>reqtype: {data?.requesttype}</p>
+                  </div>
                 </div>
               }
             </div>
@@ -261,27 +265,31 @@ export default function Page() {
         {leaderInviteUser?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
             <div key={idx}>
               {user?.id == data?.userid && 
-                <div className='grid grid-cols-5 px-8 items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.leaderid}`)}>
-                  <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
-                  <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
-                  <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
-                  <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
+                <div className="overflow-x-auto scrollbar-hide w-full">
+                  <div className='grid grid-cols-5 px-8 min-h-[600px] items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.leaderid}`)}>
+                    <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
+                    <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
+                    <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
+                    <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
 
-                  <div className='col-start-5 col-end-6'>
-                    <div className='flex justify-center gap-2 '>
-                        <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
-                        <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
-                        <button className='bg-black text-red py-1 px-6 rounded text-[9px]' >✖</button>
+                    <div className='col-start-5 col-end-6'>
+                      <div className='flex justify-center gap-2 '>
+                          <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
+                          <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
+                          <button className='bg-black text-red py-1 px-6 rounded text-[9px]' >✖</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               }
               {user?.id == data?.leaderid && 
-                <div className='grid grid-cols-4 items-center py-1 gap-3 border-b' key={idx}>
+               <div className="overflow-x-auto scrollbar-hide w-full" key={idx}>
+                  <div className='grid grid-cols-4 items-center py-1 min-h-[600px] gap-3 border-b'>
                     <p className='opacity-70 text-[9px] col-start-1 col-end-2'>{data?.createdAt}</p>
                     <p className='col-start-2 col-end-3'>{data?.rejectionmsg ?? 'no msg now'}</p>
                     <p className='col-start-3 col-end-4'>status: {data?.status}</p>
                     <p className='col-start-4 col-end-5'>reqtype: {data?.requesttype}</p>
+                  </div>
                 </div>
               }
             </div>

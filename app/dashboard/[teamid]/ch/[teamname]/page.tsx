@@ -3,9 +3,10 @@ import { useParams } from 'next/navigation'
 import React, { useEffect,useState } from 'react'
 import { Send } from 'lucide-react'
 import { Loader2 } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export default function Page() {
-  const { teamid } = useParams()
+  const { teamid,teamname } = useParams()
   const [msg,setmsg] = useState('')
   const [fetchdata,setFetchData] = useState([])
   const [msgadded,setmsgAdded] = useState(false)
@@ -25,9 +26,6 @@ export default function Page() {
 
         const data = await res.json()
 
-        console.log(data?.message)
-        console.log('data: ',data)
-
         setFetchData(data?.data)
         
       } catch (error) {
@@ -39,10 +37,12 @@ export default function Page() {
   },[msgadded])
 
 
-  async function handleAddmsg(){
+
+
+  async function handleAddmsg(event:any){
+    event.preventDefault();
     try {
       setbtnloading(true)
-      console.log('message: ',msg)
       const res = await fetch(`/api/chathandler/${teamid}`,{
         method:'POST',
         headers : {
@@ -54,15 +54,15 @@ export default function Page() {
       if(!res.ok){
         const errtext = await res.text()
         console.log(errtext)
+        toast.error(errtext)
         return;
       }
 
       const data = await res.json()
-
       console.log(data?.message)
-      console.log('data: ',data)
-
-      setmsgAdded(!msgadded)
+      setmsgAdded((prev) => !prev)
+      toast.success(data?.message)
+      setmsg('')
       
     } catch (error) {
       console.log(`Issue occured while Adding: ${error}`)
@@ -73,10 +73,10 @@ export default function Page() {
 
   return (
     <div>
-      <section>
+      <section className='border-b py-2'>
         <p className='text-center py-2'>
           <span className='text-xl'>Welcome, </span>
-          <span className='text-sm opacity-80'>Hackerspu.</span>
+          <span className='text-sm opacity-80'>{teamname ? teamname : 'team x'}</span>
         </p>
         <div className='text-center text-xs opacity-70'>
           <p>You can use this, but we suggest you to create a whatapp group,</p>
@@ -84,11 +84,11 @@ export default function Page() {
         </div>
       </section>
 
-      <section className='flex flex-col place-content-between min-h-[calc(100vh-8rem)]'>
+      <section className='flex flex-col place-content-between min-h-[calc(100vh-10rem)]'>
         <div className='flex flex-col gap-3'>
           {fetchdata.map((data:any,idx:number) => (
             <div className='flex gap-2 px-3' key={idx}>
-              <p className='bg-black rounded w-[2px]'>.</p>
+              <p className='bg-purple-500 rounded w-[2px]'>.</p>
               <div>
                 <p className='opacity-40 text-[10px] flex gap-2 '>
                   <span>{data?.senderid}</span>
@@ -103,7 +103,7 @@ export default function Page() {
         <div>
           <form onSubmit={handleAddmsg} className='flex items-center justify-center pt-6 gap-2'>
             <input type='text' value={msg} onChange={(e) => setmsg(e.target.value)} className='border rounded w-72 text-sm focus:outline-none p-1'/>
-            <button type='submit'>
+            <button type='submit' onClick={handleAddmsg}>
               {btnload ? <Loader2 className='size-4 animate-spin' /> : <Send className='size-4' />}
             </button>
           </form>

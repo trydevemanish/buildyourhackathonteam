@@ -12,7 +12,6 @@ const ChatSchema: Schema<chatSchemaModel> = new Schema(
         teamid : {
             type : String,
             required : true,
-            unique : true
         },
         sendername : {
             type : String,
