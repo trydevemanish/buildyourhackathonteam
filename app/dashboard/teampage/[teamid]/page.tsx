@@ -51,7 +51,6 @@ export default function Page() {
                 const data = await res.json()
 
                 console.log(data?.message)
-                console.log(data)
 
                 setfetchdevdata(data?.data)
 
