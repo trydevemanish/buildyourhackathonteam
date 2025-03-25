@@ -126,8 +126,8 @@ export default function page() {
                 <p>Team Created: {userdata?.teamcreated?.length}</p>
                 {userdata?.teamcreated?.length > 0 ?
                 <section>
-                    <div className='grid grid-cols-4 py-2 overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)] border-b border-black text-xs pt-5 max-h-[calc(50vh-10rem)]'>
-                      <div className="overflow-x-auto scrollbar-hide w-full">
+                    <div className="overflow-x-auto scrollbar-hide w-full">
+                      <div className='grid grid-cols-4 py-2 overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)] border-b border-black text-xs pt-5 max-h-[calc(50vh-10rem)]'>
                         <p className='col-start-1 col-end-2 text-center'>Serial</p>
                         <p className='col-start-2 col-end-3 text-center'>Teamname</p>
                         <p className='col-start-3 col-end-4 text-center'>Category</p>

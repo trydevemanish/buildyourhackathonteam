@@ -4,6 +4,8 @@ import About from "@/components/LandingPage/About";
 import Faq from "@/components/LandingPage/Faq";
 import Footer from "@/components/LandingPage/Footer";
 import Header from "@/components/LandingPage/Header";
+import HeaderPara from "@/components/LandingPage/HeaderPara";
+import GridFeatureComponent from "@/components/LandingPage/GridFeatureComponent";
 
 export default function Home() {
   return (
@@ -11,6 +13,8 @@ export default function Home() {
         <Navbar />
         <Header />
         <About />
+        <HeaderPara />
+        <GridFeatureComponent />
         <Faq />
         <Footer />
     </main>
