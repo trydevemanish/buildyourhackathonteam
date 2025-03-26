@@ -64,7 +64,7 @@ model Team {
   projectname   String
   projectdesc   String
   hackathonname String
-  hackathonlink String
+  hackathonlink String?
   hackathondesc String
   createdAt     DateTime      @default(now())
   lastUpdated   DateTime      @updatedAt

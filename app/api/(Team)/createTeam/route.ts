@@ -5,7 +5,7 @@ import { currentUser } from "@clerk/nextjs/server";
 export async function POST(req:Request) {
     try {
 
-        const { teamname,projectname,projectdesc,hackathonname,hackathondesc } = await req.json()
+        const { teamname,projectname,projectdesc,hackathonname,hackathondesc } = await req.json() ?? {}
 
         if(!teamname && !projectname && !projectdesc && !hackathondesc && !hackathonname){
             return NextResponse.json(
