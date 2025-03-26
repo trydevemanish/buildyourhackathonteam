@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 
-export async function POST(req:Request) {
+export async function POST(_req:Request) {
    try {
 
         const userdatareceived = await currentUser()
@@ -15,7 +15,7 @@ export async function POST(req:Request) {
         }
 
         // checking if user is already created.
-        let user = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
           where: {
             id : userdatareceived?.id
           }

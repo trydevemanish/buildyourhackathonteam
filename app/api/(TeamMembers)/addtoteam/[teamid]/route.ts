@@ -17,10 +17,17 @@ export async function POST(req:Request) {
 
         const clerkUser = await currentUser()
 
+        if(!clerkUser){
+            return NextResponse.json(
+                {message:'UnAuthorised User'},
+                {status:400}
+            )
+        }
+
         const newMember = await prisma.teamMembers.create({
             data:{
                 teamId : teamId,
-                userId : clerkUser?.id!,
+                userId : clerkUser?.id,
             }
         })
 

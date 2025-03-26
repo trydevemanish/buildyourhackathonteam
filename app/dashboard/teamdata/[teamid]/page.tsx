@@ -41,7 +41,7 @@ export default function Page() {
     }
     
     findTeamData()
-  },[])
+  },[teamid])
 
   async function UserMadeaReqToTheTeamLeaderToJoinThereTeam(){
     try {

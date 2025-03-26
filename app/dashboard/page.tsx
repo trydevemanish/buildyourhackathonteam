@@ -65,20 +65,20 @@ export default function Page() {
             <span className='text-purple-500'> found.</span>
           </p>
           <p className='opacity-70 text-xs'>Create new team to get started !</p>
-          {loading ? 
-           <div className='bg-black'>
-              <LoaderIcon className='cursor-pointer px-4 py-1 size-4 animate-spin stroke-white' stroke='white'/>
-           </div>
-           :
-            <button className='bg-black text-white px-8 py-1 text-xs rounded'>
+          {loading ? (
+            <div className="bg-black p-2 flex justify-center px-10 rounded ">
+              <LoaderIcon className="size-4 animate-spin stroke-white fill-white" />
+            </div>
+          ) : (
+            <button className="bg-black text-white px-8 py-1 text-xs rounded">
               <Link href="/dashboard/createteam">
-                  <p className='flex gap-2'>
-                    <span>+</span>
-                    <span className='text-xs'>Create Team</span>
-                  </p> 
-                </Link> 
-            </button>  
-          }
+                <p className="flex gap-2">
+                  <span>+</span>
+                  <span className="text-xs">Create Team</span>
+                </p> 
+              </Link> 
+            </button>
+           )} 
         </ div>
        }
     </main>

@@ -5,6 +5,12 @@ import { Send } from 'lucide-react'
 import { Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
+type fetchdatatype = {
+  senderid:string,
+  createdAt:string,
+  message:string,
+}
+
 export default function Page() {
   const { teamid,teamname } = useParams()
   const [msg,setmsg] = useState('')
@@ -27,19 +33,19 @@ export default function Page() {
         const data = await res.json()
 
         setFetchData(data?.data)
-        
+
       } catch (error) {
         console.log(`Isuue: ${error}`)
       }
     }
 
     handlefetchmsg()
-  },[msgadded])
+  },[teamid,msgadded])
 
 
 
 
-  async function handleAddmsg(event:any){
+  async function handleAddmsg(event:React.FormEvent<HTMLFormElement>){
     event.preventDefault();
     try {
       setbtnloading(true)
@@ -86,7 +92,7 @@ export default function Page() {
 
       <section className='flex flex-col place-content-between min-h-[calc(100vh-10rem)]'>
         <div className='flex flex-col gap-3'>
-          {fetchdata.map((data:any,idx:number) => (
+          {fetchdata.map((data:fetchdatatype,idx:number) => (
             <div className='flex gap-2 px-3' key={idx}>
               <p className='bg-purple-500 rounded w-[2px]'>.</p>
               <div>
@@ -103,7 +109,7 @@ export default function Page() {
         <div>
           <form onSubmit={handleAddmsg} className='flex items-center justify-center pt-6 gap-2'>
             <input type='text' value={msg} onChange={(e) => setmsg(e.target.value)} className='border rounded w-72 text-sm focus:outline-none p-1'/>
-            <button type='submit' onClick={handleAddmsg}>
+            <button type='submit'>
               {btnload ? <Loader2 className='size-4 animate-spin' /> : <Send className='size-4' />}
             </button>
           </form>

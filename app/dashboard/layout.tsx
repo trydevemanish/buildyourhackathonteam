@@ -7,6 +7,7 @@ import SideBarComp from '@/components/SideBarComp'
 import { useUser } from '@clerk/nextjs'
 import { Bell, Sidebar } from 'lucide-react'
 import SidebarForSmSc from '@/components/SidebarForSmSc'
+import Image from 'next/image'
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
@@ -113,7 +114,12 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                           </div>
                         </div>
                         <Link href={'/dashboard/me'}>
-                          <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-7 hover:grayscale'/>
+                          {/* <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-7 hover:grayscale'/> */}
+                          <Image
+                            src={user?.imageUrl || "/default-profile.png"} 
+                            alt="User Profile"
+                            className="rounded-[50%] size-7 hover:grayscale"
+                          />
                         </Link>
                     </div>
                 </div>

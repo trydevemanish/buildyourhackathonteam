@@ -61,7 +61,7 @@ export default function Page() {
             }
         }
         findUserInATeam()
-    },[])
+    },[teamid])
 
 
     async function removeMemberfromTeam(teammemberid:string,useridToberemoved:string){

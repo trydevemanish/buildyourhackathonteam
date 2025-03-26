@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 
 //delete every data of user
 
-export async function DELETE(req:Request) {
+export async function DELETE(_req:Request) {
     try {
 
         const authUser = await currentUser()

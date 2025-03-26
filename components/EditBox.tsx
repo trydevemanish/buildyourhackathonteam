@@ -158,10 +158,19 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
                 props.nameOfProp === 'Github' ? github :
                 linkedin
               }
+              // props.nameOfProp === 'Email' ? setEmail(e.target.value) :
+              // props.nameOfProp === 'Github' ? setGithub(e.target.value) :
+              // setLinkedin(e.target.value)
               onChange={(e) => {
-                props.nameOfProp === 'Email' ? setEmail(e.target.value) :
-                props.nameOfProp === 'Github' ? setGithub(e.target.value) :
-                setLinkedin(e.target.value)
+                switch (props.nameOfProp){
+                  case "Email" : 
+                    setEmail(e.target.value)
+                    break;  
+                  case "Github" : 
+                    setGithub(e.target.value)
+                  default : 
+                    setLinkedin(e.target.value)
+                }
               }}
             />
         </div>

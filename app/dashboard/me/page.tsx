@@ -4,8 +4,9 @@ import { DialogDemoTextArea,DialogDemoInput,DialogDemoSelect } from '@/component
 import { useUser } from '@clerk/nextjs'
 import { WholeUserdata,teamCreatedData } from '@/types/types'
 import { Skeleton } from "@/components/ui/skeleton"
+import Image from 'next/image'
 
-export default function page() {
+export default function Page() {
   const { user } = useUser()
   const [userdata,setUserdata] = useState({} as WholeUserdata)
   const [fetchinguserdata,setFetchingUserData] = useState(false)
@@ -36,7 +37,7 @@ export default function page() {
       }
     }
     fetchUserDetail()
-  },[])
+  },[user?.id])
 
   return (
     <div className='xs:px-8 md:px-16 py-10 overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
@@ -51,7 +52,13 @@ export default function page() {
             }
           </span>
         </div>
-        <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-14 '/>
+
+        {/* <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-14 '/> */}
+        <Image
+          src={user?.imageUrl || "/default-profile.png"} 
+          alt="user_Profile"
+          className="rounded-[50%] size-14 "
+        />
 
         <div className='flex items-center gap-2'>
           <DialogDemoTextArea props={{ nameOfProp: 'Description' }} />

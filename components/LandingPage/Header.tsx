@@ -13,7 +13,7 @@ export default function Header() {
           </h1>
           <p className='py-6 text-sm xs:text-center md:text-left'>Struggling to find teammates for hackathons ?</p>
           <p className='text-xs  xs:text-center md:text-left'>
-            <span className='opacity-70'>Whether you're an introvert or just don’t know where to start,</span>
+            <span className='opacity-70'>Whether {"you're"} an introvert or just don’t know where to start,</span>
             <span className='text-purple-500 font-bold'> Join here</span>
             <span className='opacity-70'> it easy to create, join, and collaborate on the perfect hackathon team.</span>
           </p>

@@ -52,7 +52,7 @@ export default function Page() {
             }
         }
         fetchUserData() 
-    },[])
+    },[userid])
 
     // this useeffect will help me find all the team leader has created.
     useEffect(() => {
@@ -79,7 +79,7 @@ export default function Page() {
             }
         }
         fetchLoginUserData()  
-    },[])
+    },[user?.id])
 
     async function handleMakeAreqBytheLeadertoTheUserTojointheirteam(selectedTeamId:string) {
         try {
