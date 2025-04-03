@@ -1,5 +1,4 @@
 "use client"
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { CrumpledPaperIcon } from '@radix-ui/react-icons'
 import ProtectedRoute from '@/components/ProtectedRoute'

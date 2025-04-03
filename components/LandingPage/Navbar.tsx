@@ -10,10 +10,10 @@ export default function Navbar() {
     const { isSignedIn } = useUser()
     const router = useRouter()
 
-    const redirectUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://your-deployed-domain.vercel.app/dashboard"
-        : "http://localhost:3000/dashboard";    
+    // const redirectUrl =
+    //   process.env.NODE_ENV === "production"
+    //     ? "https://your-deployed-domain.vercel.app/dashboard"
+    //     : "http://localhost:3000/dashboard";    
   
     // need to change the route of the login page whwn i will deploy it .
     async function handleSignin() {

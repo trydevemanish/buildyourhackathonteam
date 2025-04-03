@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import { SignOutButton } from "@clerk/nextjs"
 import { useRouter } from 'next/navigation'
 
@@ -32,7 +31,7 @@ export default function SideBarComp() {
   return (
     <div className='flex flex-col justify-between min-h-screen py-4 px-1'>
         <div className='flex flex-col text-[11px]'>
-            {layoutDataNavigationStructure.map((data : layoutDataNavigationStructure,idx : any) => (
+            {layoutDataNavigationStructure.map((data : layoutDataNavigationStructure,idx : number) => (
               <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`} onClick={() => router.push(data?.pushto)} key={idx} >{data?.para}</p>
             ))}
         </div>
