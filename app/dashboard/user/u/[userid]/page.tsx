@@ -25,6 +25,7 @@ export default function Page() {
     const [teamcreatedData,setTeamCreatedData] = useState([])
     const [selectedTeamId,setSelectedTeamID] = useState('')
     const [fetchinguserdata,setFetchingUserData] = useState(false)
+    const [userProfileUrl,setUserProfileUrl] = useState('/default-user.jpg')
     const {userid} = useParams()
     const { user } = useUser()
 
@@ -44,6 +45,7 @@ export default function Page() {
                 const data  = await res.json()
 
                 setUserData(data?.Data)
+                setUserProfileUrl(data?.Data?.profileurl)
                 
             } catch (error) {
                 console.log(`Issue Occured while fetching user detail: ${error}`)
@@ -124,7 +126,14 @@ export default function Page() {
                     }
                 </span>
             </div>
-            <Image src={Sample} alt='user_profile' className='rounded-[50%] size-14 '/>
+            <Image
+                src={userProfileUrl || "/default-user.jpg"}
+                alt="User Profile"
+                width={150}
+                height={40}
+                className="rounded-[50%] size-14 max-w-sm max-h-52 hover:grayscale"
+            />
+
             <div className='flex justify-between'>
                 <div>
                     {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 

@@ -36,7 +36,8 @@ export async function POST(_req:Request) {
             id : userdatareceived?.id,
             name : userdatareceived?.fullName || "New User",
             email : userdatareceived?.emailAddresses[0].emailAddress,
-            bio : 'ok'
+            bio : 'Add are your bio here.',
+            profileurl : userdatareceived?.imageUrl,
           }
         })
 

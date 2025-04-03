@@ -27,8 +27,8 @@ interface paraObjectType {
 
 export default function GridFeatureComponent() {
   return (
-    <main className='py-28 px-32'>
-        <div className='grid grid-cols-2 gap-14'>
+    <main className='py-28 xs:px-12 md:px-32'>
+        <div className=' xs:flex xs:flex-col xs:gap-12 md:grid md:grid-cols-2 md:gap-14'>
             {/* Image part her  */}
 
 

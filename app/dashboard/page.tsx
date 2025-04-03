@@ -1,16 +1,17 @@
 "use client"
 import React,{ useEffect, useState } from 'react'
-import Link from 'next/link'
 import Teamcard from '@/components/TeamcardForteamleader'
 import { TeamCardInfoType } from '@/types/types'
 import Noteam from "@/public/noteam.avif"
 import Image from 'next/image'
 import { LoaderIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
 
   const [teamDataFromBackend,setTeamDataFromBackend] = useState([])
   const [loading,setLoading] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const handlefindUserCreatedTeamData = async() => {
@@ -44,10 +45,10 @@ export default function Page() {
       {teamDataFromBackend?.length > 0 ? 
         <section>
           <div className='flex justify-end items-center gap-3 px-3 border py-1'>
-            <button className='bg-black inline text-white px-8 py-[6px] text-xs rounded'>
-              <Link href="/dashboard/createteam">
+            <button className='bg-black inline text-white px-8 py-[6px] text-xs rounded' onClick={() => router.push("/dashboard/createteam")}>
+              {/* <Link href="/dashboard/createteam"> */}
                 <span className='opacity-80 hover:opacity-100'>+ create one </span>
-              </Link>
+              {/* </Link> */}
             </button>
           </div> 
           <div className='flex gap-5 px-8 py-2 overflow-y-auto scrollbar-hide'>
@@ -70,13 +71,13 @@ export default function Page() {
               <LoaderIcon className="size-4 animate-spin stroke-white fill-white" />
             </div>
           ) : (
-            <button className="bg-black text-white px-8 py-1 text-xs rounded">
-              <Link href="/dashboard/createteam">
+            <button className="bg-black text-white px-8 py-1 text-xs rounded" onClick={() => router.push("/dashboard/createteam")}>
+              {/* <Link href="/dashboard/createteam"> */}
                 <p className="flex gap-2">
                   <span>+</span>
                   <span className="text-xs">Create Team</span>
                 </p> 
-              </Link> 
+              {/* </Link>  */}
             </button>
            )} 
         </ div>

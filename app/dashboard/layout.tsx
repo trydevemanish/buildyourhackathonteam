@@ -8,6 +8,7 @@ import { useUser } from '@clerk/nextjs'
 import { Bell, Sidebar } from 'lucide-react'
 import SidebarForSmSc from '@/components/SidebarForSmSc'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
@@ -18,8 +19,10 @@ interface Dashboardlayoutprops {
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     const [userCredit,setUserCredit] = useState<number>()
     const [showSidebar,setShowSideBar] = useState(false)
+    const [userProfileUrl,setUserProfileUrl] = useState('/default-user.jpg')
     
     const { user } = useUser()
+    const router = useRouter()
     
     // useefeect to find user if no user create one.
     useEffect(() => {
@@ -45,13 +48,15 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
         const result = await res.json()
 
         console.log(result?.message)
-        
+
+        setUserProfileUrl(result?.data?.profileurl)
+
       } catch (error) {
         console.log(`Failed to create User: ${error}`)
       }
     }
 
-    //useeffect to fetch total credit.
+    // useeffect to fetch total credit.
     useEffect(() => {
       findUserTotalCredit()
     },[])
@@ -86,8 +91,8 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
 
     return(
         <ProtectedRoute>
-          <main>
-            <div className='xs:block  md:grid md:grid-cols-7 min-h-screen overflow-x-hidden'>
+          <main className='bg-gradient-to-b from-white via-purple-50 to-white'>
+            <div className='xs:block md:grid md:grid-cols-7 min-h-screen overflow-x-hidden'>
               <div className='col-start-1 col-end-2 border-black border-r md:visible md:block  xs:hidden xs:invisible'>
                 <SideBarComp />
               </div>
@@ -103,24 +108,20 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                     <Sidebar className='size-4 md:hidden md:invisible xs:visible xs:block font-bold' onClick={() => setShowSideBar(!showSidebar)} />
                     <div className='flex items-center gap-4'>
                         <div className='flex gap-4 items-center'>
-                          <Link href={`/dashboard/notification`}>
-                            <Bell className='size-5 rounded cursor-pointer hover:bg-purple-200 p-1' />
-                          </Link>
-                          <div className='flex items-center hover:bg-purple-100 rounded p-1'>
-                            <Link href={`/dashboard/usercredit`}>
-                              <CrumpledPaperIcon className='size-3 cursor-pointer' />
-                            </Link>
+                          <Bell className='size-5 rounded cursor-pointer hover:bg-purple-200 p-1' onClick={() => router.push(`/dashboard/notification`)} />
+                          <div className='flex items-center hover:bg-purple-100 rounded p-1' onClick={() => router.push(`/dashboard/usercredit`)}>
+                            <CrumpledPaperIcon className='size-3 cursor-pointer' />
                             <p className='text-xs'>{userCredit}</p>
                           </div>
                         </div>
-                        <Link href={'/dashboard/me'}>
-                          {/* <img src={`${user?.imageUrl}`} alt='user_profile' className='rounded-[50%] size-7 hover:grayscale'/> */}
-                          <Image
-                            src={user?.imageUrl || "/default-profile.png"} 
-                            alt="User Profile"
-                            className="rounded-[50%] size-7 hover:grayscale"
-                          />
-                        </Link>
+                        <Image
+                          src={userProfileUrl || "/default-user.jpg"}
+                          alt="User Profile"
+                          width={150}
+                          height={40}
+                          className="rounded-[50%] max-w-sm max-h-52 size-7 hover:grayscale"
+                          onClick={() => router.push('/dashboard/me')}
+                        />
                     </div>
                 </div>
                 {props.children}
