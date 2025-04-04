@@ -10,15 +10,9 @@ export default function Navbar() {
     const { isSignedIn } = useUser()
     const router = useRouter()
 
-    const redirectUrl =
-      process.env.NODE_ENV === "production"
-        ? process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL_PRODUCTION
-        : process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL_DEVELOPMENT    
-
-  
     // need to change the route of the login page whwn i will deploy it .
     async function handleSignin() {
-      return isSignedIn ? router.push('/dashboard') : router.push(`/sign-in?redirect_url=${redirectUrl}`)
+      return isSignedIn ? router.push('/dashboard') : router.push(`/sign-in`)
     }
 
   return (
