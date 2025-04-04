@@ -10,26 +10,15 @@ export default function Navbar() {
     const { isSignedIn } = useUser()
     const router = useRouter()
 
-    // const redirectUrl =
-    //   process.env.NODE_ENV === "production"
-    //     ? "https://your-deployed-domain.vercel.app/dashboard"
-    //     : "http://localhost:3000/dashboard";    
+    const redirectUrl =
+      process.env.NODE_ENV === "production"
+        ? `${process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL_PRODUCTION}`
+        : `${process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL_DEVELOPMENT}`;    
+
   
     // need to change the route of the login page whwn i will deploy it .
     async function handleSignin() {
-      // return isSignedIn ? router.push('/dashboard') : router.push('https://easy-meerkat-32.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard')
-
-      return isSignedIn ? router.push('/dashboard') : router.push(
-        `${
-              process.env.NODE_ENV !== 'production' ?
-              process.env.NEXT_PUBLIC_CLERK_FRONTEND_API :
-              process.env.NEXT_PUBLIC_CLERK_FRONTEND_API
-          }?redirect_url=${
-              process.env.NODE_ENV != 'production' ? 
-              process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL_DEVELOPMENT : 
-              process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL_PRODUCTION
-          }`
-      )
+      return isSignedIn ? router.push('/dashboard') : router.push(`${process.env.NEXT_PUBLIC_CLERK_FRONTEND_API}?redirect_url=${redirectUrl}`)
     }
 
   return (
