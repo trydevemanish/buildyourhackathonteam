@@ -18,7 +18,7 @@ export default function Navbar() {
   
     // need to change the route of the login page whwn i will deploy it .
     async function handleSignin() {
-      return isSignedIn ? router.push('/dashboard') : router.push(`/sign-in/redirect_url=${redirectUrl}`)
+      return isSignedIn ? router.push('/dashboard') : router.push(`/sign-in?redirect_url=${redirectUrl}`)
     }
 
   return (
