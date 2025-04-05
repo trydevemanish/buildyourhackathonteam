@@ -1,7 +1,7 @@
 import React from 'react'
-import teams from '@/public/teams.png'
+import teams from '@/public/teams.jpg'
 import Image from 'next/image'
-import Otherdev from '@/public/otherdev.png'
+import Otherdev from '@/public/slide3.jpg'
 import { PersonIcon,CodeIcon,CrumpledPaperIcon,ComponentInstanceIcon,CodeSandboxLogoIcon } from '@radix-ui/react-icons'
 import { Users,InspectIcon } from 'lucide-react'
 
@@ -11,7 +11,7 @@ export default function About() {
 
       <div className='py-8 flex flex-col gap-10'>
 
-        <div className='xs:flex xs:flex-col md:grid md:grid-cols-2 gap-16 py-4'>
+        <div className='xs:flex xs:flex-col md:grid md:grid-cols-2 gap-10 py-4'>
           <div className='col-start-1 col-end-2 py-10 px-10'> 
             <h1 className='text-3xl font-opensans font-bold'>
               <span>Finding the right team with</span> 
@@ -33,7 +33,7 @@ export default function About() {
             </div>
           </div>
           <div className="flex justify-center xs:px-8 col-start-2 col-end-3 md:px-0 md:justify-start">
-          <Image src={teams} alt='teams' className='border md:h-auto rounded-l-[2.5rem] rounded-t-[2.5rem]' />
+            <Image src={teams} alt='teams' className='border w-auto md:h-auto rounded-l-[2.5rem] rounded-t-[2.5rem] hover:bg-gradient-to-b  hover:from-white hover:to-black ' />
           </div>
         </div>
 

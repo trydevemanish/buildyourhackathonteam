@@ -6,6 +6,7 @@ import Footer from "@/components/LandingPage/Footer";
 import Header from "@/components/LandingPage/Header";
 import HeaderPara from "@/components/LandingPage/HeaderPara";
 import GridFeatureComponent from "@/components/LandingPage/GridFeatureComponent";
+import { ScrollAreaHorizontal } from "@/components/LandingPage/Scrollarea";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <About />
         <HeaderPara />
         <GridFeatureComponent />
+        <ScrollAreaHorizontal />
         <Faq />
         <Footer />
     </main>

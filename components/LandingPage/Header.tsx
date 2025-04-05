@@ -21,15 +21,15 @@ export default function Header() {
             <button className='bg-purple-500 text-white px-8 py-2 text-xs rounded-md'>Get started</button>
           </div>
         </div>
-        {/* <Image src={header} alt='header' className='xs:w-full xs:h-auto  xs:px-10 xs:rounded-xl    col-start-2 col-end-3 w-[28rem] md:px-0 h-[28rem] rounded-l-[2.5rem] md:rounded-r-none' /> */}
         <div className="flex justify-center md:justify-start">
           <Image 
             src={header} 
             alt="header" 
             className="
-              w-full max-w-[28rem] h-auto 
-              xs:px-10 xs:rounded-xl 
-              md:px-0 md:w-[28rem] md:h-[28rem] md:rounded-l-[2.5rem] md:rounded-r-none
+              w-full max-w-[50rem] h-auto 
+              xs:px-6 xs:rounded-xl 
+              md:px-0 md:rounded-none
+              shadow-md shadow-purple-100
             " 
           />
         </div>
