@@ -117,7 +117,6 @@
 }
 
 
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -135,4 +134,12 @@
 
 .scrollbar-hide::-webkit-scrollbar{
   display: none;
+}
+
+.bg-white-primary { 
+  background: #eae9e9;
+}
+
+.bg-white-secondary { 
+  background: #fff;
 }

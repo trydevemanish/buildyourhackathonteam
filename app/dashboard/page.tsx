@@ -37,7 +37,7 @@ export default function Page() {
         setLoading(false)
       }
     }
-    handlefindUserCreatedTeamData()
+    // handlefindUserCreatedTeamData()
   },[])
 
   return (
@@ -45,9 +45,9 @@ export default function Page() {
       {teamDataFromBackend?.length > 0 ? 
         <section>
           <div className='flex justify-end items-center gap-3 px-3 border py-1'>
-            <button className='bg-black inline text-white px-8 py-[6px] text-xs rounded' onClick={() => router.push("/dashboard/createteam")}>
+            <button className='bg-purple-500 inline text-white px-8 py-[6px] text-xs rounded' onClick={() => router.push("/dashboard/createteam")}>
               {/* <Link href="/dashboard/createteam"> */}
-                <span className='opacity-80 hover:opacity-100'>+ create one </span>
+                <span>+ create one </span>
               {/* </Link> */}
             </button>
           </div> 
@@ -85,3 +85,5 @@ export default function Page() {
     </main>
   )
 }
+
+// dayegen507@mobilesm.com

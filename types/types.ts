@@ -11,6 +11,7 @@ export type TeamCardInfoType = {
     createdAt? : string;
     lastUpdated? : string;
     maxteamsize? : number;
+    teamstatus? : string;
 }
 
 export type UserData = {

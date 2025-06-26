@@ -57,6 +57,8 @@ export default function Page() {
         <Image
           src={user?.imageUrl || "/default-profile.png"} 
           alt="user_Profile"
+          width={90}
+          height={90}
           className="rounded-[50%] size-14 "
         />
 

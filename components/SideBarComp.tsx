@@ -1,42 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { SignOutButton } from "@clerk/nextjs"
 import { useRouter } from 'next/navigation'
 
 const layoutDataNavigationStructure = [
   {
+    id:1,
     pushto : '/dashboard',
-    para :'your team '
+    para :`${"Your's team"}`
   },
   {
-    pushto : '/dashboard/allteams',
-    para : 'other teams to join'
-  },
-  {
-    pushto : '/dashboard/teamjoined',
-    para : 'team joined as member'
-  },
-  {
+    id:2,
     pushto : '/dashboard/otherdev',
-    para : 'meet other developers'
+    para : 'Meet developers'
+  },
+  {
+    id:3,
+    pushto : '/dashboard/allteams',
+    para : 'Other teams to join'
+  },
+  {
+    id:4,
+    pushto : '/dashboard/otherdev',
+    para : 'Upcoming Hackathons'
+  },
+  {
+    id:5,
+    pushto : '/dashboard/teamjoined',
+    para : 'Team joined as member'
   }
 ]
 
 type layoutDataNavigationStructure = {
+  id:number,
   pushto  :string,
   para  :string;
 }
 
 export default function SideBarComp() {
+  const [selected,setSelected] = useState(1)
   const router = useRouter()
+
+  async function handleMenuSelect(pushto:string,id:number){
+    setSelected(id)
+    router.push(pushto)
+  }
+
   return (
     <div className='flex flex-col justify-between min-h-screen py-4 px-1'>
-        <div className='flex flex-col text-[11px]'>
+        <div className='flex flex-col gap-1 text-[12px]'>
             {layoutDataNavigationStructure.map((data : layoutDataNavigationStructure,idx : number) => (
-              <p className={`cursor-pointer hover:bg-purple-100 py-1 px-2 rounded`} onClick={() => router.push(data?.pushto)} key={idx} >{data?.para}</p>
+              <p className={`cursor-pointer font-semibold ${selected && selected == data?.id ? 'bg-purple-300' : ''} hover:bg-purple-300 py-1 px-2 rounded`} onClick={async() => await handleMenuSelect(data?.pushto,data?.id)} key={idx} >{data?.para}</p>
             ))}
         </div>
         <div className='bg-black flex justify-center text-white px-6 py-1 text-xs rounded'>
-        <SignOutButton />
+         <SignOutButton />
         </div>
     </div>
   )

@@ -41,12 +41,15 @@ export default function Teamcard(
     }
 
   return (
-    <div className='border border-black inline-block px-2 py-1 shadow shadow-neutral-100 rounded cursor-pointer'>
+    <div className='border border-black inline-block px-2 py-1 shadow shadow-neutral-300 cursor-pointer'>
         <div className='px-4 py-3 inline-block text-xs w-64 '>
             <div className='flex flex-col gap-1'>
                 <div className='flex justify-between items-center'>
                     <p>Team: {props?.teamname}</p>
-                    <button className='bg-black text-white px-4 rounded text-[10px] py-1' onClick={handledeleteteam}>Delete</button>
+                    <div className='flex gap-1 items-center'>
+                      <p className='text-xs border px-3 py-1 rounded-3xl bg-green-200'>{props?.teamstatus}</p>
+                      <button className='bg-black text-white px-4 rounded text-[10px] py-1' onClick={handledeleteteam}>Delete</button>
+                    </div>
                 </div>
                 <div onClick={() => {
                   router.push(`/dashboard/teamdata/${props?.id}`)

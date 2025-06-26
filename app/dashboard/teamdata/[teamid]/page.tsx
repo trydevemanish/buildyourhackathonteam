@@ -146,6 +146,7 @@ export default function Page() {
             </div> 
           </div>
           <div className='flex items-center gap-6'>
+            <p className='text-xs border px-3 py-1 rounded-3xl bg-green-200'>{teamdata?.teamstatus}</p>
             <AirplayIcon onClick={() => router.push(`/dashboard/teampage/${teamdata?.id}`)}  className='size-7 rounded bg-purple-100 px-2 hover:bg-purple-300 py-1 cursor-pointer'/>
             <MessagesSquare onClick={movetoChatPage} className='size-7 rounded bg-purple-100 px-2 hover:bg-purple-300 py-1 cursor-pointer' />
           </div>
