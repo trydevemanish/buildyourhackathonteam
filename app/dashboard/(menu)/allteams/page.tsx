@@ -24,7 +24,7 @@ export default function Page() {
 
       setEveryTeamData(data?.data)
     }
-    fetchEveyTeam()
+    // fetchEveyTeam()
   },[])
 
   return (

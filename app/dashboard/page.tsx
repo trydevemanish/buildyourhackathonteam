@@ -76,13 +76,11 @@ export default function Page() {
                 <span className='text-purple-500'> found.</span>
               </p>
               <p className='opacity-70 text-xs'>Create new team to get started !</p>
-              <button className="bg-black text-white px-8 py-1 text-xs rounded" onClick={() => router.push("/dashboard/createteam")}>
-                {/* <Link href="/dashboard/createteam"> */}
+              <button className="bg-black text-white px-8 py-1 text-xs rounded" onClick={() => router.push("/createteam")}>
                   <p className="flex gap-2">
                     <span>+</span>
                     <span className="text-xs">Create Team</span>
                   </p> 
-                {/* </Link>  */}
               </button>
             </ div>
           )
