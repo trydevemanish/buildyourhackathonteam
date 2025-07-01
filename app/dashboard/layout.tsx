@@ -106,7 +106,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                     <Sidebar className='size-4 md:hidden md:invisible xs:visible xs:block font-bold' onClick={() => setShowSideBar(!showSidebar)} />
                     <div className='flex items-center gap-4'>
                         <div className='flex gap-4 items-center'>
-                          <Bell className='size-8 rounded cursor-pointer hover:bg-purple-300 p-2' onClick={() => router.push(`/dashboard/notification`)} />
+                          <Bell className='size-8 rounded cursor-pointer hover:bg-purple-300 p-2' onClick={() => router.push(`/notification`)} />
                           {/* <div className='flex items-center hover:bg-purple-100 rounded p-1' onClick={() => router.push(`/dashboard/usercredit`)}>
                             <CrumpledPaperIcon className='size-3 cursor-pointer' />
                             <p className='text-xs'>{userCredit}</p>

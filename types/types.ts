@@ -55,3 +55,8 @@ export type TeamJoinedByUserDetail = {
         hackathondesc:string
     }
 }
+
+export type teamCreatedAttributeNamenType = {
+   attribute : string;
+   className:string;
+}

@@ -177,16 +177,20 @@ export default function Page() {
             </div>
 
             <div className='flex flex-col gap-7 xs:px-4 md:px-16 py-9'>
+              
               <div className='flex justify-between'>
                 <div className='flex flex-col gap-1'>
                   <p className='text-sm'>Project name : </p> 
-                  <div className='opacity-80 text-[12px]'>{teamdata?.projectname ? teamdata?.projectname :   <Skeleton className='rounded w-20 h-4' />  }
+                  <div className='opacity-80 text-[12px]'>
+                    {teamdata?.projectname ? teamdata?.projectname :   <Skeleton className='rounded w-20 h-4' />}
                   </div> 
                 </div>
                 <div className='flex items-center gap-6'>
                   <p className='text-xs border px-3 py-1 rounded-3xl bg-green-200'>{teamdata?.teamstatus}</p>
+
                   <AirplayIcon onClick={() => router.push(`/dashboard/teampage/${teamdata?.id}`)}  className='size-7 rounded bg-purple-100 px-2 hover:bg-purple-300 py-1 cursor-pointer'/>
                   <MessagesSquare onClick={movetoChatPage} className='size-7 rounded bg-purple-100 px-2 hover:bg-purple-300 py-1 cursor-pointer' />
+                  
                 </div>
               </div> 
 
