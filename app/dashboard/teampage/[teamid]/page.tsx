@@ -26,6 +26,7 @@ type TeamMemberInfo = {
     }
 }
 
+// this page is dedicated to find the members of the team not an actual team page
 export default function Page() {
     const [fetchdevdata,setfetchdevdata] = useState([])
     const [fetchingTeamData,setFetchingTeamData] = useState(false)

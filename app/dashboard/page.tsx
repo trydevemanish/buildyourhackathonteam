@@ -38,7 +38,7 @@ export default function Page() {
         setLoading(false)
       }
     }
-    // handlefindUserCreatedTeamData()
+    handlefindUserCreatedTeamData()
   },[])
 
   return (

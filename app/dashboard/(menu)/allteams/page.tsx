@@ -4,27 +4,37 @@ import Teamcard from "@/components/Teamcard"
 import { TeamCardInfoType } from "@/types/types"
 import NoteamcreatedYet from '@/public/noteamcreatedyet.jpg'
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 export default function Page() {
   const [eveyteamdata,setEveryTeamData] = useState([])
+  const [loading,setloading] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchEveyTeam = async() => {
-      const res = await fetch('/api/fetcheveryteam')
-
-      if(!res.ok){
-        const errtext = await res.text()
-        console.log(errtext)
-        return ;
+     try {
+        setloading(true)
+        const res = await fetch('/api/fetcheveryteam')
+  
+        if(!res.ok){
+          const errtext = await res.text()
+          console.log(errtext)
+          return ;
+        }
+  
+        const data = await res.json()
+  
+        console.log(data?.message)
+  
+        setEveryTeamData(data?.data)
+      } catch (error) {
+        console.error(`failed to fetch everyteam : ${error}`)
+      } finally {
+        setloading(false)
       }
-
-      const data = await res.json()
-
-      console.log(data?.message)
-
-      setEveryTeamData(data?.data)
     }
-    // fetchEveyTeam()
+    fetchEveyTeam()
   },[])
 
   return (
@@ -38,21 +48,44 @@ export default function Page() {
 
         <section className="overflow-y-auto scrollbar-hide py-2">
             {
-              eveyteamdata.length > 0 ? 
-              <div className="flex flex-wrap gap-5 px-8 py-2">
-                {eveyteamdata.map((teamdata : TeamCardInfoType, idx : number) => (
-                  <Teamcard props={teamdata} key={idx}/>
-                ))}
-              </div>
-              : 
-              <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(96vh-14rem)]'>
-                <Image src={NoteamcreatedYet} alt='noteam' className='w-60 h-40 animate-pulse'/>
-                <p className='text-base'>No team found yet.</p>
-                <p className='opacity-70 text-xs'>Comeback later!</p>
-              </ div>
+              loading ? 
+              <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(95vh-3rem)]'>
+                <p className='opacity-70 text-xs animate-pulse'>Wait fetching others teams...</p>
+              </div> : 
+              (
+                Array.isArray(eveyteamdata) && eveyteamdata.length > 0 ?
+                <div className="flex flex-wrap gap-5 px-8 py-2">
+                  {eveyteamdata.map((teamdata : TeamCardInfoType, idx : number) => (
+                    <Teamcard props={teamdata} key={idx}/>
+                  ))}
+                </div> 
+                :
+                (
+                  <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(96vh-14rem)]'>
+                    {/* <Image src={NoteamcreatedYet} alt='noteam' className='w-60 h-40 animate-pulse'/> */}
+                    <p className='text-base'>No team has been Created Yet, Why don't you start this revolution.</p>
+                    <p className=' text-xs bg-purple-300 text-black font-opensans cursor-pointer px-4 py-1 rounded-md' onClick={() => router.push('/createteam')}>Create your first team</p>
+                  </ div>
+                )
+              )
             }
         </section>
 
     </main>
   )
 }
+
+// {
+//               eveyteamdata.length > 0 ? 
+              // <div className="flex flex-wrap gap-5 px-8 py-2">
+              //   {eveyteamdata.map((teamdata : TeamCardInfoType, idx : number) => (
+              //     <Teamcard props={teamdata} key={idx}/>
+              //   ))}
+              // </div>
+//               : 
+              // <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(96vh-14rem)]'>
+              //   <Image src={NoteamcreatedYet} alt='noteam' className='w-60 h-40 animate-pulse'/>
+              //   <p className='text-base'>No team found yet.</p>
+              //   <p className='opacity-70 text-xs'>Comeback later!</p>
+              // </ div>
+//             }

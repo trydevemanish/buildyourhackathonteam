@@ -36,7 +36,7 @@ export default function Page() {
                 setLoading(false)
             }
         }
-        // fetchJoinedTeam()
+        fetchJoinedTeam()
     },[])
 
   return (
@@ -49,11 +49,16 @@ export default function Page() {
         :
         (
             Array.isArray(fetchteamJoinedData) && fetchteamJoinedData.length > 0 ?
-                <div className="flex xs:flex-col md:flex-row gap-2 flex-wrap xs:px-4 md:px-6 pt-2">
-                    {fetchteamJoinedData.map((teamdata : TeamJoinedByUserDetail, idx : number) => (
-                        <TeamCardUserJoin key={idx} props={teamdata} />
-                    ))}
-                </div>
+            (
+               <div className='flex flex-col gap-2 py-2'>
+                    <p className='text-center font-opensans underline decoration-purple-400 underline-offset-4 decoration-2'>Team Joined</p>
+                    <div className="flex xs:flex-col md:flex-row gap-2 flex-wrap xs:px-4 md:px-6 pt-2">
+                        {fetchteamJoinedData.map((teamdata : TeamJoinedByUserDetail, idx : number) => (
+                            <TeamCardUserJoin key={idx} props={teamdata} />
+                        ))}
+                    </div>
+               </div>
+            )
             :
             (
                 <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(97vh-3rem)]'>

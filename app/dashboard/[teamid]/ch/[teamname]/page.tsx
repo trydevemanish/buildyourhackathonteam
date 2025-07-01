@@ -11,6 +11,7 @@ type fetchdatatype = {
   message:string,
 }
 
+// this page is for sending or receiving message from of a team.
 export default function Page() {
   const { teamid,teamname } = useParams()
   const [msg,setmsg] = useState('')

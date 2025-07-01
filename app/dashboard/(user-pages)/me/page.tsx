@@ -164,6 +164,7 @@ export default function Page() {
 
         <div className='py-5 border-t flex flex-col gap-5'>
           {/* shows simple data like team joined by user and when user joined the website  */}
+          <p className='text-center font-opensans text-sm underline decoration-purple-200 underline-offset-4'>Team detail</p>
             <div className='flex flex-row items-center gap-8'>
               <p>
                 <span className='font-opensans pr-2'>Joined At :</span> 
