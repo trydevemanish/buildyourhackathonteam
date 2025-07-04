@@ -90,7 +90,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
         <ProtectedRoute>
           {/* changing bakground color  */}
           <main className='bg-gradient-to-b from-[#e0e0e0] via-purple-50 to-[#e0e0e0]'>
-            <div className='xs:block md:grid md:grid-cols-7 min-h-screen overflow-x-hidden'>
+            <div className='xs:block md:grid md:grid-cols-7 max-h-screen overflow-x-hidden'>
               <div className='col-start-1 col-end-2 border-black border-r md:visible md:block  xs:hidden xs:invisible'>
                 <SideBarComp />
               </div>

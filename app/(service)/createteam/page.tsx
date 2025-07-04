@@ -196,7 +196,7 @@ export default function Page() {
                                         <span className='font-medium'>Team Name :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <input placeholder="Enter team name:" {...field} className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                        <input placeholder="Enter team name:" {...field} className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -214,7 +214,7 @@ export default function Page() {
                                         <span className='font-medium'>Project Name :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <input {...field} placeholder='Enter Project name:' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                        <input {...field} placeholder='Enter Project name:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -232,7 +232,7 @@ export default function Page() {
                                         <span className='font-medium'>Project Description :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} placeholder='Elaborate Project detail:' className='border border-black focus:outline-none text-[9px] px-2 w-96 ml-3 placeholder:text-xs py-2' />
+                                        <Textarea {...field} placeholder='Elaborate Project detail:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-[9px] px-2 w-96 ml-3 placeholder:text-xs py-2' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -251,7 +251,7 @@ export default function Page() {
                                         <span className='font-medium'>Hackathon Name :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <input {...field} placeholder='Enter Hackthon name:' className='border-b border-black focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                        <input {...field} placeholder='Enter Hackthon name:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -270,7 +270,7 @@ export default function Page() {
                                         <span className='font-medium'>Hackathon Desc:</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} rows={4} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b border-black focus:outline-none text-[9px] px-2 w-96 placeholder:text-xs py-2 ml-3' />
+                                        <Textarea {...field} rows={4} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-[9px] px-2 w-96 placeholder:text-xs py-2 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -283,7 +283,7 @@ export default function Page() {
                             loading ? 
                             <Loader2 className='size-3 animate-spin' /> : 
                             <div className='flex flex-col items-center justify-center'>
-                                <button className='bg-black flex gap-1 text-white px-12 text-xs rounded py-2 items-center'>
+                                <button className='bg-black flex gap-1 text-white border shadow-border shadow-xl border-purple-400 px-12 text-xs rounded py-2 items-center'>
                                     <CodeSandboxLogoIcon className='size-3' />
                                     <span> Create team</span>
                                 </button>

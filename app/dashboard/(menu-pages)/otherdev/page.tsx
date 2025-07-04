@@ -132,7 +132,7 @@ export default function Page() {
     }
   }
 
-
+ 
   return (
     <div>
       <div className='flex justify-between items-center px-3 py-1 border'>
@@ -201,7 +201,7 @@ export default function Page() {
             (
               <div className='flex justify-center items-center h-[calc(95vh-8rem)]'>
                 <section className='flex flex-col gap-3 justify-center items-center min-h-[calc(96vh-14rem)]'>
-                <Image src={NoteamcreatedYet} alt='noteam' className='w-60 h-40 animate-pulse'/>
+                {/* <Image src={NoteamcreatedYet} alt='noteam' className='w-60 h-40 animate-pulse'/> */}
                   <p className='opacity-80'>No Data found.</p>
                   <p className='opacity-80 text-center text-sm '>Try again later !</p>
                 </section>

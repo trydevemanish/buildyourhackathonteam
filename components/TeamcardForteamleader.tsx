@@ -41,7 +41,7 @@ export default function Teamcard(
     }
 
   return (
-    <div className='border border-black inline-block px-2 py-1 shadow shadow-neutral-300 cursor-pointer'>
+    <div className='border border-black inline-block px-2 py-1 bg-white shadow-md shadow-white cursor-pointer'>
         <div className='px-4 py-3 inline-block text-xs w-64 '>
             <div className='flex flex-col gap-1'>
                 <div className='flex justify-between items-center'>
