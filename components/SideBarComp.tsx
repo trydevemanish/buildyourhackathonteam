@@ -20,7 +20,7 @@ const layoutDataNavigationStructure = [
   },
   {
     id:4,
-    pushto : '/dashboard/otherdev',
+    pushto : '/dashboard/hackathonNews',
     para : 'Upcoming Hackathons'
   },
   {

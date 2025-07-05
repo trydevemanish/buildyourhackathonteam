@@ -3,6 +3,7 @@ import React,{ useState,useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import LoadingComponent from '@/components/LoadingComponent'
 
 type  userReqLeaderToJoinTeamNotification = {
   id : string,
@@ -24,6 +25,10 @@ export default function Page() {
   // this resemble to store fetch data of notification where leader invivtes user to join team
   const [leaderInviteUser,setLeaderInviteUser] = useState([])
 
+  //checking loading state...
+  const [loadingForReqType_U_t_L,setLoadingForReqType_U_t_L] = useState(false)
+  const [loadingForReqType_L_T_U,setLoadingForReqType_L_T_U] = useState(false)
+
   const [userAcceptedLeaderinvitation,setUserAcceptedLeaderinvitation] = useState(false)
   const [userRejectedLeaderinvitation,setUserRejectedLeaderinvitation] = useState(false)
   
@@ -33,15 +38,18 @@ export default function Page() {
   const router = useRouter()
   const { user } = useUser()
 
+  // this function will fetch all the notification where user is making req to team leader to join their team
   useEffect(() => {
-    // this function will fetch all the notification where user is making req to team leader to join their team
     const findAllNotificationReqTypq_U_t_L = async() => {
       try {
+
+        setLoadingForReqType_U_t_L(true)
 
         const res = await fetch(`/api/fetchnotification/user_to_Leader`)
 
         if(!res.ok){
           console.log(await res.text())
+          toast.error(await res.text())
           return;
         }
 
@@ -53,6 +61,8 @@ export default function Page() {
       } catch (error) {
         console.log(`Issue occured while fetching notification: ${error}`)
         throw new Error(`Issue occured while fetching notification: ${error}`)
+      } finally {
+        setLoadingForReqType_U_t_L(false)
       }
     }
     findAllNotificationReqTypq_U_t_L()
@@ -62,6 +72,8 @@ export default function Page() {
   useEffect(() => {
     const fetchallNotificationReqType_L_T_U = async() => {
         try {
+
+          setLoadingForReqType_L_T_U(true)
 
           const res = await fetch(`/api/fetchnotification/leader_to_User`)
 
@@ -78,6 +90,8 @@ export default function Page() {
         } catch (error) {
           console.log(`Issue occured while fetching notification: ${error}`)
           throw new Error(`Issue occured while fetching notification: ${error}`)
+        } finally {
+          setLoadingForReqType_L_T_U(false)
         }
     }
     fetchallNotificationReqType_L_T_U()
@@ -220,80 +234,104 @@ export default function Page() {
       }
   }
 
-
   return (
     <div>
       <div className='text-sm text-center py-2 border'>
             <p>Notification page.</p>
       </div>
+
       {/* this section will show the req that user made to leader to join team . */}
       <section className='text-xs flex flex-col overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
-        {userReqTeamToJoinData?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
-            <div key={idx}>
-              {user?.id == data?.leaderid && 
-                <div className="overflow-x-auto scrollbar-hide w-full">
-                  <div className='grid grid-cols-5 min-w-[600px] px-8 items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.userid}`)}>
-                    <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
-                    <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
-                    <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
-                    <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
-
-                    <div className='col-start-5 col-end-6'>
-                      <div className='flex justify-center gap-2 '>
-                          <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
-                          <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
+        {
+          loadingForReqType_U_t_L ? 
+          <LoadingComponent label='Fetching Notification' />
+          :
+          (
+            Array.isArray(userReqTeamToJoinData) && userReqTeamToJoinData.length > 0 ?
+            userReqTeamToJoinData?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
+              <div key={idx}>
+                {user?.id == data?.leaderid && 
+                  <div className="overflow-x-auto scrollbar-hide w-full">
+                    <div className='grid grid-cols-5 min-w-[600px] px-8 items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.userid}`)}>
+                      <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
+                      <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
+                      <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
+                      <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
+  
+                      <div className='col-start-5 col-end-6'>
+                        <div className='flex justify-center gap-2 '>
+                            <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
+                            <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              }
-              {user?.id == data?.userid && 
-                <div className="overflow-x-auto scrollbar-hide w-full" key={idx}>
-                  <div className='grid grid-cols-4 items-center min-w-[600px] py-1 gap-3 border-b'>
-                      <p className='opacity-70 text-[9px] col-start-1 col-end-2'>{data?.createdAt}</p>
-                      <p className='col-start-2 col-end-3'>{data?.rejectionmsg ?? 'no msg now'}</p>
-                      <p className='col-start-3 col-end-4'>status: {data?.status}</p>
-                      <p className='col-start-4 col-end-5'>reqtype: {data?.requesttype}</p>
+                }
+                {user?.id == data?.userid && 
+                  <div className="overflow-x-auto scrollbar-hide w-full" key={idx}>
+                    <div className='grid grid-cols-4 items-center min-w-[600px] py-1 gap-3 border-b'>
+                        <p className='opacity-70 text-[9px] col-start-1 col-end-2'>{data?.createdAt}</p>
+                        <p className='col-start-2 col-end-3'>{data?.rejectionmsg ?? 'no msg now'}</p>
+                        <p className='col-start-3 col-end-4'>status: {data?.status}</p>
+                        <p className='col-start-4 col-end-5'>reqtype: {data?.requesttype}</p>
+                    </div>
                   </div>
-                </div>
-              }
-            </div>
-        ))}
+                }
+              </div>
+            ))
+            :
+            (
+              <LoadingComponent label='No Notification yet...' />
+            )
+          )
+        }
       </section>
 
       <section>
-        {leaderInviteUser?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
-            <div key={idx}>
-              {user?.id == data?.userid && 
-                <div className="overflow-x-auto scrollbar-hide w-full">
-                  <div className='grid grid-cols-5 px-8 min-h-[600px] items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.leaderid}`)}>
-                    <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
-                    <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
-                    <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
-                    <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
+        {
+          loadingForReqType_L_T_U ?
+          <LoadingComponent label='Fetching Notification' />
+          :
+          (
+            Array.isArray(leaderInviteUser) && leaderInviteUser.length > 0 ?
+            leaderInviteUser?.map((data : userReqLeaderToJoinTeamNotification,idx:number) => (
+                <div key={idx}>
+                  {user?.id == data?.userid && 
+                    <div className="overflow-x-auto scrollbar-hide w-full">
+                      <div className='grid grid-cols-5 px-8 min-h-[600px] items-center py-1 gap-3 border-b' onClick={() => router.push(`/dashboard/user/u/${data?.leaderid}`)}>
+                        <p className='opacity-70 text-[9px] col-start-1 col-end-2 '>{data?.createdAt}</p>
+                        <p className='col-start-2 col-end-3'>{data?.user?.name} req to join team.</p>
+                        <p className='opacity-70 text-xs col-start-3 col-end-4'>Status: {data?.status}</p>
+                        <p className='col-start-4 col-end-5'>reqType: {data?.requesttype}</p>
 
-                    <div className='col-start-5 col-end-6'>
-                      <div className='flex justify-center gap-2 '>
-                          <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
-                          <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
-                          <button className='bg-black text-red py-1 px-6 rounded text-[9px]' >✖</button>
+                        <div className='col-start-5 col-end-6'>
+                          <div className='flex justify-center gap-2 '>
+                              <button className='bg-black text-white py-[2px] px-6 rounded text-[9px]' onClick={() => handleAcceptReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✔</button>
+                              <button className='bg-black text-red py-1 px-6 rounded text-[9px]' onClick={() => handleRejectReq(data?.id,data?.userid,data?.teamid,data?.leaderid,data?.status,data?.requesttype)}>✖</button>
+                              <button className='bg-black text-red py-1 px-6 rounded text-[9px]' >✖</button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  }
+                  {user?.id == data?.leaderid && 
+                  <div className="overflow-x-auto scrollbar-hide w-full" key={idx}>
+                      <div className='grid grid-cols-4 items-center py-1 min-h-[600px] gap-3 border-b'>
+                        <p className='opacity-70 text-[9px] col-start-1 col-end-2'>{data?.createdAt}</p>
+                        <p className='col-start-2 col-end-3'>{data?.rejectionmsg ?? 'no msg now'}</p>
+                        <p className='col-start-3 col-end-4'>status: {data?.status}</p>
+                        <p className='col-start-4 col-end-5'>reqtype: {data?.requesttype}</p>
+                      </div>
+                    </div>
+                  }
                 </div>
-              }
-              {user?.id == data?.leaderid && 
-               <div className="overflow-x-auto scrollbar-hide w-full" key={idx}>
-                  <div className='grid grid-cols-4 items-center py-1 min-h-[600px] gap-3 border-b'>
-                    <p className='opacity-70 text-[9px] col-start-1 col-end-2'>{data?.createdAt}</p>
-                    <p className='col-start-2 col-end-3'>{data?.rejectionmsg ?? 'no msg now'}</p>
-                    <p className='col-start-3 col-end-4'>status: {data?.status}</p>
-                    <p className='col-start-4 col-end-5'>reqtype: {data?.requesttype}</p>
-                  </div>
-                </div>
-              }
-            </div>
-        ))}
+            ))
+            :
+            (
+              <LoadingComponent label='No Notification yet...' />
+            )
+          )
+        }
       </section>
     </div>
   )

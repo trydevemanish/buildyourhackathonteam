@@ -14,7 +14,7 @@ export default function Teamcard({ props } : { props : TeamCardInfoType }){
   async function UserMadeaReqToTheTeamLeaderToJoinThereTeam(){
     try {
 
-      toast.loading('Sending req.')
+      toast.success('sending req')
 
       const res = await fetch(`/api/userReqtoJoinTeam`,{
         method : 'POST',
@@ -25,7 +25,7 @@ export default function Teamcard({ props } : { props : TeamCardInfoType }){
       }) 
 
       if(!res.ok){
-        console.log(await res.text())
+        toast.error(await res.text())
         return;
       }
 
@@ -40,7 +40,7 @@ export default function Teamcard({ props } : { props : TeamCardInfoType }){
   }
 
   return (
-       <div className='border border-black inline-block px-2 py-1 shadow shadow-purple-100 rounded cursor-pointer'> 
+       <div className='border border-black inline-block px-2 py-1 bg-white shadow-md shadow-white cursor-pointer'> 
         <div className='px-4 py-3 inline-block text-xs w-64 '>
             <div className='flex flex-col gap-1'>
                 <div className='flex justify-between items-center'>

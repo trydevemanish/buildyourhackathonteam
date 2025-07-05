@@ -16,6 +16,7 @@ export default function Page() {
   useEffect(() => {
     const handlefindUserCreatedTeamData = async() => {
       try {
+
         setLoading(true)
         
         const res = await fetch('/api/fetchallteamCreatedbyuser')

@@ -196,7 +196,7 @@ export default function Page() {
                                         <span className='font-medium'>Team Name :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <input placeholder="Enter team name:" {...field} className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                        <input {...field} placeholder="Enter team name:" className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
