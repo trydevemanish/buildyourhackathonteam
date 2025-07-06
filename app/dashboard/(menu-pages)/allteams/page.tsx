@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react"
 import Teamcard from "@/components/Teamcard"
 import { TeamCardInfoType } from "@/types/types"
-import NoteamcreatedYet from '@/public/noteamcreatedyet.jpg'
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 export default function Page() {
@@ -63,7 +61,7 @@ export default function Page() {
                 (
                   <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(96vh-14rem)]'>
                     {/* <Image src={NoteamcreatedYet} alt='noteam' className='w-60 h-40 animate-pulse'/> */}
-                    <p className='text-base'>No team has been Created Yet, Why don't you start this revolution.</p>
+                    <p className='text-base'>No team has been Created Yet, Why {"don't"} you start this revolution.</p>
                     <p className=' text-xs bg-purple-300 text-black font-opensans cursor-pointer px-4 py-1 rounded-md' onClick={() => router.push('/createteam')}>Create your first team</p>
                   </ div>
                 )

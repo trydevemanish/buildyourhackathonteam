@@ -2,9 +2,6 @@
 import React,{ useEffect, useState } from 'react'
 import Teamcard from '@/components/TeamcardForteamleader'
 import { TeamCardInfoType } from '@/types/types'
-import Noteam from "@/public/noteam.avif"
-import Image from 'next/image'
-import { LoaderIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export default function Page() {

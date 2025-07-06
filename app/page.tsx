@@ -8,7 +8,7 @@ import HeaderPara from "@/components/LandingPage/HeaderPara";
 import GridFeatureComponent from "@/components/LandingPage/GridFeatureComponent";
 import { ScrollAreaHorizontal } from "@/components/LandingPage/Scrollarea";
 
-export default function Home() {
+export default function Home() { 
   return (
     <main className="py-2">
         <Navbar />

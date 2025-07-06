@@ -1,8 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import Friend from '@/public/noteam.avif'
 import TeamCardUserJoin from '@/components/TeamCardUserJoin'
 import { TeamJoinedByUserDetail } from '@/types/types'
 
@@ -63,7 +61,7 @@ export default function Page() {
             (
                 <div className='flex flex-col gap-3 justify-center items-center min-h-[calc(97vh-3rem)]'>
                     <div className='flex flex-col items-center gap-1'>
-                        <p className='text-lg'>You Haven't Join any team yet, </p>
+                        <p className='text-lg'>You {"Haven't"} Join any team yet, </p>
                         <p className='text-sm opacity-70'> Join team to get started.</p>   
                     </div>
                     <button className='bg-black text-white px-8 py-1 text-xs rounded'>

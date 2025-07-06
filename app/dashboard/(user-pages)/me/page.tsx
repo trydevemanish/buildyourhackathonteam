@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { DialogDemoTextArea,DialogDemoInput,DialogDemoSelect } from '@/components/EditBox'
 import { useUser } from '@clerk/nextjs'
 import { WholeUserdata,teamCreatedData } from '@/types/types'
-import { Skeleton } from "@/components/ui/skeleton"
 import Image from 'next/image'
 import { teamCreatedAttributeNamenType } from '@/types/types'
 import LoadingComponent from '@/components/LoadingComponent'
@@ -73,7 +72,7 @@ export default function Page() {
         setFetchingUserData(false)
       }
     }
-    // fetchUserDetail()
+    fetchUserDetail()
   },[user?.id])
 
   return (

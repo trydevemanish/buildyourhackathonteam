@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Skeleton } from '@/components/ui/skeleton'
 import toast from 'react-hot-toast'
 import LoadingComponent from '@/components/LoadingComponent'
 import { teamCreatedAttributeNamenType } from '@/types/types'
@@ -91,7 +90,7 @@ export default function Page() {
                 setFetchingUserData(false)
             }
         }
-        // fetchUserData() 
+        fetchUserData() 
     },[userid])
 
     // this useeffect will help me find all the teams, that the leader who is visiting the developer page has created.
@@ -209,7 +208,7 @@ export default function Page() {
                     <div className='flex items-center justify-between w-full gap-2'>
                         {
                             socialMediaObject.map((data:socialMediaObjecttype,idx:number) => (
-                                <>
+                                <div key={idx}>
                                     {
                                         data.name == 'email' ?
                                         <p>{userdata?.email ? userdata?.email : 'No email added.'}</p>
@@ -221,7 +220,7 @@ export default function Page() {
                                             <p>{userdata?.linkedin ? userdata?.linkedin : 'No linkedin added.'}</p>
                                         )
                                     }
-                                </>
+                                </div>
                             ))
                         }
                     </div>

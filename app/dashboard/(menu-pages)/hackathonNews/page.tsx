@@ -2,34 +2,36 @@
 import React, { useEffect, useState } from 'react'
 
 export default function Page() {
-  const [data,setData] = useState(false)
+  // const [data,setData] = useState(false)
+  const [click,setClick] = useState(false)
 
   useEffect(() => { 
-    async function fetchHacakathonData(){
-      try {
-        const res = await fetch('/api/scrapewebsite')
+    // async function fetchHacakathonData(){
+    //   try { 
+    //     const res = await fetch('/api/scrapewebsite')
     
-        if(!res.ok){
-          throw new Error('Failed to scrape Website')
-        }
+    //     if(!res.ok){
+    //       throw new Error('Failed to scrape Website')
+    //     }
     
-        const data = await res.json();
+    //     const data = await res.json();
     
-        console.log('data response message',data.message)
-        console.log('data response data',data.data)
+    //     console.log('data response message',data.message)
+    //     console.log('data response data',data.data)
 
-      } catch (error) {
-        console.error(`Isuue: ${error}`)
-      }
-    }
+    //   } catch (error) {
+    //     console.error(`Isuue: ${error}`)
+    //   } 
+    // } 
 
     // fetchHacakathonData()
-  },[data])
+
+    console.log('ok')
+  },[click])
 
   return (
-    <div>
-      This page is where new hackathon will be showed after taking data from the devpost..
-      <button onClick={() => setData(prev => !prev)}>click</button>
+    <div className='px-6 py-4'>
+      <p className='text-center font-opensans text-lg' onClick={() => setClick(prev => !prev)}>This page will show the upcoming hakathon.</p>
     </div>
   )
 }

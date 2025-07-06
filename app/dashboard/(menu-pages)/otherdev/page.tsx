@@ -1,11 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import ProfileCard from '@/components/ProfileCard'
-import { User,IdCardIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { UserData } from '@/types/types'
-import NoteamcreatedYet from '@/public/noteamcreatedyet.jpg'
-import Image from "next/image"
 import { useUser } from '@clerk/nextjs'
 
 import {
@@ -18,10 +14,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import toast from 'react-hot-toast'
-
-const devDatatoShow = {
-  
-}
 
 export default function Page() {
   const [value,setvalue] = useState('')
