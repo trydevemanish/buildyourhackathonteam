@@ -33,7 +33,10 @@ export default function Page() {
 
         console.log('loading is tru')
 
-        const res = await fetch('/api/findallusers')
+        const res = await fetch('/api/findallusers',{
+          method: 'GET',
+          credentials: 'include',
+        })
  
         if(!res.ok){
           const errtext = await res.text()
@@ -66,6 +69,7 @@ export default function Page() {
 
           const res = await fetch(`/api/finduserbyname`,{
             method : 'GET',
+            credentials : 'include',
             headers : {
               'Content-Type':'application/json'
             },
@@ -100,6 +104,7 @@ export default function Page() {
 
       const res = await fetch(`/api/findUserbyrole`,{
         method : 'GET',
+        credentials:'include',
         headers : {
           'Content-Type':'application/json'
         },

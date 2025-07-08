@@ -65,7 +65,10 @@ export default function Page() {
                 
                 setloading(true)
 
-                const res  = await fetch(`/api/fetchteammembers/${teamid}`)
+                const res  = await fetch(`/api/fetchteammembers/${teamid}`,{
+          method: 'GET',
+          credentials: 'include',
+        })
 
                 if(!res.ok){
                     console.log(await res.text())
@@ -94,6 +97,7 @@ export default function Page() {
 
             const res = await fetch(`/api/removeMemberfromteam/${teamid}/${teammemberid}`,{
                 method  : 'DELETE',
+                credentials:'include',
                 headers : {
                     'Content-Type' : 'application/json'
                 },
@@ -119,6 +123,7 @@ export default function Page() {
 
             const res = await fetch(`/api/leaveteam/${teamid}/${teammemberid}`,{
                 method : 'DELETE',
+                credentials:'include'
             })
 
             if(!res.ok){

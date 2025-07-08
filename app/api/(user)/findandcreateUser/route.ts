@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function POST(_req:Request) {
    try {
 
-        const userdatareceived = await currentUser()
+        const { userId } = await auth();
 
-        if(!userdatareceived){
+        console.log('user id in the route.ts file',userId)
+
+        if(!userId){
           return NextResponse.json(
-            {error:`Unauthorisied User.`},
+            {message : 'Unauthorised user'},
             {status:401}
           )
         }
@@ -17,7 +19,7 @@ export async function POST(_req:Request) {
         // checking if user is already created.
         let user = await prisma.user.findUnique({
           where: {
-            id : userdatareceived?.id
+            id : userId
           }
         })
 
@@ -29,42 +31,29 @@ export async function POST(_req:Request) {
           )
         }
 
+        // const clerkUser = await clerkClient.users.getUser(userId);
+        const clerkUser = await (await clerkClient()).users.getUser(userId)
         console.log('Creating a new User')
         //otherwise create a new User.
-        user = await prisma.user.create({
+        const newuser = await prisma.user.create({
           data: {
-            id : userdatareceived?.id,
-            name : userdatareceived?.fullName || "New User",
-            email : userdatareceived?.emailAddresses[0].emailAddress,
-            bio : 'Add are your bio here.',
-            profileurl : userdatareceived?.imageUrl,
+            id : clerkUser.id,
+            name : clerkUser.fullName || "New User",
+            email : clerkUser.emailAddresses[0].emailAddress,
+            bio : 'Tell a little bit about yourself here..',
+            profileurl : clerkUser.imageUrl,
           }
         })
 
-        // assigning User credit here
-        const initialcredit = await prisma.userCredit.create({
-            data : {
-                initialCredit : 3,
-                userid:userdatareceived?.id
-            }
-        })
-
-        if(!user){
+        if(!newuser){
           return NextResponse.json(
             {error:`Issue occured when creating user`},
             {status:400}
           )
         }
 
-        if(!initialcredit){
-            return NextResponse.json(
-                {error:'Issue ocuured when creating user initial credit'},
-                {status:400}
-            )
-        }
-
         return NextResponse.json(
-          {message:`User Created:`,usercreatedData:user,userInitialCredit:initialcredit},
+          {message:`User Created:`,usercreatedData:newuser},
           {status:201}
         )
     

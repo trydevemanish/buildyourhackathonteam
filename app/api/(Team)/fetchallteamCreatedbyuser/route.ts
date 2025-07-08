@@ -3,14 +3,16 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET(_req:Request) {
     try {
 
-        const clerkUser = await currentUser()
+        const { userId } = await auth()
 
-        if(!clerkUser){
+        console.log('authorised user id in find all team created by user',userId)
+        
+        if(!userId){
             return NextResponse.json(
                 {error : `Unauthorized User`},
                 {status:401}
@@ -19,7 +21,7 @@ export async function GET(_req:Request) {
 
         const UserTeams = await prisma.team.findMany({
             where : {
-                leaderid : clerkUser?.id
+                leaderid : userId
             }
         })
 

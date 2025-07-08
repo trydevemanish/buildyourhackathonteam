@@ -72,7 +72,10 @@ export default function Page() {
 
                 setFetchingUserData(true)
 
-                const res = await fetch(`/api/finduserbyid/${userid}`)
+                const res = await fetch(`/api/finduserbyid/${userid}`,{
+          method: 'GET',
+          credentials: 'include',
+        })
 
                 if(!res.ok){
                     console.log(await res.text())
@@ -100,7 +103,10 @@ export default function Page() {
 
                 setFetchingUserData(true)
 
-                const res = await fetch(`/api/finduserbyid/${user?.id}`)
+                const res = await fetch(`/api/finduserbyid/${user?.id}`,{
+          method: 'GET',
+          credentials: 'include',
+        })
 
                 if(!res.ok){
                     console.log(await res.text())
@@ -131,6 +137,7 @@ export default function Page() {
 
             const res = await fetch('/api/leaderrequsertojointeam',{
                 method:'POST',
+                credentials:'include',
                 headers:{
                     'Content-Type':'application/json'
                 },

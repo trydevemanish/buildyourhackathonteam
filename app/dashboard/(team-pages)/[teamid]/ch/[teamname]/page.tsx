@@ -43,12 +43,15 @@ export default function Page() {
         throw new Error('Can not fetch the message ')
       }
  
-      
-      const docs = querySnapshot.docs.map(doc => ({
+      const docs = querySnapshot.docs
+      .filter(doc => doc.get('teamid') == teamid)
+      .map(doc => ({
         id: doc.id,
-        // teamid : doc.get('teamid'),
+        teamid : doc.get('teamid'),
         ...doc.data()
       } as fetchdatatype));
+
+      console.log('docs for notorious gang',docs)
 
       setFetchData(docs)
     }
@@ -75,7 +78,7 @@ export default function Page() {
         throw new Error('Issue occured while adding document')
       }
 
-      toast.success('Document added')
+      toast.success('msg added')
       setmsg('')
 
     } catch (e) {
@@ -105,7 +108,7 @@ export default function Page() {
 
   return (
     <div className='px-6'>
-      <section className='border-b py-2'>
+      <section className=' py-2'>
         <p className='text-center font-opensans py-1'>
           <span className='text-xl'>Welcome, </span>
           <span className='text-sm opacity-80'>{teamname ? teamname : 'team x'}</span>

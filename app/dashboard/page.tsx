@@ -16,7 +16,10 @@ export default function Page() {
 
         setLoading(true)
         
-        const res = await fetch('/api/fetchallteamCreatedbyuser')
+        const res = await fetch('/api/fetchallteamCreatedbyuser',{
+          method: 'GET',
+          credentials: 'include',
+        })
   
         if(!res.ok){
           const errText = await res.text()

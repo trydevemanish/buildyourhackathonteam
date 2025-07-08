@@ -8,7 +8,7 @@ export async function GET(_req:Request) {
             orderBy : {
                 name : 'asc'
             }
-        })
+        }) 
 
         if(!userdata){
             return NextResponse.json(

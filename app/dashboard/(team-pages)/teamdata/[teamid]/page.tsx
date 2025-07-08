@@ -48,7 +48,10 @@ export default function Page() {
     const findTeamData = async() => {
       try {
         setloading(true)
-        const res = await fetch(`/api/findteambyid/${teamid}`)
+        const res = await fetch(`/api/findteambyid/${teamid}`,{
+          method: 'GET',
+          credentials: 'include',
+        })
 
         if(!res.ok){
           const errtext = await res.text()
@@ -78,6 +81,7 @@ export default function Page() {
 
       const res = await fetch(`/api/userReqtoJoinTeam`,{
         method : 'POST',
+        credentials:'include',
         headers : {
           'Content-Type' : 'application/json'
         },
@@ -106,7 +110,8 @@ export default function Page() {
     try {
     
       const res = await fetch(`/api/deleteTeam/${teamdata?.id}`,{
-          method: 'DELETE'
+          method: 'DELETE',
+          credentials:'include'
       })
       
       if(!res.ok){
@@ -133,6 +138,7 @@ export default function Page() {
 
       const res = await fetch(`/api/checkUserisInteam/${teamdata?.id}`,{
         method : 'POST',
+        credentials:'include', 
         headers : {
           'Content-Type':'application/json'
         },

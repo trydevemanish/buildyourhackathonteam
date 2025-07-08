@@ -13,7 +13,10 @@ export default function Page() {
     const fetchEveyTeam = async() => {
      try {
         setloading(true)
-        const res = await fetch('/api/fetcheveryteam')
+        const res = await fetch('/api/fetcheveryteam',{
+          method: 'GET',
+          credentials: 'include',
+        })
   
         if(!res.ok){
           const errtext = await res.text()

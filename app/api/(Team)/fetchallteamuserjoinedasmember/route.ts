@@ -1,16 +1,20 @@
 // need to do pagination 
 // fetch only neccessary field using include
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser,auth } from "@clerk/nextjs/server";
 
-export async function GET(_req:Request) {
+export async function GET(_req:NextRequest) {
     try {
 
-        const clerkUser = await currentUser()
+        // const clerkUser = await currentUser()
+        const { userId } = await auth()
+         
 
-        if(!clerkUser){
+        console.log('authorised user id in find all team joined by user',userId)
+
+        if(!userId){
             return NextResponse.json(
                 {error : `Unauthorized User`},
                 {status:401}
@@ -19,7 +23,7 @@ export async function GET(_req:Request) {
 
         const userjoinedteamsasmembers = await prisma.teamMembers.findMany({
             where : {
-                userId : clerkUser?.id
+                userId : userId
             },
             include : {
                 team : true

@@ -53,7 +53,10 @@ export default function Page() {
 
         setFetchingUserData(true)
 
-         const res = await fetch(`/api/finduserbyid/${user?.id}`)
+         const res = await fetch(`/api/finduserbyid/${user?.id}`,{
+          method: 'GET',
+          credentials: 'include',
+        })
 
          if(!res.ok){
           console.error(await res.text())

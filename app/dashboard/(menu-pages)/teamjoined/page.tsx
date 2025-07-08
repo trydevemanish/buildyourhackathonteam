@@ -14,7 +14,10 @@ export default function Page() {
 
                 setLoading(true)
 
-                const res = await fetch('/api/fetchallteamuserjoinedasmember')
+                const res = await fetch('/api/fetchallteamuserjoinedasmember',{
+                    method: 'GET',
+                    credentials: 'include',
+                })
 
                 if(!res.ok){
                     const errtext = await res.text()
