@@ -3,7 +3,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser,auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET(_req:NextRequest) {
     try {

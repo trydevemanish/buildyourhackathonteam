@@ -57,7 +57,7 @@ export default function Page() {
     }
 
     getmessage()
-  },[msgadded,deleteMsg])
+  },[msgadded,deleteMsg,teamid])
 
   async function addmessage(event:React.FormEvent<HTMLFormElement>){
     event.preventDefault();
