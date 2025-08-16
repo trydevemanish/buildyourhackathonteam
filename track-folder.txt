@@ -1,0 +1,7 @@
+dashboard
+  -layout.tsx
+  -page.tsx
+menu-page
+  -allteams
+  -teamjoined
+  -otherdev

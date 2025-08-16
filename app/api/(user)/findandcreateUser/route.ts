@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { auth, clerkClient } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
-export async function POST(_req:Request) {
+export async function POST(req:Request) {
    try {
 
-        const { userId } = await auth();
+        const { userId } = await req.json();
 
         console.log('user id in the route.ts file',userId)
 

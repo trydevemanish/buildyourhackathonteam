@@ -19,7 +19,6 @@ export default function Page() {
   const [value,setvalue] = useState('')
   const [loading,setloading] = useState(false)
   const [fetchdevdata,setfetchdevdata] = useState([])
-  // const [showInUserTableType,setShowInUserTableType] = useState(true)
 
   const router = useRouter()
   const { user} = useUser()
@@ -30,8 +29,6 @@ export default function Page() {
       try {
 
         setloading(true)
-
-        console.log('loading is tru')
 
         const res = await fetch('/api/findallusers',{
           method: 'GET',
@@ -65,8 +62,6 @@ export default function Page() {
       const interval = setInterval(async() => {
         try {
 
-          toast.loading('fetching user')
-
           const res = await fetch(`/api/finduserbyname`,{
             method : 'GET',
             credentials : 'include',
@@ -99,8 +94,6 @@ export default function Page() {
 
   const findUserWithTheirRole = async(value:'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design') => {
     try {
-
-      toast.loading('fetching user with role.')
 
       const res = await fetch(`/api/findUserbyrole`,{
         method : 'GET',

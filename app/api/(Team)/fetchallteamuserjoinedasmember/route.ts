@@ -3,13 +3,12 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
 
-export async function GET(_req:NextRequest) {
+export async function POST(req:NextRequest) {
     try {
 
         // const clerkUser = await currentUser()
-        const { userId } = await auth()
+        const { userId } = await req.json()
          
 
         console.log('authorised user id in find all team joined by user',userId)

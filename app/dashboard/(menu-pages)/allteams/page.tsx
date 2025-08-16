@@ -9,6 +9,7 @@ export default function Page() {
   const [loading,setloading] = useState(false)
   const router = useRouter()
 
+  // fetch every team 
   useEffect(() => {
     const fetchEveyTeam = async() => {
      try {

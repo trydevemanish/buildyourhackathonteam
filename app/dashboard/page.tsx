@@ -3,13 +3,16 @@ import React,{ useEffect, useState } from 'react'
 import Teamcard from '@/components/TeamcardForteamleader'
 import { TeamCardInfoType } from '@/types/types'
 import { useRouter } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
 
 export default function Page() {
 
   const [teamDataFromBackend,setTeamDataFromBackend] = useState([])
   const [loading,setLoading] = useState(false)
   const router = useRouter()
+  const { user } = useUser()
 
+  // fetch all teams created by the user (user is a leader)
   useEffect(() => {
     const handlefindUserCreatedTeamData = async() => {
       try {
@@ -17,8 +20,12 @@ export default function Page() {
         setLoading(true)
         
         const res = await fetch('/api/fetchallteamCreatedbyuser',{
-          method: 'GET',
+          method: 'POST',
           credentials: 'include',
+          headers : {
+            'Content-Type' : 'application/json'
+          },
+          body : JSON.stringify({ userId:user?.id })
         })
   
         if(!res.ok){
@@ -41,6 +48,7 @@ export default function Page() {
     }
     handlefindUserCreatedTeamData()
   },[])
+  
 
   return (
     <main>

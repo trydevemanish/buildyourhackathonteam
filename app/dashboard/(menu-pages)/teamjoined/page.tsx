@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TeamCardUserJoin from '@/components/TeamCardUserJoin'
 import { TeamJoinedByUserDetail } from '@/types/types'
+import { useUser } from '@clerk/nextjs'
 
 export default function Page() {
     const [fetchteamJoinedData, setfetchTeamJoinedData] = useState([])
     const [loading,setLoading] = useState(false)
+    const { user } = useUser()
 
+    // fetching all the team joined by thee use as a leader or as a member
     useEffect(() => {
         const fetchJoinedTeam = async() => {
             try {
@@ -15,8 +18,12 @@ export default function Page() {
                 setLoading(true)
 
                 const res = await fetch('/api/fetchallteamuserjoinedasmember',{
-                    method: 'GET',
+                    method: 'POST',
                     credentials: 'include',
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    },
+                    body : JSON.stringify({ userId : user?.id  })
                 })
 
                 if(!res.ok){
