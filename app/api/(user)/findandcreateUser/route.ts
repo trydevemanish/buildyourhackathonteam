@@ -33,7 +33,7 @@ export async function POST(req:Request) {
 
         // const clerkUser = await clerkClient.users.getUser(userId);
         const clerkUser = await (await clerkClient()).users.getUser(userId)
-        console.log('Creating a new User')
+        console.log('Creating a new User', clerkUser.id, clerkUser.fullName, clerkUser.emailAddresses[0].emailAddress)
         //otherwise create a new User.
         const newuser = await prisma.user.create({
           data: {

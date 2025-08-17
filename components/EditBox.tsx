@@ -45,7 +45,7 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ email : email,userId:user?.id })
+        body:JSON.stringify({ newEmail:email,userId:user?.id })
       })
       
       if(!res.ok){
@@ -73,7 +73,7 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ github : github,userId:user?.id })
+        body:JSON.stringify({ newGithub:github,userId:user?.id })
       })
       
       if(!res.ok){
@@ -101,7 +101,7 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ linkedin : linkedin,userId:user?.id })
+        body:JSON.stringify({ newLinkedin:linkedin,userId:user?.id })
       })
       
       if(!res.ok){
@@ -185,7 +185,7 @@ export function DialogDemoTextArea({props} : {props : propsProperties}) {
   const [description, setDescription] = useState('')
   const { user } = useUser()
 
-  async function handledescriptionChanges(){
+  async function handledescriptionChanges(description:string){
     try {
 
       toast.dismiss('updating description.')
@@ -195,7 +195,7 @@ export function DialogDemoTextArea({props} : {props : propsProperties}) {
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ description : description,userId:user?.id })
+        body:JSON.stringify({ newbio : description,userId:user?.id })
       })
       
       if(!res.ok){
@@ -239,7 +239,7 @@ export function DialogDemoTextArea({props} : {props : propsProperties}) {
             />
         </div>
         <DialogFooter>
-          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" onClick={handledescriptionChanges} >Save changes</button>
+          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" onClick={() => handledescriptionChanges(description)} >Save changes</button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -261,7 +261,7 @@ export function DialogDemoSelect({props} : {props : propsProperties}) {
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ role : role,userId:user?.id })
+        body:JSON.stringify({ newRole:role,userId:user?.id })
       })
       
       if(!res.ok){

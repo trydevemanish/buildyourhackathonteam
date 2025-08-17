@@ -12,7 +12,7 @@ export default function Page() {
   const router = useRouter()
   const { user } = useUser()
 
-  // fetch all teams created by the user (user is a leader)
+  // fetch all teams created by the user (user is a leade r)
   useEffect(() => {
     const handlefindUserCreatedTeamData = async() => {
       try {

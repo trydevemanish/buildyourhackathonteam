@@ -6,6 +6,8 @@ export async function PUT(req : Request){
     try {
 
         const { newbio,userId } = await req.json()
+        
+        console.log('newbio',newbio)
 
         if(!newbio){
             return NextResponse.json(
@@ -13,6 +15,7 @@ export async function PUT(req : Request){
                 {status:404}
             )
         }
+
 
         if(!userId){
             return NextResponse.json(

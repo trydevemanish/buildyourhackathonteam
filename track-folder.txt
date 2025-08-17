@@ -26,3 +26,6 @@ components
   -TeamCard
   -TeamCardforteamleader
   -TeamCardUserJoin
+
+Check vulnarabilities in the code 
+- when going to the dashboard cant create a new user
