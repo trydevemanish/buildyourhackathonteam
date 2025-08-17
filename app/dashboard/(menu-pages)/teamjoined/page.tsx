@@ -45,7 +45,7 @@ export default function Page() {
             }
         }
         fetchJoinedTeam()
-    },[])
+    },[user?.id])
 
   return (
     <div>

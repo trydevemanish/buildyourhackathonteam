@@ -47,7 +47,7 @@ export default function Page() {
       }
     }
     handlefindUserCreatedTeamData()
-  },[])
+  },[user?.id])
   
 
   return (
