@@ -109,7 +109,7 @@ export default function Page() {
               <div className='flex items-center pt-2 gap-2'>
                 <DialogDemoTextArea props={{ nameOfProp: 'Description' }} />
                 <p className='font-opensans'>
-                    {userdata?.bio ? userdata?.bio : 'Add a small intro of youself .'}
+                    {userdata?.bio ? userdata?.bio : 'Add a small intro of yourself .'}
                 </p>
               </div>
 
@@ -208,37 +208,3 @@ export default function Page() {
    </div>
   )
 }
-
-
-            {/* <div className='flex items-center gap-2'>
-              <DialogDemoInput props={{ nameOfProp: 'Email' }} />
-              <div>
-                {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
-                  <>
-                      {userdata?.email ? userdata?.email : 'No email added.'}
-                  </>
-                }
-              </div>
-            </div>
-
-            <div className='flex items-center gap-2'>
-              <DialogDemoInput props={{ nameOfProp: 'Github' }} />
-              <div>
-                {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
-                  <>
-                    {userdata?.github ? userdata?.github : 'No github added.'}
-                  </>
-                }
-              </div>
-            </div>
-
-            <div className='flex items-center gap-2'>
-              <DialogDemoInput props={{ nameOfProp: 'Linkedin' }} />
-              <div>
-                {fetchinguserdata ? <Skeleton className='rounded w-20 h-4' /> : 
-                  <>
-                    {userdata?.linkedin ? userdata?.linkedin : 'No linkedin added.'}
-                  </>
-                }
-              </div>
-            </div> */}

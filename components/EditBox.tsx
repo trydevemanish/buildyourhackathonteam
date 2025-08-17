@@ -23,6 +23,7 @@ import { Edit3 } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useUser } from "@clerk/nextjs"
 
 type propsProperties = {
   nameOfProp : string;
@@ -32,23 +33,22 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
   const [email,setEmail] = useState('')
   const [github,setGithub] = useState('')
   const [linkedin,setLinkedin] = useState('')
+  const { user } = useUser()
 
   async function handleEmailUpdate(){
-    // console.log('Email:', email)
     try {
 
-      toast.loading('updating email.')
+      toast.dismiss('updating email.')
 
       const res =  await fetch('/api/updateEmail',{
         method: 'PUT',
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ email : email })
+        body:JSON.stringify({ email : email,userId:user?.id })
       })
       
       if(!res.ok){
-        toast.error(await res.text())
         console.log(await res.text())
         return ;
       }
@@ -59,27 +59,25 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
 
     } catch (error) {
       console.log(`Issue Ocuured while updating email : ${error}.`)
-      toast.error('Issue Ocuured while updating email.')
+      return
     }
   }
 
   async function handleGithubUpdate() {
-    // console.log('Github: ',github)
     try {
 
-      toast.loading('updating github.')
+      toast.dismiss('updating github.')
 
       const res =  await fetch('/api/updateGithub',{
         method: 'PUT',
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ github : github })
+        body:JSON.stringify({ github : github,userId:user?.id })
       })
       
       if(!res.ok){
         console.log(await res.text())
-        toast.error(await res.text())
         return ;
       }
 
@@ -94,7 +92,6 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
   }
 
   async function handleLinkedinUpdate() {
-    // console.log("Linkedin: ",linkedin)
     try {
 
       toast.loading('updating Linkedin.')
@@ -104,12 +101,11 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ linkedin : linkedin })
+        body:JSON.stringify({ linkedin : linkedin,userId:user?.id })
       })
       
       if(!res.ok){
         console.log(await res.text())
-        toast.error(await res.text())
         return ;
       }
 
@@ -187,25 +183,23 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
 export function DialogDemoTextArea({props} : {props : propsProperties}) {
 
   const [description, setDescription] = useState('')
+  const { user } = useUser()
 
   async function handledescriptionChanges(){
-    // console.log(description)
-
     try {
 
-      toast.loading('updating description.')
+      toast.dismiss('updating description.')
 
       const res =  await fetch('/api/updatedesc',{
         method: 'PUT',
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ description : description })
+        body:JSON.stringify({ description : description,userId:user?.id })
       })
       
       if(!res.ok){
         console.log(await res.text())
-        toast.error(await res.text())
         return ;
       }
 
@@ -253,24 +247,25 @@ export function DialogDemoTextArea({props} : {props : propsProperties}) {
   )
 }
 
+
 export function DialogDemoSelect({props} : {props : propsProperties}) {
+  const {user} = useUser()
 
   async function updateRole(role:'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design') {
     try {
 
-      toast.loading('updating role.')
+      toast.dismiss('updating role.')
 
       const res =  await fetch('/api/changeUserRole',{
         method: 'PUT',
         headers : {
           'Content-Type':'application/json'
         },
-        body:JSON.stringify({ role : role })
+        body:JSON.stringify({ role : role,userId:user?.id })
       })
       
       if(!res.ok){
         console.log(await res.text())
-        toast.error(await res.text())
         return ;
       }
 
@@ -280,7 +275,6 @@ export function DialogDemoSelect({props} : {props : propsProperties}) {
 
     } catch (error) {
       console.log(`Issue Ocuured while updating Role. :${error}`)
-      toast.error('Issue Ocuured while updating Role')
     }
   }
 

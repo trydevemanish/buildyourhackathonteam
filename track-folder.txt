@@ -17,3 +17,12 @@ user-page
 service
   -createteam
   -notification
+components
+  -Authpage
+  -EditBox
+  -LoadingComponent
+  -ProtectedRoute
+  -SideBarComp
+  -TeamCard
+  -TeamCardforteamleader
+  -TeamCardUserJoin

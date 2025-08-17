@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export async function PUT(req : Request){
     try {
 
-        const { newEmail } = await req.json()
+        const { newEmail,userId } = await req.json()
 
         if(!newEmail){
             return NextResponse.json(
@@ -14,11 +14,18 @@ export async function PUT(req : Request){
             )
         }
 
-        const authUser = await currentUser()
+        if(!userId){
+            return NextResponse.json(
+                {error : `User id not passed`},
+                {status:404}
+            )
+        }
+
+        const authUser = await (await clerkClient()).users.getUser(userId)
 
         if(!authUser){
             return NextResponse.json(
-                {error:`Unauthorizied User.`},
+                {error:`Invalid User id.`},
                 {status:401}
             )
         }

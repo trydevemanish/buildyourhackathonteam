@@ -14,18 +14,18 @@ export default function Teamcard({ props } : { props : TeamCardInfoType }){
   async function UserMadeaReqToTheTeamLeaderToJoinThereTeam(){
     try {
 
-      toast.success('sending req')
+      toast.dismiss('sending req')
 
       const res = await fetch(`/api/userReqtoJoinTeam`,{
         method : 'POST',
         headers : {
           'Content-Type' : 'application/json'
         },
-        body : JSON.stringify({ leaderid: props?.leaderid ,teamid: props?.id })
+        body : JSON.stringify({ leaderid: props?.leaderid ,teamid: props?.id,userId:user?.id })
       }) 
 
       if(!res.ok){
-        toast.error(await res.text())
+        console.error(await res.text())
         return;
       }
 
@@ -35,7 +35,6 @@ export default function Teamcard({ props } : { props : TeamCardInfoType }){
       
     } catch (error) {
       console.log(`Failed to make req to leader: ${error}`)
-      toast.error(`Failed to make req to leader.`)
     }
   }
 

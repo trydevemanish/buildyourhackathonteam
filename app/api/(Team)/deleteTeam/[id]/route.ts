@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export async function DELETE(req:Request) {
     try {
@@ -8,7 +8,9 @@ export async function DELETE(req:Request) {
         const newurl = new URL(req.url)
         const teamId = newurl.pathname.split('/')[3]
 
-        const clerkUser = await currentUser()
+        const { userId } = await req.json()
+
+        const clerkUser = await (await clerkClient()).users.getUser(userId)
 
         if(!clerkUser){
             return NextResponse.json(

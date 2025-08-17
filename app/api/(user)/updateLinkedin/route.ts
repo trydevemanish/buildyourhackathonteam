@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export async function PUT(req : Request){
     try {
 
-        const { newLinkedin } = await req.json()
+        const { newLinkedin,userId } = await req.json()
 
         if(!newLinkedin){
             return NextResponse.json(
@@ -14,7 +14,14 @@ export async function PUT(req : Request){
             )
         }
 
-        const authUser = await currentUser()
+        if(!userId){
+          return NextResponse.json(
+            {message : 'Unauthorised user'},
+            {status:401}
+          )
+        }
+
+        const authUser = await (await clerkClient()).users.getUser(userId)
 
         if(!authUser){
             return NextResponse.json(
