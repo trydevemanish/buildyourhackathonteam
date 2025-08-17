@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
 
 export async function POST(req:Request) {
     try {
@@ -15,11 +14,11 @@ export async function POST(req:Request) {
             )
         }
 
-        const clerkUser = await currentUser()
+        const { userId } = await req.json()
 
-        if(!clerkUser){
+        if(!userId){
             return NextResponse.json(
-                {message:'UnAuthorised User'},
+                {error:`userId not passed`},
                 {status:400}
             )
         }
@@ -27,7 +26,7 @@ export async function POST(req:Request) {
         const newMember = await prisma.teamMembers.create({
             data:{
                 teamId : teamId,
-                userId : clerkUser?.id,
+                userId : userId,
             }
         })
 

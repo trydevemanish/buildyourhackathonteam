@@ -20,17 +20,13 @@ import {
   } from "@/components/ui/form"
 import { Textarea } from '@/components/ui/textarea'
 import toast from 'react-hot-toast'
+import { useUser } from '@clerk/nextjs'
 
 
 export default function Page() {
-    // const [usercredit,setUserCredit] = useState<number>()
     const [loading,setloading] = useState(false)
     const router = useRouter()
-
-    // useEffect(() => {
-    //     //when this page will load automaticaaly user intital credit will be fetched.
-    //     findUserTotalCredit()
-    // },[])
+    const {user} = useUser()
 
     const form = useForm<z.infer<typeof TeamFormationSchema>>({
         resolver : zodResolver(TeamFormationSchema),
@@ -41,17 +37,13 @@ export default function Page() {
 
             setloading(true)
 
-            // if(usercredit == 0){
-            //     console.log('User is out of credit.')
-            //     return;
-            // }
-
             const res = await fetch(`/api/createTeam`,{
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'
                 },
                 body : JSON.stringify({ 
+                    leaderid:user?.id,
                     teamname:values?.teamname,
                     projectname:values?.projectname, 
                     projectdesc:values?.projectdesc, 
@@ -93,7 +85,7 @@ export default function Page() {
           headers : {
             'Content-Type':'application/json'
           },
-          body : JSON.stringify({ teamid:teamid })
+          body : JSON.stringify({ teamid:teamid,userId:user?.id })
         })
 
         if(!res.ok){
@@ -110,63 +102,6 @@ export default function Page() {
             console.log(`Issue Coccured while Adding as a team Member : ${error}`)
         }
     }
-
-    // async function subtractCredit() {
-    //     try {
-
-    //         const res = await fetch(`/api/subtractcredit`,{
-    //             method : 'PUT',
-    //             headers : {
-    //                 'Content-Type':'application/json'
-    //             },
-    //             body: JSON.stringify({ inititalCredit : usercredit })
-    //         })
-
-    //         if(!res.ok){
-    //             const errtext = await res.text()
-    //             console.log(errtext)
-    //             return ;
-    //         }
-
-    //         const data = await res.json()
-
-    //         console.log(data?.message)
-            
-    //     } catch (error) {
-    //         console.log(`Failed to update userCredit: ${error}`)
-    //     }
-    // }
-
-    // add memebr to the team as a leader
-    
-
-    // async function findUserTotalCredit(){
-    //     try {
-           
-    //       const res = await fetch(`/api/findusercredit`)
-  
-    //       if(!res.ok){
-    //         const errtext = await res.text()
-    //         console.log(errtext)
-    //         return;
-    //       }
-  
-    //       const data = await res.json()
-  
-    //       if(!data){
-    //         console.log('Failed to covert res to json')
-    //         return;
-    //       }
-
-    //       console.log(data?.message)
-          
-    //       // need to set the user credit data here 
-    //       setUserCredit(data?.data?.initialCredit)
-          
-    //     } catch (error) {
-    //       console.log(`Failed to create User: ${error}`)
-    //     }
-    // }
 
   return (
     <div className='xs:block md:grid md:grid-cols-2 overflow-y-auto scrollbar-hide max-h-screen'>
@@ -196,7 +131,7 @@ export default function Page() {
                                         <span className='font-medium'>Team Name :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <input {...field} placeholder="Enter team name:" className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                        <input {...field} placeholder="Enter team name:" className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-xs px-2 w-96 py-1 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -214,7 +149,7 @@ export default function Page() {
                                         <span className='font-medium'>Project Name :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <input {...field} placeholder='Enter Project name:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                        <input {...field} placeholder='Enter Project name:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-xs px-2 w-96 py-1 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -232,7 +167,7 @@ export default function Page() {
                                         <span className='font-medium'>Project Description :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} placeholder='Elaborate Project detail:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-[9px] px-2 w-96 ml-3 placeholder:text-xs py-2' />
+                                        <Textarea {...field} placeholder='Elaborate Project detail:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-[9px] px-2 w-96 ml-3 placeholder:text-xs py-2' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -251,7 +186,7 @@ export default function Page() {
                                         <span className='font-medium'>Hackathon Name :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <input {...field} placeholder='Enter Hackthon name:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-xs px-2 w-96 py-1 ml-3' />
+                                        <input {...field} placeholder='Enter Hackthon name:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-xs px-2 w-96 py-1 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -270,7 +205,7 @@ export default function Page() {
                                         <span className='font-medium'>Hackathon Desc:</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} rows={4} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none text-[9px] px-2 w-96 placeholder:text-xs py-2 ml-3' />
+                                        <Textarea {...field} rows={4} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-[9px] px-2 w-96 placeholder:text-xs py-2 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -283,7 +218,7 @@ export default function Page() {
                             loading ? 
                             <Loader2 className='size-3 animate-spin' /> : 
                             <div className='flex flex-col items-center justify-center'>
-                                <button className='bg-black flex gap-1 text-white border shadow-border shadow-xl border-purple-400 px-12 text-xs rounded py-2 items-center'>
+                                <button className='bg-black flex gap-1 text-white border shadow-border shadow-xl border-purple-400 px-12 xs:text-base md:text-xs rounded py-2 items-center'>
                                     <CodeSandboxLogoIcon className='size-3' />
                                     <span> Create team</span>
                                 </button>

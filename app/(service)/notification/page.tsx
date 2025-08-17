@@ -49,7 +49,6 @@ export default function Page() {
 
         if(!res.ok){
           console.log(await res.text())
-          toast.error(await res.text())
           return;
         }
 
@@ -67,6 +66,8 @@ export default function Page() {
     }
     findAllNotificationReqTypq_U_t_L()
   },[leaderAcceptedUserinvitation,leaderRejectedUserinvitation])
+
+
 
   // this useeffect will fetch the notification data where user is invited by leader to join team
   useEffect(() => {
@@ -97,13 +98,15 @@ export default function Page() {
     fetchallNotificationReqType_L_T_U()
   },[userAcceptedLeaderinvitation,userRejectedLeaderinvitation])
 
+
+
   // hanlde accept req
   async function handleAcceptReq(reqid:string,userid:string,teamid:string,leaderid : string,status:string,reqType:string) {
       try {
           console.log(status)
           // make a req to add user to the teammember table.
-          if(status !== 'PENDING'){
-              console.log('This req is already handled: ${status}')
+          if(status != 'PENDING'){
+              console.log(`This req is already handled: ${status}`)
               return;
           } 
 
@@ -166,6 +169,9 @@ export default function Page() {
           console.log(`Issue Occured while accepting: ${error}`)
       }
   }
+
+
+
 
   //handle reject req.
   async function handleRejectReq(reqid:string,userid:string,teamid:string,leaderid : string,status:string,reqType:string){
@@ -241,7 +247,7 @@ export default function Page() {
       </div>
 
       {/* this section will show the req that user made to leader to join team . */}
-      <section className='text-xs flex flex-col overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
+      <section className='md:text-xs xs:text-base flex flex-col overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
         {
           loadingForReqType_U_t_L ? 
           <LoadingComponent label='Fetching Notification' />

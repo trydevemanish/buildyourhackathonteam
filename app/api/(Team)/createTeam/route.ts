@@ -1,11 +1,18 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export async function POST(req:Request) {
     try {
 
-        const { teamname,projectname,projectdesc,hackathonname,hackathondesc } = await req.json() ?? {}
+        const { teamname,projectname,projectdesc,hackathonname,hackathondesc,leaderid } = await req.json() ?? {}
+
+        if(!leaderid){
+            return NextResponse.json(
+                {error:`User id not passed`},
+                {status:404}
+            )
+        }
 
         if(!teamname && !projectname && !projectdesc && !hackathondesc && !hackathonname){
             return NextResponse.json(
@@ -14,19 +21,19 @@ export async function POST(req:Request) {
             )
         }
 
-        const clerkUser = await currentUser()
+        const clerkUser = await (await clerkClient()).users.getUser(leaderid)
 
         if(!clerkUser){
             return NextResponse.json(
-                {error:`Unauthorisied User.`},
-                {status:401}
+                {error:`Invalid User id.`},
+                {status:404}
             )
         }
 
         const newTeam = await prisma.team.create({
             data : {
                 teamname : teamname,
-                leaderid : clerkUser?.id,
+                leaderid : leaderid,
                 leadername:clerkUser?.firstName || 'not mentioned',
                 projectname:projectname,
                 projectdesc : projectdesc,

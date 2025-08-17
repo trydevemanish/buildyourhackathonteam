@@ -13,4 +13,7 @@ team-page
   -[teamid](chatpage done)
 user-page
   -me
-  
+  -user
+service
+  -createteam
+  -notification
