@@ -10,7 +10,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-//   SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -55,7 +54,6 @@ const teamCreatedAttributeNamen = [
 ]
 
 
-// Userdata
 // this is an important page , profile of othe devs
 export default function Page() {
     const [userdata,setUserData] = useState({} as WholeUserdata)
@@ -66,6 +64,7 @@ export default function Page() {
     const {userid} = useParams()
     const { user } = useUser()
 
+    // fetching the other dev user profile 
     useEffect(() => {
         const fetchUserData = async() => {
             try {
@@ -78,7 +77,8 @@ export default function Page() {
         })
 
                 if(!res.ok){
-                    console.log(await res.text())
+                    const errtext= await res.json()
+                    console.log(errtext)
                     return;
                 }
 
@@ -89,12 +89,15 @@ export default function Page() {
                 
             } catch (error) {
                 console.log(`Issue Occured while fetching user detail: ${error}`)
+                return
             } finally { 
                 setFetchingUserData(false)
             }
         }
+
         fetchUserData() 
     },[userid])
+
 
     // this useeffect will help me find all the teams, that the leader who is visiting the developer page has created.
     useEffect(() => {
@@ -119,6 +122,7 @@ export default function Page() {
                 
             } catch (error) {
                 console.log(`Issue Occured while fetching user detail: ${error}`)
+                return
             } finally {
                 setFetchingUserData(false)
             }
@@ -141,8 +145,10 @@ export default function Page() {
                 headers:{
                     'Content-Type':'application/json'
                 },
-                body:JSON.stringify({ userid:userid,teamid:selectedTeamId })
+                body:JSON.stringify({ userid:userid,teamid:selectedTeamId,leaderId: user?.id })
             })
+
+            // here the user id is the user whom leder send the request 
 
             if(!res.ok){
                 console.log(await res.text())

@@ -59,7 +59,8 @@ export default function Page() {
         })
 
          if(!res.ok){
-          console.error(await res.text())
+          const errtext = await res.json()
+          console.error(errtext)
           return;
          }
 

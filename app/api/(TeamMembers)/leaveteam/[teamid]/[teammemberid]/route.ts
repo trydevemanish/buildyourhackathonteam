@@ -1,16 +1,15 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
 
 export async function DELETE(req:Request) {
     try {
 
-        const clerkUser = await currentUser()
+        const { userId } = await req.json()
 
-        if(!clerkUser){
+        if(!userId){
             return NextResponse.json(
-                {error:`UnAuthorisied User`},
-                {status:401}
+                {error:`User is didn't pass`},
+                {status:404}
             )
         }
 
@@ -25,11 +24,26 @@ export async function DELETE(req:Request) {
             )
         }
 
+        // check if user is in a team 
+        const resultIfUserIsinTeamasaMember = await prisma.teamMembers.findFirst({
+            where : {
+                teamId : teamId,
+                userId:userId
+            }
+        })
+
+        if(!resultIfUserIsinTeamasaMember){
+            return NextResponse.json(
+                {message:"User isn't in team."},
+                {status:400}
+            )
+        }
+
         const leaveTeam = await prisma.teamMembers.delete({
             where:{
                 id:teammemberid,
                 teamId : teamId,
-                userId : clerkUser?.id
+                userId : userId
             }
         })
 

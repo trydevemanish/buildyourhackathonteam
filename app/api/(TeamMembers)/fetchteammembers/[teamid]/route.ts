@@ -26,7 +26,7 @@ export async function GET(req:Request) {
 
         if(!teamMember){
             return NextResponse.json(
-                {message:'No member in team'},
+                {message:'No memeber joined'},
                 {status:400}
             )
         }

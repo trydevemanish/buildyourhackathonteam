@@ -44,6 +44,7 @@ export default function Page() {
   const { user } = useUser()
   const router = useRouter()
   
+  // fetching team general data 
   useEffect(() => {
     const findTeamData = async() => {
       try {
@@ -74,6 +75,9 @@ export default function Page() {
     findTeamData()
   },[teamid])
 
+
+
+  // making req to the team leader to join team 
   async function UserMadeaReqToTheTeamLeaderToJoinThereTeam(){
     try {
 
@@ -85,7 +89,7 @@ export default function Page() {
         headers : {
           'Content-Type' : 'application/json'
         },
-        body : JSON.stringify({ leaderid: teamdata.leaderid ,teamid: teamdata.id })
+        body : JSON.stringify({ leaderid: teamdata.leaderid ,teamid: teamdata.id,userId:user?.id })
       }) 
 
       if(!res.ok){
@@ -105,6 +109,8 @@ export default function Page() {
       setCheckingReqSend(false)
     }
   }
+
+
 
   async function DeleteTeam() {
     try {
@@ -131,6 +137,7 @@ export default function Page() {
         console.log(`Issue occured deleting user: ${error}`)
     }
   }
+  
 
   // only move if user is in team
   async function movetoChatPage() {
@@ -262,19 +269,3 @@ export default function Page() {
     </div>
   )
 }
-
-{/* <div className='flex flex-col gap-1'>
-                 <p className='text-sm'>Project desc : </p>
-                 <div className='opacity-80 text-[12px]'>{teamdata?.projectdesc ? teamdata?.projectdesc :  <Skeleton className='rounded w-20 h-4' />}</div>
-              </div>
-
-              <div className='flex flex-col gap-1'>
-                <p className='text-sm'>Hackathon Name : </p>
-                <div className='opacity-80 text-[12px]'>{teamdata?.hackathonname ? teamdata?.hackathonname :  <Skeleton className='rounded w-20 h-4' /> }</div>
-              </div>
-              
-
-              <div className='flex flex-col gap-1'>
-                <p className='text-sm'>Hackathon desc : </p>
-                <div className='opacity-80 text-[12px]'>{teamdata?.hackathondesc ? teamdata?.hackathondesc :  <Skeleton className='rounded w-20 h-4' /> }</div>
-              </div> */}

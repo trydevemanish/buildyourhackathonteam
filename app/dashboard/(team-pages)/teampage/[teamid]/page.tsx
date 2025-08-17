@@ -60,19 +60,19 @@ export default function Page() {
 
 
     useEffect(() => {
-        const findUserInATeam =async() => {
+        const findUserInATeam = async() => {
             try {
                 
                 setloading(true)
 
                 const res  = await fetch(`/api/fetchteammembers/${teamid}`,{
-          method: 'GET',
-          credentials: 'include',
-        })
+                method: 'GET',
+                credentials: 'include',
+                })
 
                 if(!res.ok){
-                    console.log(await res.text())
-                    toast.error(await res.text())
+                    const errText = await res.json()
+                    console.log(errText)
                     return;
                 }
 
@@ -101,7 +101,7 @@ export default function Page() {
                 headers : {
                     'Content-Type' : 'application/json'
                 },
-                body : JSON.stringify({ useridToberemoved:useridToberemoved })
+                body : JSON.stringify({ useridToberemoved:useridToberemoved,userId:user?.id })
             })
 
             if(!res.ok){
@@ -123,12 +123,16 @@ export default function Page() {
 
             const res = await fetch(`/api/leaveteam/${teamid}/${teammemberid}`,{
                 method : 'DELETE',
-                credentials:'include'
+                credentials:'include',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({ userId:user?.id })
             })
 
             if(!res.ok){
-                console.log(await res.text())
-                toast.error(await res.text())
+                const errtext = await res.json()
+                console.log(errtext)
                 return;
             }
 
@@ -140,7 +144,7 @@ export default function Page() {
             
         } catch (error) {
             console.log(`Issue Occured while leaving Team: ${error}`)
-            toast.error(`Issue Occured while leaving Team: ${error}`)
+            return
         }
     }
 

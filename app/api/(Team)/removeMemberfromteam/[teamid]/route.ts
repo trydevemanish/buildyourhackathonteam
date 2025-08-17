@@ -1,20 +1,18 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+
 
 // only leader will be able to remove user
-
 export async function DELETE(req:Request) {
     try {
 
-        const { useridToberemoved } = await req.json()
+        const { useridToberemoved,userId } = await req.json()
 
-        const clerkUser = await currentUser()
 
-        if(!clerkUser){
+        if(!userId){
             return NextResponse.json(
-                {error : `Unauthorized User`},
-                {status:401}
+                {error : `User id not passed who is trying to remove the another user.`},
+                {status:404}
             )
         }
 
@@ -26,7 +24,7 @@ export async function DELETE(req:Request) {
         const checkUserisleader = await prisma.team.findUnique({
             where : {
                 id : teamid,
-                leaderid : clerkUser?.id
+                leaderid : userId
             }
         })
 

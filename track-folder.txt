@@ -1,3 +1,5 @@
+adding user id in the boady feind in these pages to fetch the data 
+
 dashboard
   -layout.tsx
   -page.tsx
@@ -5,3 +7,10 @@ menu-page
   -allteams
   -teamjoined
   -otherdev
+team-page
+  -teamdata[teamid]
+  -teampage(finding member of team)
+  -[teamid](chatpage done)
+user-page
+  -me
+  

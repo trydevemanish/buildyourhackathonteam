@@ -1,20 +1,17 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs/server";
 
 export async function POST(req:Request) {
     try {
 
-        const clerkUser = await currentUser()
+        const { userid,teamid,leaderId } = await req.json()
 
-        if(!clerkUser){
+        if(!leaderId){
             return NextResponse.json(
-                {message:'Unauthorisied User'},
-                {status:401}
+                {error:'Invalid leader id'},
+                {status:400}
             )
         }
-
-        const { userid,teamid } = await req.json()
 
         if(!userid && !teamid){
             return NextResponse.json(
@@ -27,7 +24,7 @@ export async function POST(req:Request) {
             data : {
                 teamid : teamid,
                 userid : userid,
-                leaderid : clerkUser?.id
+                leaderid : leaderId
             }
         })
 

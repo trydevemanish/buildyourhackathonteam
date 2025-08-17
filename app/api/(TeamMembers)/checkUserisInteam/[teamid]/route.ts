@@ -16,8 +16,6 @@ export async function POST(req:Request) {
 
         const { userid } = await req.json()
 
-        console.log('user id to be checked :',userid)
-
         if(!userid){
             return NextResponse.json(
                 {message:'Invalid Property'},

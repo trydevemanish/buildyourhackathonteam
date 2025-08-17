@@ -1,11 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs/server";
+
 
 export async function POST(req:Request) {
     try {
 
-        const { leaderid,teamid } = await req.json()
+        const { leaderid,teamid,userId } = await req.json()
 
         if(!leaderid && !teamid){
             return NextResponse.json(
@@ -14,19 +14,32 @@ export async function POST(req:Request) {
             )
         }
 
-        const clerkuser = await currentUser()
+        if(!userId){
+          return NextResponse.json(
+            {message : 'User id not passed'},
+            {status:404}
+          )
+        }
 
-        if(!clerkuser){
-            return NextResponse.json(
-                {error:'Unauthoriseied User'},
-                {status:400}
-            )
+        // checking if user is already created.
+        const user = await prisma.user.findUnique({
+          where: {
+            id : userId
+          }
+        })
+
+        // if yes return a message of success.
+        if(!user){
+          return NextResponse.json(
+            {message:`Invalid user id`},
+            {status:400}
+          )
         }
 
         const userreqCreated = await prisma.userReqtojointeam.create({
             data : {
                 leaderid : leaderid,
-                userid : clerkuser?.id,
+                userid : userId,
                 teamid : teamid
             }
         })
