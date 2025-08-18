@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { clerkClient } from "@clerk/nextjs/server";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 
 export async function POST(req:Request) {
    try {
@@ -8,18 +8,13 @@ export async function POST(req:Request) {
         const { userId } = await req.json();
 
         console.log('user id in the route.ts file',userId)
-
-        if(!userId){
-          return NextResponse.json(
-            {message : 'Unauthorised user'},
-            {status:401}
-          )
-        }
+        
+        const AuthUser = await currentUser()
 
         // checking if user is already created.
         const user = await prisma.user.findUnique({
           where: {
-            id : userId
+            id : userId || AuthUser?.id
           }
         })
 
@@ -32,13 +27,21 @@ export async function POST(req:Request) {
         }
 
         // const clerkUser = await clerkClient.users.getUser(userId);
-        const clerkUser = await (await clerkClient()).users.getUser(userId)
-        console.log('Creating a new User', clerkUser.id, clerkUser.fullName, clerkUser.emailAddresses[0].emailAddress)
+        const clerkUser = await (await clerkClient()).users.getUser(userId || AuthUser?.id)
+
+        if(!clerkUser){
+          return NextResponse.json(
+            {error:`User id is invalid or maybe unauthorised user`},
+            {status:400}
+          )
+        }
+
+        console.log('Creating a new User')
         //otherwise create a new User.
         const newuser = await prisma.user.create({
           data: {
             id : clerkUser.id,
-            name : clerkUser.fullName || "New User",
+            name : clerkUser.fullName || clerkUser.username || 'New User',
             email : clerkUser.emailAddresses[0].emailAddress,
             bio : 'Tell a little bit about yourself here..',
             profileurl : clerkUser.imageUrl,

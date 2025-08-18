@@ -167,7 +167,7 @@ export default function Page() {
                                         <span className='font-medium'>Project Description :</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} placeholder='Elaborate Project detail:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-[9px] px-2 w-96 ml-3 placeholder:text-xs py-2' />
+                                        <Textarea {...field} placeholder='Elaborate Project detail:' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-sm px-2 w-96 ml-3 placeholder:text-xs py-2' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -205,7 +205,7 @@ export default function Page() {
                                         <span className='font-medium'>Hackathon Desc:</span> 
                                     </FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} rows={4} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-[9px] px-2 w-96 placeholder:text-xs py-2 ml-3' />
+                                        <Textarea {...field} rows={4} placeholder='Elaborate Hackathon detail , Provide its link also...' className='border-b shadow-border shadow-md border-purple-400 focus:outline-none xs:text-base md:text-sm px-2 w-96 placeholder:text-xs py-2 ml-3' />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />

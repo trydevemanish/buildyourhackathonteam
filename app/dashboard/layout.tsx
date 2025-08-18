@@ -27,6 +27,8 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
             if(fetchedUserOrCreateUserData.current) return 
             fetchedUserOrCreateUserData.current = true;
 
+            console.log('No of time this function is called and userId',user?.id)
+
             const res = await fetch('/api/findandcreateUser',{
               method : 'POST',
               credentials: 'include',
@@ -52,7 +54,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
         }
 
       FindorcreateUser()
-    },[user])
+    },[user,userProfileUrl])
     
     return(
         <ProtectedRoute>

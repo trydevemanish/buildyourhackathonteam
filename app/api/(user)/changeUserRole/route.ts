@@ -48,18 +48,18 @@ export async function PUT(req : Request){
             })
         }
 
-        const checkIfuserisinteam = await prisma.teamMembers.findMany({
-            where : {
-                userId : authUser?.id
-            }
-        })
+        // const checkIfuserisinteam = await prisma.teamMembers.findMany({
+        //     where : {
+        //         userId : authUser?.id
+        //     }
+        // })
 
-        if(checkIfuserisinteam){
-            return NextResponse.json(
-                {message:`Cannot Update Role, User in already in a team.`},
-                {status:200}
-            )
-        }
+        // if(checkIfuserisinteam){
+        //     return NextResponse.json(
+        //         {message:`Cannot Update Role, User in already in a team.`},
+        //         {status:200}
+        //     )
+        // }
 
         const UpdatedRole = await prisma.user.update({
             where : {

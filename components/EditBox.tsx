@@ -29,6 +29,11 @@ type propsProperties = {
   nameOfProp : string;
 }
 
+type propsPropertiesfordesc = {
+  nameOfProp : string;
+  onUpdate: () => void;
+}
+
 export function DialogDemoInput({props} : {props : propsProperties}) {
   const [email,setEmail] = useState('')
   const [github,setGithub] = useState('')
@@ -180,7 +185,7 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
 }
 
 
-export function DialogDemoTextArea({props} : {props : propsProperties}) {
+export function DialogDemoTextArea({props} : {props : propsPropertiesfordesc}) {
 
   const [description, setDescription] = useState('')
   const { user } = useUser()
@@ -206,6 +211,7 @@ export function DialogDemoTextArea({props} : {props : propsProperties}) {
       const data = await res.json()
 
       toast.success(data?.message)
+      props.onUpdate()
 
     } catch (error) {
       console.log(`Issue Ocuured while updating description. :${error}`)

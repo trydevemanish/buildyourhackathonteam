@@ -175,7 +175,7 @@ export default function Page() {
                                     <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>
                                     <p className='col-start-2 col-end-3 text-center opacity-70 text-xs'>
                                         <span>{teamMemberInfo?.user?.name} </span>
-                                        <span className="text-purple-500">{user?.id == teamMemberInfo?.team?.leaderid ? ' - leader' : ' - member'}</span>
+                                        <span className="text-purple-500">{teamMemberInfo?.userId === teamMemberInfo?.team?.leaderid ? ' - leader' : ' - member'}</span>
                                     </p>
                                     <p className='col-start-3 col-end-4 text-center opacity-70 text-xs'>{teamMemberInfo?.user?.email}</p>
                                     <p className='col-start-4 col-end-5 text-center opacity-70 text-xs'>{teamMemberInfo?.user?.role}</p>

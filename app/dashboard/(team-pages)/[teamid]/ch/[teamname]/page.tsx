@@ -11,16 +11,19 @@ import LoadingComponent from '@/components/LoadingComponent'
 import Curved from '@/public/curved.png'
 import Image from 'next/image'
 
-type fetchdatatype = {
+type fetchdatatype = { 
   id:string;
   teamid:string;
   message:string;
   senderid:string;
   sendername:string;
-  timestamp: {
-    nanoseconds : 789000000,
-    seconds : 1751604174
-  }
+  timestamp : any;
+  // timestamp: {
+  //   // nanoseconds : 789000000,
+  //   // seconds : 1751604174
+  //   nanoseconds : 789000000,
+  //   seconds : 1751604174
+  // }
 }
 
 // this page is for sending or receiving message from of a team.
@@ -37,27 +40,39 @@ export default function Page() {
   useEffect(() => {
 
     async function getmessage() {
-      const querySnapshot = await getDocs(collection(db, `${process.env.NEXT_PUBLIC_FIREBASE_COLLECTION_ID}`));
+      try {
 
-      if(!querySnapshot){
-        throw new Error('Can not fetch the message ')
+        const querySnapshot = await getDocs(collection(db, `${process.env.NEXT_PUBLIC_FIREBASE_COLLECTION_ID}`));
+  
+        if(!querySnapshot){
+          throw new Error('Can not fetch the message ') 
+        }
+   
+        const docs = querySnapshot.docs
+        .filter(doc => doc.get('teamid') == teamid)
+        .map(doc => ({
+          id: doc.id,
+          teamid : doc.get('teamid'),
+          ...doc.data()
+        } as fetchdatatype));
+  
+        setFetchData(docs)
+      } catch (error) {
+        console.log(`Issue Ocuured getting msg: ${error}`)
+        return
       }
- 
-      const docs = querySnapshot.docs
-      .filter(doc => doc.get('teamid') == teamid)
-      .map(doc => ({
-        id: doc.id,
-        teamid : doc.get('teamid'),
-        ...doc.data()
-      } as fetchdatatype));
-
-      console.log('docs for notorious gang',docs)
-
-      setFetchData(docs)
     }
 
-    getmessage()
+    getmessage() 
   },[msgadded,deleteMsg,teamid])
+
+  function getCurrentTimeUTC() {
+    const date = new Date();
+    const hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+    
+    return `${hours}:${minutes}`;
+  }
 
   async function addmessage(event:React.FormEvent<HTMLFormElement>){
     event.preventDefault();
@@ -66,12 +81,14 @@ export default function Page() {
       setbtnloading(true)
       setmsgAdded(prev=>!prev)
 
+      const newDate = getCurrentTimeUTC()
+
       const docRef = await addDoc(collection(db, `${process.env.NEXT_PUBLIC_FIREBASE_COLLECTION_ID}`), {
         teamid: teamid,
         message: msg,
         senderid:user?.id,
-        sendername: user?.firstName,
-        timestamp: new Date()
+        sendername: user?.username,
+        timestamp: newDate
       });
 
       if(!docRef){
@@ -135,7 +152,7 @@ export default function Page() {
                     <div className='px-2 py-2'>
                       <div className='opacity-40 text-[10px] flex gap-2 '>
                         <p>{data?.sendername}</p>
-                        <p>{`${data?.timestamp?.seconds} seconds`}</p>
+                        <p>{`${data?.timestamp}`}</p>
                       </div>
                       <div className='flex flex-row gap-4 items-center justify-between'>
                         <p className='text-[12px] w-52'>{data?.message}</p>
@@ -175,38 +192,3 @@ export default function Page() {
   ) 
 }
 
-
-// async function handleAddmsg(event:React.FormEvent<HTMLFormElement>){
-//     event.preventDefault();
-
-//     try {
-//       setbtnloading(true)
-
-//       const res = await fetch(`/api/chathandler/${teamid}`,{
-//         method:'POST',
-//         headers : {
-//           'Content-Type' : 'application/json'
-//         },
-//         body : JSON.stringify({ message : msg })
-//       })
-
-//       if(!res.ok){
-//         const errtext = await res.text()
-//         console.log(errtext)
-//         toast.error(errtext)
-//         return;
-//       }
-
-//       const data = await res.json()
-//       console.log(data?.message)
-
-//       setmsgAdded((prev) => !prev)
-//       toast.success(data?.message)
-//       setmsg('')
-      
-//     } catch (error) {
-//       console.log(`Issue occured while Adding: ${error}`)
-//     } finally {
-//       setbtnloading(false)
-//     }
-//   }

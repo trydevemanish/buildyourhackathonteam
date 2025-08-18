@@ -57,13 +57,14 @@ export default function Page() {
   },[])
 
   const handleSearchRoute = async(e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault()
       setvalue(e.target.value)
 
       const interval = setInterval(async() => {
         try {
 
           const res = await fetch(`/api/finduserbyname`,{
-            method : 'GET',
+            method : 'POST',
             credentials : 'include',
             headers : {
               'Content-Type':'application/json'
@@ -96,7 +97,7 @@ export default function Page() {
     try {
 
       const res = await fetch(`/api/findUserbyrole`,{
-        method : 'GET',
+        method : 'POST',
         credentials:'include',
         headers : {
           'Content-Type':'application/json'

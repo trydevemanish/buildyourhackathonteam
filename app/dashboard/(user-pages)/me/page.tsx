@@ -47,8 +47,7 @@ export default function Page() {
   const [userdata,setUserdata] = useState({} as WholeUserdata)
   const [fetchinguserdata,setFetchingUserData] = useState(false)
 
-  useEffect(() => {
-    const fetchUserDetail = async() => {
+  const fetchUserDetail = async() => {
       try {
 
         setFetchingUserData(true)
@@ -76,8 +75,14 @@ export default function Page() {
         setFetchingUserData(false)
       }
     }
+
+  useEffect(() => {
     fetchUserDetail()
   },[user?.id])
+
+  const handleDescriptionUpdate = async () => {
+    await fetchUserDetail(); // refetch after update
+  };
 
   return (
     <div className='xs:px-8 md:px-16 py-8 overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
@@ -107,7 +112,7 @@ export default function Page() {
 
               {/* shows bio  */}
               <div className='flex items-center pt-2 gap-2'>
-                <DialogDemoTextArea props={{ nameOfProp: 'Description' }} />
+                <DialogDemoTextArea props={{ nameOfProp: 'Description',onUpdate: handleDescriptionUpdate }} />
                 <p className='font-opensans'>
                     {userdata?.bio ? userdata?.bio : 'Add a small intro of yourself .'}
                 </p>
