@@ -18,11 +18,11 @@ const layoutDataNavigationStructure = [
     pushto : '/dashboard/allteams',
     para : 'Other teams to join'
   },
-  // {
-  //   id:4,
-  //   pushto : '/dashboard/hackathonNews',
-  //   para : 'Upcoming Hackathons'
-  // },
+  {
+    id:4,
+    pushto : '/dashboard/hackathonpage',
+    para : 'Upcoming Hackathons'
+  },
   {
     id:5,
     pushto : '/dashboard/teamjoined',

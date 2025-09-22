@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 export default function HeaderPara() {
   return (
@@ -7,7 +8,7 @@ export default function HeaderPara() {
       <p className='text-center xs:px-4 md:px-36 leading-loose font-opensans text-sm'>
         No more struggling to find teammates! A perfect place to find teams if {"you're"} a beginner, you can <span className='font-bold'>browse teams, choose the right team, and join</span> with just a few clicks—no awkward face-to-face requests needed. <span className='font-bold'>Just connect, collaborate, and start building!</span>
       </p>
-      <button className='bg-purple-500 px-8 py-2 text-sm text-white rounded-md'>Get started !</button>
+      <Link href={'/dashboard'}><button className='bg-purple-500 px-8 py-2 text-sm text-white rounded-md'>Get started !</button></Link>
     </div>
   )
 }

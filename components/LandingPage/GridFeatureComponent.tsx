@@ -1,9 +1,10 @@
 import React from 'react'
-import { UserRoundCheckIcon,Wand2Icon,TreeDeciduous } from 'lucide-react'
+import Link from 'next/link'
 import Image from 'next/image'
-import WinnerTeam from '@/public/Winnerteam.png'
 import Confused from '@/public/Confused.png'
 import CurvedArrow from '@/public/curved.png'
+import WinnerTeam from '@/public/Winnerteam.png'
+import { UserRoundCheckIcon,Wand2Icon,TreeDeciduous } from 'lucide-react'
 
 const paraObject = [
     {
@@ -36,15 +37,32 @@ export default function GridFeatureComponent() {
                 <div className='grid grid-cols-2 grid-rows-2 gap-4 py-10'>
                     {/* first quadrant  */}
                     <div className='col-start-1 col-end-2 row-start-1 row-end-2'>
-                        <Image src={CurvedArrow} alt='curved arrow' className='rounded object-contain' />
+                        <Image 
+                        src={CurvedArrow} 
+                        alt='curved arrow' 
+                        width={400}
+                        height={300}
+                        priority
+                        className='rounded object-contain' />
                     </div>
                     {/* 2nd quadrant  */}
                     <div className='col-start-2 col-end-3 row-start-1 row-end-2'>
-                        <Image src={WinnerTeam} alt='WinnerTeam' className='min-w-80 rounded-md object-cover' />
+                        <Image 
+                        src={WinnerTeam} 
+                        alt='WinnerTeam' 
+                        width={400}
+                        height={300}
+                        priority
+                        className='min-w-80 rounded-md object-cover' />
                     </div>
                     {/* 3rd quadrant  */}
                     <div className='col-start-1 col-end-2 row-start-2 row-end-3'>
-                        <Image src={Confused} alt='confused' className='rounded min-w-80 object-cover' />
+                        <Image 
+                        src={Confused} alt='confused' 
+                        width={400}
+                        height={300}
+                        priority
+                        className='rounded min-w-80 object-cover' />
                     </div>
                     {/* 4rth quadrant  */}
                     <div className='col-start-2 col-end-3 row-start-2 row-end-3'></div>
@@ -65,7 +83,7 @@ export default function GridFeatureComponent() {
                             </div>
                         ))}
                     </div>
-                    <button className='bg-purple-600 text-white px-6 py-2 rounded'>Start here !</button>
+                    <Link className='bg-purple-600 px-6 text-center max-w-xs rounded-sm' href='/dashboard'><button className='bg-purple-600 text-white px-6 py-2 rounded'>Start here !</button></Link>
                 </section>
             </div>
         </div>

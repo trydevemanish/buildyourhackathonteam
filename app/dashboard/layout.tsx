@@ -1,11 +1,11 @@
 "use client"
-import React, { useEffect, useState,useRef } from 'react'
-import ProtectedRoute from '@/components/ProtectedRoute'
-import SideBarComp from '@/components/SideBarComp'
-import { useUser } from '@clerk/nextjs'
-import { Bell } from 'lucide-react'
 import Image from 'next/image'
+import { Bell } from 'lucide-react'
+import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import SideBarComp from '@/components/SideBarComp'
+import ProtectedRoute from '@/components/ProtectedRoute'
+import React, { useState } from 'react'
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
@@ -13,48 +13,8 @@ interface Dashboardlayoutprops {
 
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     const [showSidebar,setShowSideBar] = useState(false)
-    const [userProfileUrl,setUserProfileUrl] = useState('/Winnerteam.png')
-    const fetchedUserOrCreateUserData = useRef(false)
-    
-    const { user } = useUser()
     const router = useRouter()
-
-    // useeffect to find user if no user create one.
-    useEffect(() => {
-      async function FindorcreateUser(){
-        try {
-
-            if(fetchedUserOrCreateUserData.current) return 
-            fetchedUserOrCreateUserData.current = true;
-
-            console.log('No of time this function is called and userId',user?.id)
-
-            const res = await fetch('/api/findandcreateUser',{
-              method : 'POST',
-              credentials: 'include',
-              headers: {
-                'Content-Type' : 'application/json'
-              },
-              body : JSON.stringify({userId:user?.id})
-            })
-
-            if(!res.ok){
-              const errTxt = await res.text()
-              console.log(errTxt)
-              return ;
-            }
-
-            const result = await res.json()
-
-            setUserProfileUrl(result?.data?.profileurl)
-
-          } catch (error) {
-            console.log(`Failed to create User: ${error}`)
-          }
-        }
-
-      FindorcreateUser()
-    },[user,userProfileUrl])
+    const { user } = useUser()
     
     return(
         <ProtectedRoute>
@@ -89,10 +49,12 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                         <Bell className='size-8 rounded cursor-pointer hover:bg-purple-300 p-2' onClick={() => router.push(`/notification`)} />
                       </div>
                       <Image
-                        src={userProfileUrl || "/default-user.jpg"}
+                        // src={userProfileUrl || "/default-user.jpg"}
+                        src={user?.imageUrl!}
                         alt="User Profile"
                         width={150}
                         height={50}
+                        priority
                         className="rounded-[50%] cursor-pointer max-w-sm max-h-52 size-7"
                         onClick={() => router.push('/dashboard/me')}
                       />
@@ -107,3 +69,45 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
 }
 
 export default DashboardLayout
+
+
+    // const [userProfileUrl,setUserProfileUrl] = useState('/Winnerteam.png')
+    // const fetchedUserOrCreateUserData = useRef(false)
+
+    // const router = useRouter()
+
+    // useEffect(() => {
+    //   async function FindorcreateUser(){
+    //     try {
+
+    //         // if(fetchedUserOrCreateUserData.current) return 
+    //         // fetchedUserOrCreateUserData.current = true;
+
+    //         console.log('No of time this function is called and userId',user?.id)
+
+    //         const res = await fetch('/api/findandcreateUser',{
+    //           method : 'POST',
+    //           credentials: 'include',
+    //           headers: {
+    //             'Content-Type' : 'application/json'
+    //           },
+    //           body : JSON.stringify({userId:user?.id})
+    //         })
+
+    //         if(!res.ok){
+    //           const errTxt = await res.json()
+    //           console.log(errTxt?.message) 
+    //           return ;
+    //         }
+
+    //         // const result = await res.json()
+
+    //         // setUserProfileUrl(result?.data?.profileurl)
+
+    //       } catch (error) {
+    //         console.log(`Failed to create User: ${error}`)
+    //       }
+    //     }
+
+    //   FindorcreateUser()
+    // },[user])

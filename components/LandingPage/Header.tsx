@@ -1,6 +1,7 @@
 import React from 'react'
-import header from '@/public/header.png'
+import Link from 'next/link'
 import Image from 'next/image'
+import header from '@/public/header.png'
 
 export default function Header() {
   return (
@@ -18,12 +19,15 @@ export default function Header() {
             <span className='opacity-70'> it easy to create, join, and collaborate on the perfect hackathon team.</span>
           </p>
           <div className='py-16  xs:flex xs:justify-center md:block'>
-            <button className='bg-purple-500 text-white px-8 py-2 text-xs rounded-md'>Get started</button>
+            <Link href='/dashboard'><button className='bg-purple-500 text-white px-8 py-2 text-xs rounded-md'>Get started</button></Link>
           </div>
         </div>
         <div className="flex justify-center md:justify-start">
           <Image 
             src={header} 
+            width={500}
+            height={600}
+            priority
             alt="header" 
             className="
               w-full max-w-[50rem] h-auto 

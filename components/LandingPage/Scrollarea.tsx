@@ -1,12 +1,11 @@
 import * as React from "react"
-import Image, { StaticImageData } from "next/image"
 import Slide1 from '@/public/teams.jpg'
 import Slide2 from '@/public/slide3.jpg'
 import Slide3 from '@/public/slide4.webp'
 import Slide4 from '@/public/teams.jpg'
 import Slide5 from '@/public/slide6.jpg'
 import Slide6 from '@/public/slide7.jpg'
-
+import Image, { StaticImageData } from "next/image"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 export interface Artwork {
@@ -43,10 +42,11 @@ export function ScrollAreaHorizontal() {
             <div className="overflow-hidden rounded-md relative">
               <Image
                 src={artwork.image}
-                alt='Hackathon image'
+                alt={`Hackathonimage-${idx}`}
                 className="aspect-[4/5] h-fit w-fit object-cover cursor-pointer brightness-50 hover:brightness-100 hover:contrast-50"
-                width={200}
-                height={100}
+                width={190}
+                height={110}
+                priority
               />
             </div>
           </figure>

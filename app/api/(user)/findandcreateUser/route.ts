@@ -1,24 +1,24 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import { clerkClient,auth } from "@clerk/nextjs/server";
 
-export async function POST(req:Request) {
+export async function GET(req:Request) {
    try {
 
-        const { userId } = await req.json();
+        await auth.protect() // show 404 error when user is unauthorised.
+        const { userId } = await auth()
 
-        console.log('user id in the route.ts file',userId)
-        
-        const AuthUser = await currentUser()
+        if (!userId) {
+          return NextResponse.json({ error: 'Error: No signed in userid' }, { status: 401 })
+        }
 
         // checking if user is already created.
         const user = await prisma.user.findUnique({
           where: {
-            id : userId || AuthUser?.id
+            id : userId
           }
         })
 
-        // if yes return a message of success.
         if(user){
           return NextResponse.json(
             {message:`User is Already Present.`,data:user},
@@ -26,8 +26,7 @@ export async function POST(req:Request) {
           )
         }
 
-        // const clerkUser = await clerkClient.users.getUser(userId);
-        const clerkUser = await (await clerkClient()).users.getUser(userId || AuthUser?.id)
+        const clerkUser = await (await clerkClient()).users.getUser(userId)
 
         if(!clerkUser){
           return NextResponse.json(
@@ -36,8 +35,6 @@ export async function POST(req:Request) {
           )
         }
 
-        console.log('Creating a new User')
-        //otherwise create a new User.
         const newuser = await prisma.user.create({
           data: {
             id : clerkUser.id,
@@ -63,7 +60,7 @@ export async function POST(req:Request) {
    } catch (error) {
       console.log(`Failed To add User To DB : ${error}`)
       return NextResponse.json(
-        {error:`Failed To add User To DB : ${error}`},
+        {message:`Failed To add User To DB : ${error}`},
         {status:500}
       )
    }

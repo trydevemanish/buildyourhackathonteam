@@ -1,9 +1,9 @@
 import React from 'react'
-import teams from '@/public/teams.jpg'
 import Image from 'next/image'
+import teams from '@/public/teams.jpg'
 import Otherdev from '@/public/slide3.jpg'
-import { PersonIcon,CodeIcon,CrumpledPaperIcon,ComponentInstanceIcon,CodeSandboxLogoIcon } from '@radix-ui/react-icons'
 import { Users,InspectIcon } from 'lucide-react'
+import { PersonIcon,CodeIcon,CrumpledPaperIcon,ComponentInstanceIcon,CodeSandboxLogoIcon } from '@radix-ui/react-icons'
 
 export default function About() {
   return (
@@ -33,13 +33,27 @@ export default function About() {
             </div>
           </div>
           <div className="flex justify-center xs:px-8 col-start-2 col-end-3 md:px-0 md:justify-start">
-            <Image src={teams} alt='teams' className='border w-auto md:h-auto rounded-l-[2.5rem] rounded-t-[2.5rem] hover:bg-gradient-to-b  hover:from-white hover:to-black ' />
+            <Image 
+              src={teams} 
+              alt='teams' 
+              className='border w-auto md:h-auto rounded-l-[2.5rem] rounded-t-[2.5rem] hover:bg-gradient-to-b  hover:from-white hover:to-black'
+              width={500}
+              height={400}
+              priority
+            />
           </div>
         </div>
 
         <div className='xs:flex xs:flex-col md:grid md:grid-cols-2 gap-16 py-4'>
         <div className="flex justify-center xs:px-8 col-start-1 col-end-2 md:px-0 md:justify-start">
-          <Image src={Otherdev} alt='otherdev' className='border rounded-r-[2.5rem] rounded-t-[2.5rem]' />
+          <Image 
+            src={Otherdev} 
+            alt='otherdev' 
+            className='border rounded-r-[2.5rem] rounded-t-[2.5rem]'
+            width={500}
+            height={400}
+            priority
+          />
         </div>
           <div className='col-start-2 col-end-3 py-10 px-10'>
             <h1 className='text-2xl font-opensans font-bold'>
@@ -58,10 +72,6 @@ export default function About() {
               <p className='flex gap-3 items-center'>
                   <span><CodeSandboxLogoIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
                   <span>Create Your Own team.</span>
-              </p>
-              <p className='flex gap-3 items-center'>
-                  <span><CrumpledPaperIcon className='size-8 bg-purple-200 p-2 rounded '/></span>
-                  <span>Req for more credit.</span>
               </p>
             </div>
           </div>

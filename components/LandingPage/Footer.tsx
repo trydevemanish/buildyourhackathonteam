@@ -1,8 +1,8 @@
 import React from 'react'
-import Coding from "@/public/coding.png"
+import Link from 'next/link'
 import Image from 'next/image' 
+import Coding from "@/public/coding.png"
 import { GitHubLogoIcon,TwitterLogoIcon,LinkedInLogoIcon,CodeSandboxLogoIcon } from '@radix-ui/react-icons' 
-
 
 export default function Footer() {
   return (
@@ -11,7 +11,7 @@ export default function Footer() {
 
         <div className=' md:col-start-1 md:col-end-2 xs:flex xs:items-center xs:flex-col xs:gap-3'>
           <div className='flex items-center gap-2'>
-            <Image src={Coding} alt='logo' className='size-5' />
+            <Image src={Coding} alt='logo' width={50} height={10} priority className='size-5' />
             <p className={`font-semibold text-xs `}>Buildyourhackathonteam</p>
           </div>
           <div className='py-5 flex gap-4 '>
@@ -25,7 +25,9 @@ export default function Footer() {
                 <CodeSandboxLogoIcon className='size-3' />
                 <p>Hackathons are better with the right team.</p>
             </div>
-            <button className='bg-purple-500 px-8 py-2 text-xs rounded text-white'>Get started.</button>
+            <button className='bg-purple-500 px-8 py-2 text-xs rounded text-white'>
+              <Link href={'/dashboard'}>Get started.</Link>
+            </button>
         </div>
       </div> 
     </section>
