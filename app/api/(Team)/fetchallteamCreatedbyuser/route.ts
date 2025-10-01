@@ -12,7 +12,7 @@ export async function GET(req:Request) {
         const { userId } = await auth()
 
         if (!userId) {
-          return NextResponse.json({ error: 'Error: No signed in userid' }, { status: 401 })
+          return NextResponse.json({ message: 'Error: No signed in userid' }, { status: 401 })
         }
 
         const UserTeams = await prisma.team.findMany({

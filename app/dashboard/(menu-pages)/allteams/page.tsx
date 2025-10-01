@@ -1,6 +1,7 @@
 import React, { Suspense } from "react"
 import AllTeam from "@/components/fetchedDataComponents/AllTeam"
-import LoadingComponent from "@/components/LoadingComponent"
+const LoadingComponent = React.lazy(() => import('@/components/LoadingComponent'))
+
 
 export default function Page() {
   return (

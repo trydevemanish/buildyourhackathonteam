@@ -1,12 +1,13 @@
 import React, { Suspense } from 'react'
-import TeamJoinedByUserDetails from '@/components/fetchedDataComponents/TeamsJoinedAsMember'
 import LoadingComponent from '@/components/LoadingComponent'
+
+const TeamJoinedasaMember = React.lazy(() => import('@/components/fetchedDataComponents/TeamsJoinedAsMember'))
 
 export default function Page() {
   return (
     <div>
        <Suspense fallback={<LoadingComponent label='Fetching Team Joined.' />}>
-        <TeamJoinedByUserDetails />
+        <TeamJoinedasaMember />
        </Suspense>
     </div>
   )

@@ -1,10 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function POST(req:Request){
+type selectedRoleValueType = 'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design'
+
+export async function GET(req:Request){
     try {
 
-        const { role } = await req.json();
+        const myURL = new URL(req.url);
+        const role : any = myURL.searchParams.get('role')!
+
+        console.log('role',role)
 
         if(!role){
             return NextResponse.json(
@@ -25,6 +30,8 @@ export async function POST(req:Request){
                 {status:400}
             )
         }
+
+        console.log(`result for role: ${role}`,result)
 
         return NextResponse.json(
             {message:'User Founded with role',data:result},

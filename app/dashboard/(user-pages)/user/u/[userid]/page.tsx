@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { teamCreatedData,WholeUserdata } from '@/types/types'
+import DefaultProfile from '@/public/default-user.jpg'
 
 import {
   Select,
@@ -58,78 +59,115 @@ const teamCreatedAttributeNamen = [
 export default function Page() {
     const [userdata,setUserData] = useState({} as WholeUserdata)
     const [teamcreatedData,setTeamCreatedData] = useState([])
+
     const [selectedTeamId,setSelectedTeamID] = useState('')
     const [fetchinguserdata,setFetchingUserData] = useState(false)
-    const [userProfileUrl,setUserProfileUrl] = useState('/default-user.jpg')
+
+    // const [userProfileUrl,setUserProfileUrl] = useState('/default-user.jpg')
     const {userid} = useParams()
     const { user } = useUser()
 
     // fetching the other dev user profile 
+    // useEffect(() => {
+    //     const fetchUserData = async() => {
+    //         try {
+
+    //             setFetchingUserData(true)
+
+    //             const res = await fetch(`/api/finduserbyid/${userid}`,{
+    //             method: 'GET',
+    //             credentials: 'include',
+    //             })
+
+    //             if(!res.ok){
+    //                 const errtext= await res.json()
+    //                 console.log(errtext)
+    //                 return;
+    //             }
+
+    //             const data  = await res.json()
+
+    //             setUserData(data?.data)
+    //             // setUserProfileUrl(data?.data?.profileurl)
+                
+    //         } catch (error) {
+    //             console.log(`Issue Occured while fetching user detail: ${error}`)
+    //             return
+    //         } finally { 
+    //             setFetchingUserData(false)
+    //         }
+    //     }
+
+    //     fetchUserData() 
+    // },[userid])
+
+
+    // // this useeffect will help me find all the teams, that the leader who is visiting the developer page has created.
+    // useEffect(() => {
+    //     const fetchLoginUserData = async() => {
+    //         try {
+
+    //             setFetchingUserData(true)
+
+    //             const res = await fetch(`/api/finduserbyid/${user?.id}`,{
+    //       method: 'GET',
+    //       credentials: 'include',
+    //     })
+
+    //             if(!res.ok){
+    //                 console.log(await res.text())
+    //                 return;
+    //             }
+
+    //             const data  = await res.json()
+
+    //             setTeamCreatedData(data?.data?.teamcreated)
+                
+    //         } catch (error) {
+    //             console.log(`Issue Occured while fetching user detail: ${error}`)
+    //             return
+    //         } finally {
+    //             setFetchingUserData(false)
+    //         }
+    //     }
+    //     fetchLoginUserData()  
+    // },[user?.id])
+
     useEffect(() => {
-        const fetchUserData = async() => {
+        const fetchUserAndTeamData = async() => {
             try {
 
                 setFetchingUserData(true)
 
-                const res = await fetch(`/api/finduserbyid/${userid}`,{
-          method: 'GET',
-          credentials: 'include',
-        })
+                const [unknownuserdata,loginuserteamdata] = await Promise.all([
+                    fetch(`/api/finduserbyid/${userid}`),
+                    fetch(`/api/finduserbyid/${user?.id}`)
+                ])
 
-                if(!res.ok){
-                    const errtext= await res.json()
-                    console.log(errtext)
-                    return;
+                if(!unknownuserdata.ok || !loginuserteamdata.ok){
+                    console.error(`Data retrieval failed.`)
+                    return
                 }
 
-                const data  = await res.json()
+                const setunknownuserdata = await unknownuserdata.json()
+                const setloginuserteamdata = await loginuserteamdata.json()
 
-                setUserData(data?.Data)
-                setUserProfileUrl(data?.Data?.profileurl)
-                
-            } catch (error) {
-                console.log(`Issue Occured while fetching user detail: ${error}`)
-                return
-            } finally { 
-                setFetchingUserData(false)
-            }
-        }
-
-        fetchUserData() 
-    },[userid])
-
-
-    // this useeffect will help me find all the teams, that the leader who is visiting the developer page has created.
-    useEffect(() => {
-        const fetchLoginUserData = async() => {
-            try {
-
-                setFetchingUserData(true)
-
-                const res = await fetch(`/api/finduserbyid/${user?.id}`,{
-          method: 'GET',
-          credentials: 'include',
-        })
-
-                if(!res.ok){
-                    console.log(await res.text())
-                    return;
+                if(!setunknownuserdata || !setloginuserteamdata){
+                    console.error('Data is Possibly undefined!')
                 }
 
-                const data  = await res.json()
-
-                setTeamCreatedData(data?.Data?.teamcreated)
+                setUserData(setunknownuserdata?.data)
+                setTeamCreatedData(setloginuserteamdata?.data?.teamcreated)
                 
             } catch (error) {
-                console.log(`Issue Occured while fetching user detail: ${error}`)
-                return
+                console.log(`Issue Occured fetching user & team data: ${error}`)
             } finally {
                 setFetchingUserData(false)
             }
         }
-        fetchLoginUserData()  
-    },[user?.id])
 
+        // fetchUserAndTeamData()
+    },[userid,user?.id])
 
     // this function help leader to make a request to the user to join team 
     async function handleMakeAreqBytheLeadertoTheUserTojointheirteam(selectedTeamId:string) {
@@ -166,7 +204,7 @@ export default function Page() {
     }
 
   return (
-    <div className='px-16 py-10'>
+    <div className='xs:px-4 md:px-16 py-10'>
         {
             fetchinguserdata ? 
             <LoadingComponent label='Fetching devloper data...' /> :
@@ -180,10 +218,11 @@ export default function Page() {
 
                     <div className='py-2'>
                         <Image
-                            src={userProfileUrl || "/default-user.jpg"}
+                            src={user?.imageUrl || DefaultProfile}
                             alt="User Profile"
                             width={150}
                             height={40}
+                            priority
                             className="rounded-[50%] size-14 max-w-sm max-h-52 hover:grayscale"
                         />
                     </div>

@@ -4,16 +4,9 @@ import { TeamCardInfoType } from '@/types/types'
 import { useRouter } from 'next/navigation'
 import toast from "react-hot-toast";
 import { useUser } from '@clerk/nextjs';
+import Link from 'next/link';
 
-export default function Teamcard(
-  {
-    props,
-  } : 
-  {
-    props : TeamCardInfoType,
-  }
-){
-
+export default function Teamcard({props} : { props : TeamCardInfoType,}){
     const router = useRouter()
     const {user} = useUser()
 
@@ -56,16 +49,14 @@ export default function Teamcard(
                       <button className='bg-black text-white px-4 rounded text-[10px] py-1' onClick={handledeleteteam}>Delete</button>
                     </div>
                 </div>
-                <div onClick={() => {
-                  router.push(`/dashboard/teamdata/${props?.id}`)
-                }} >
-                  <div className='flex flex-col gap-2'>
+                <div>
+                  <Link href={`/dashboard/teamdata/${props?.id}`} className='flex flex-col gap-2'>
                     <p>leader: <span className='opacity-70'>{props?.leadername}</span></p>
                     <p>Project name: <span className='opacity-70'>{props?.projectname}</span></p>
                     <p>Project desc: <span className='opacity-70'>{props?.projectdesc}</span></p>
                     <p>Hackathon name: <span className='opacity-70'>{props?.hackathonname}</span></p>
                     <p>Proj desc: <span className='opacity-70'>{props?.hackathondesc}</span></p>
-                  </div>
+                  </Link>
                 </div>
             </div>
         </div>
@@ -73,3 +64,8 @@ export default function Teamcard(
     </div>
   )
 }
+
+
+// onClick={() => {
+//                   router.push(`/dashboard/teamdata/${props?.id}`)
+//                 }} 

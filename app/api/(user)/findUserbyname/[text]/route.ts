@@ -1,10 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function POST(req:Request){
+export async function GET(req:Request){
     try {
 
-        const { text } = await req.json();
+        const url = new URL(req.url)
+        const text = await url.pathname.split('/')[3]
+
+        console.log('text',text)
 
         if(!text){
             return NextResponse.json(

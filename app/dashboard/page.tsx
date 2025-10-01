@@ -1,6 +1,7 @@
 import React,{ Suspense } from 'react'
 import LoadingComponent from '@/components/LoadingComponent'
-import TeamsCreatedByUser from '@/components/fetchedDataComponents/TeamsCreatedByUser'
+
+const TeamsCreatedByUser = React.lazy(() => import('@/components/fetchedDataComponents/TeamsCreatedByUser'));
 
 export default function Page() {
   return (

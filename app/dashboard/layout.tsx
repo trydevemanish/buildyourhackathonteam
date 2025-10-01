@@ -4,8 +4,9 @@ import { Bell } from 'lucide-react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import SideBarComp from '@/components/SideBarComp'
-import ProtectedRoute from '@/components/ProtectedRoute'
+// import ProtectedRoute from '@/components/ProtectedRoute'
 import React, { useState } from 'react'
+import DefaultImage from '@/public/default-user.jpg'
 
 interface Dashboardlayoutprops {
     children : React.ReactNode
@@ -17,7 +18,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     const { user } = useUser()
     
     return(
-        <ProtectedRoute>
+        // <ProtectedRoute>
           <main className='bg-gradient-to-b min-h-screen from-[#ffffff] via-purple-50 to-[#ffffff]'>
             <div className="xs:block md:grid md:grid-cols-7 max-h-screen overflow-x-hidden">
               {/* Sidebar */}
@@ -50,7 +51,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                       </div>
                       <Image
                         // src={userProfileUrl || "/default-user.jpg"}
-                        src={user?.imageUrl!}
+                        src={user?.imageUrl! ?? DefaultImage}
                         alt="User Profile"
                         width={150}
                         height={50}
@@ -64,7 +65,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
               </div>
             </div>
           </main>
-        </ProtectedRoute>
+        // </ProtectedRoute>
     )
 }
 

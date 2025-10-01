@@ -34,7 +34,7 @@ export async function GET(req:Request) {
         }
 
         return NextResponse.json(
-          {message:`User Found:`,Data:user},
+          {message:`User Found:`,data:user},
           {status:200}
         )
     

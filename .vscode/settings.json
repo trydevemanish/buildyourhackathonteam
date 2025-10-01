@@ -1,0 +1,6 @@
+{
+    "editor.largeFileOptimizations": false,
+    "terminal.explorerKind": "integrated",
+    "terminal.integrated.accessibleViewFocusOnCommandExecution": false,
+    "terminal.integrated.allowMnemonics": true
+}
