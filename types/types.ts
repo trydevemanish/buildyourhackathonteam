@@ -8,6 +8,7 @@ export type TeamCardInfoType = {
     projectdesc : string;
     hackathonname : string;
     hackathondesc : string;
+    hackathonlink:string;
     createdAt? : string;
     lastUpdated? : string;
     maxteamsize? : number;

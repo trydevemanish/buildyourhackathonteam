@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 
-export async function POST(req:Request) {
+export async function GET(req:Request) {
     try {
 
         const url = new URL(req.url)
@@ -14,7 +15,8 @@ export async function POST(req:Request) {
             )
         }
 
-        const { userid } = await req.json()
+        await auth.protect()
+        const { userId:userid } = await auth()
 
         if(!userid){
             return NextResponse.json(
