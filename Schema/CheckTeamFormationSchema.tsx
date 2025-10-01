@@ -5,5 +5,6 @@ export const TeamFormationSchema = z.object({
     projectname:z.string(),
     projectdesc:z.string().max(500),
     hackathonname:z.string(),
+    hackathonlink:z.string(),
     hackathondesc:z.string().max(500)
 })

@@ -43,4 +43,5 @@ NOTES.txt
 *other
 track-folder.txt
 hackathonpage
-hook
+# hook
+useFetchHackathonData.tsx

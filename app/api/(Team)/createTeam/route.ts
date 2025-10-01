@@ -1,20 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { clerkClient } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function POST(req:Request) {
     try {
 
-        const { teamname,projectname,projectdesc,hackathonname,hackathondesc,leaderid } = await req.json() ?? {}
+        const { teamname,projectname,projectdesc,hackathonname,hackathonlink,hackathondesc } = await req.json() ?? {}
+        const { userId : leaderid } = await auth()
 
         if(!leaderid){
             return NextResponse.json(
-                {error:`User id not passed`},
+                {error:`Unauthorised user`},
                 {status:404}
             )
         }
 
-        if(!teamname && !projectname && !projectdesc && !hackathondesc && !hackathonname){
+        if(!teamname && !projectname && !projectdesc && !hackathondesc &&!hackathonlink && !hackathonname){
             return NextResponse.json(
                 {error:`Invalid Properties.`},
                 {status:404}
@@ -34,10 +35,11 @@ export async function POST(req:Request) {
             data : {
                 teamname : teamname,
                 leaderid : leaderid,
-                leadername:clerkUser?.firstName || 'not mentioned',
+                leadername: clerkUser?.username || clerkUser?.fullName || clerkUser?.firstName || 'not mentioned',
                 projectname:projectname,
                 projectdesc : projectdesc,
                 hackathonname : hackathonname,
+                hackathonlink:hackathonlink,
                 hackathondesc : hackathondesc
             }
         })
@@ -58,7 +60,7 @@ export async function POST(req:Request) {
     } catch (error) {
         console.log(`Failed To Create Team: ${error}`)
         return NextResponse.json(
-            {error :`Failed To Create Team: ${error}`},
+            {message :`Failed To Create Team: ${error}`},
             {status:500}
         )
     }
