@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import useDebounce from '@/hook/useDebouce'
 
 type selectedRoleValueType = 'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design'
 const OtherDevComponent = React.lazy(() => import('@/components/fetchedDataComponents/OtherDevComponent'))
@@ -35,6 +36,7 @@ const menuText = [
 
 export default function Page() {
   const [value,setvalue] = useState('')
+  const debouceValue = useDebounce(value)
   const [selectedRoleValue,setSelectedRoleValue] = useState<selectedRoleValueType>()
   // const [loading,setloading] = useState(false)
   // const [fetchdevdata,setfetchdevdata] = useState([])
@@ -174,7 +176,6 @@ export default function Page() {
             value={value}
             className='text-xs w-56 px-3 py-1 rounded bg-[#e7e7e7] focus:outline-none border-black border' 
             onChange={(e) => setvalue(e.target.value)} 
-            // onChange={handleSearchRoute} 
           />
         </div>
       </div>
@@ -196,7 +197,7 @@ export default function Page() {
             </ div>
           }
         >
-          <OtherDevComponent inputvalue={value} selectedRoleValue={selectedRoleValue}  />
+          <OtherDevComponent inputvalue={debouceValue} selectedRoleValue={selectedRoleValue}  />
         </Suspense>
       </div>
     </div>

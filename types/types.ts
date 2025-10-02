@@ -59,5 +59,5 @@ export type TeamJoinedByUserDetail = {
 
 export type teamCreatedAttributeNamenType = {
    attribute : string;
-   className:string;
+//    className:string;
 }

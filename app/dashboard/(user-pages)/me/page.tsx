@@ -10,50 +10,11 @@ import { useFetchData } from '@/hook/useFetchData'
 
 
 export default function Page() {
-  // const { user } = useUser()
-  // const [userdata,setUserdata] = useState({} as WholeUserdata)
-  // const [fetchinguserdata,setFetchingUserData] = useState(false)
-
-  // const fetchUserDetail = async() => {
-  //     try {
-
-  //       setFetchingUserData(true)
-
-  //        const res = await fetch(`/api/finduserbyid/${user?.id}`,{
-  //         method: 'GET',
-  //         credentials: 'include',
-  //       })
-
-  //        if(!res.ok){
-  //         const errtext = await res.json()
-  //         console.error(errtext)
-  //         return;
-  //        }
-
-  //        const data = await res.json()
-
-  //        console.log(data?.message)
-
-  //        setUserdata(data?.Data)
-        
-  //     } catch (error) {
-  //       console.error(`Issue ocuured while fetching User detail : ${error}`)
-  //     } finally { 
-  //       setFetchingUserData(false)
-  //     }
-  //   }
-
-  // useEffect(() => {
-  //   fetchUserDetail()
-  // },[user?.id])
-
-  // const handleDescriptionUpdate = async () => {
-  //   await fetchUserDetail(); // refetch after update
-  // };
-
   return (
     <div className='xs:px-4 md:px-16 py-8 overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
-      <UserData />
+      <Suspense fallback={<LoadingComponent label='Feching profile data...' />}>
+        <UserData />
+      </Suspense>
    </div>
   )
 }
@@ -79,19 +40,15 @@ type socialMediaObjecttype = {
 const teamCreatedAttributeNamen = [
   {
     attribute : 'Serial',
-    className : 'col-start-1 col-end-2 text-center'
   },
   {
     attribute : 'Teamname',
-    className : 'col-start-2 col-end-3 text-center'
   },
   {
     attribute : 'Category',
-    className:'col-start-3 col-end-4 text-center'
   },
   {
     attribute : 'ProjectName',
-    className:'col-start-4 col-end-5 text-center'
   },
 ]
 
@@ -127,6 +84,7 @@ function UserData(){
         width={90}
         height={90}
         className="rounded-[50%] size-14 border shadow-sm shadow-slate-300"
+        priority
       />
     </div>
 
@@ -196,7 +154,7 @@ function UserData(){
                     <div className='grid grid-cols-4 gap-1 overflow-y-auto scrollbar-hide max-h[calc(96vh-2rem)] text-xs pt-5 max-h-[calc(50vh-10rem)]'>
                         {
                           teamCreatedAttributeNamen.map((data:teamCreatedAttributeNamenType,idx:number) => (
-                            <p className={`${data?.className} bg-purple-200 py-1`}key={idx}>{data?.attribute}</p>
+                            <p className={`text-center bg-purple-200 py-1`}key={idx}>{data?.attribute}</p>
                           ))
                         }
                     </div>

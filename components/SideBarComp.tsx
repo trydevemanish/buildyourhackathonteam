@@ -1,7 +1,7 @@
 'use client'
 import React, { useRef } from 'react'
 import { SignOutButton } from "@clerk/nextjs"
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const layoutDataNavigationStructure = [
   {
@@ -42,7 +42,15 @@ type props = {
 }
 
 export default function SideBarComp({closeSidebar}:props) {
-  const selected = useRef(1)
+  const pathname = usePathname()
+  const selected = useRef(
+    pathname == '/dashboard' ? 1 :
+    pathname == '/dashboard/otherdev' ? 2 :
+    pathname == '/dashboard/allteams' ? 3 :
+    pathname == '/dashboard/hackathonpage' ? 4 :
+    5
+  )
+
   const router = useRouter()
 
   async function handleMenuSelect(pushto:string,id:number){

@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { Bell } from 'lucide-react'
 import { useUser } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import SideBarComp from '@/components/SideBarComp'
 // import ProtectedRoute from '@/components/ProtectedRoute'
 import React, { useState } from 'react'
@@ -14,6 +14,7 @@ interface Dashboardlayoutprops {
 
 const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
     const [showSidebar,setShowSideBar] = useState(false)
+    const pathname = usePathname()
     const router = useRouter()
     const { user } = useUser()
     
@@ -44,7 +45,17 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                   >
                     ☰
                   </button>
-                  <p className={`text-xs xs:hidden xs:invisible font-semibold md:visible md:block  `}>Buildyourhackathonteam</p>
+                  <p className={`text-xs xs:hidden xs:invisible font-semibold md:visible md:block  `}>
+                    {
+                      pathname != '/dasboard'  && 
+                      pathname != '/dashboard/otherdev' && 
+                      pathname != '/dashboard/allteams' &&
+                      pathname != '/dashboard/hackathonpage' &&
+                      pathname != '/dashboard/teamjoined' &&
+                      <span className='px-4 cursor-pointer bg-neutral-800 text-neutral-200 rounded-md py-1 text-sm shadow-sm font-semibold '>{"<- back"}</span>
+                    }
+                    <span>Buildyourhackathonteam</span>
+                  </p>
                   <div className='flex items-center gap-4'>
                       <div className='flex gap-4 items-center'>
                         <Bell className='size-8 rounded cursor-pointer hover:bg-purple-300 p-2' onClick={() => router.push(`/notification`)} />
