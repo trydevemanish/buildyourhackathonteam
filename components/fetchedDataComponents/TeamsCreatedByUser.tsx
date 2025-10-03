@@ -50,7 +50,7 @@ export default function TeamsCreatedByUser() {
         {
             teamDataFromBackend && teamDataFromBackend.length > 0 && 
             <div className='flex justify-end items-center gap-3 px-3 border py-1'>
-                <button className='bg-purple-500 inline text-white px-8 py-[6px] text-xs rounded' onClick={() => router.push("/dashboard/createteam")}>
+                <button className='bg-purple-500 inline text-white px-8 py-[6px] text-xs rounded' onClick={() => router.push("/createteam")}>
                     <span>+ create one </span>
                 </button>
             </div> 

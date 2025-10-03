@@ -129,6 +129,31 @@ function UserData(){
       </div>
     </div>
 
+    <TeamDetail userdata={userdata} />
+
+</div>
+  )
+}
+
+
+
+function TeamDetail({userdata}:{userdata : WholeUserdata | undefined}) {
+
+  if(!userdata){
+    return (
+      <div>
+        <p className='text-center py-7'>Wait fetching your team detail!</p>
+      </div>
+    )
+  }
+
+  if(userdata == null){
+     <div>
+      <p className='text-center py-7'>You aren't related to any team!</p>
+    </div>
+  }
+
+  return (
     <div className='py-5 border-t flex flex-col gap-5'>
       {/* shows simple data like team joined by user and when user joined the website  */}
       <p className='text-center font-opensans text-sm underline decoration-purple-200 underline-offset-4'>Team detail</p>
@@ -180,7 +205,5 @@ function UserData(){
             }
         </div>
     </div>
-
-</div>
   )
 }

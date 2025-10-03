@@ -46,13 +46,11 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                     ☰
                   </button>
                   <p className={`text-xs xs:hidden xs:invisible font-semibold md:visible md:block  `}>
+                    
                     {
-                      pathname != '/dashboard'  && 
-                      '/dashboard/otherdev' &&
-                      '/dashboard/allteams' &&
-                      '/dashboard/hackathonpage' &&
-                       '/dashboard/teamjoined' &&
-                      <span className='px-2 py-1 cursor-pointer bg-emerald-300 rounded-md leading-4 mr-3 text-[10px] text-center shadow-sm font-semibold '>{"<- back"}</span>
+                      !['/dashboard', '/dashboard/otherdev', '/dashboard/allteams', '/dashboard/hackathonpage', '/dashboard/teamjoined'].includes(pathname) 
+                      && 
+                      <span onClick={() => router.back()} className='px-2 py-1 cursor-pointer bg-emerald-300 rounded-md leading-4 mr-3 text-[10px] text-center shadow-sm font-semibold '>{"<- back"}</span>
                     }
                     <span>Buildyourhackathonteam</span>
                   </p>
