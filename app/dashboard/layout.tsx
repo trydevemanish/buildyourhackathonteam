@@ -47,12 +47,12 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                   </button>
                   <p className={`text-xs xs:hidden xs:invisible font-semibold md:visible md:block  `}>
                     {
-                      pathname != '/dasboard'  && 
-                      pathname != '/dashboard/otherdev' && 
-                      pathname != '/dashboard/allteams' &&
-                      pathname != '/dashboard/hackathonpage' &&
-                      pathname != '/dashboard/teamjoined' &&
-                      <span className='px-4 cursor-pointer bg-neutral-800 text-neutral-200 rounded-md py-1 text-sm shadow-sm font-semibold '>{"<- back"}</span>
+                      pathname != '/dashboard'  && 
+                      '/dashboard/otherdev' &&
+                      '/dashboard/allteams' &&
+                      '/dashboard/hackathonpage' &&
+                       '/dashboard/teamjoined' &&
+                      <span className='px-2 py-1 cursor-pointer bg-emerald-300 rounded-md leading-4 mr-3 text-[10px] text-center shadow-sm font-semibold '>{"<- back"}</span>
                     }
                     <span>Buildyourhackathonteam</span>
                   </p>
