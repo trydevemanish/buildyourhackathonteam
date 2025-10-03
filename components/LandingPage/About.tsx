@@ -3,7 +3,7 @@ import Image from 'next/image'
 import teams from '@/public/teams.jpg'
 import Otherdev from '@/public/slide3.jpg'
 import { Users,InspectIcon } from 'lucide-react'
-import { PersonIcon,CodeIcon,CrumpledPaperIcon,ComponentInstanceIcon,CodeSandboxLogoIcon } from '@radix-ui/react-icons'
+import { PersonIcon,CodeIcon,ComponentInstanceIcon,CodeSandboxLogoIcon } from '@radix-ui/react-icons'
 
 export default function About() {
   return (

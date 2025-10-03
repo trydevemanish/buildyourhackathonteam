@@ -17,7 +17,7 @@ type fetchdatatype = {
   message:string;
   senderid:string;
   sendername:string;
-  timestamp : any;
+  timestamp : string | number;
   // timestamp: {
   //   // nanoseconds : 789000000,
   //   // seconds : 1751604174

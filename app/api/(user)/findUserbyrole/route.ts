@@ -1,13 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-type selectedRoleValueType = 'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design'
-
 export async function GET(req:Request){
     try {
 
         const myURL = new URL(req.url);
-        const role : any = myURL.searchParams.get('role')!
+        const role : unknown = myURL.searchParams.get('role')
 
         console.log('role',role)
 

@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";           
 import { auth } from "@clerk/nextjs/server";
 
-export async function GET(req:Request) {
+export async function GET(_req:Request) {
     try {
 
         await auth.protect()

@@ -9,7 +9,7 @@ import Teamcard from '@/components/TeamcardForteamleader'
 export default function TeamsCreatedByUser() {
     const router = useRouter()
     const { data : teamDataFromBackend,errors : TeamCreatedByUserErrors,loading } = useFetchData<TeamCardInfoType[]>({ url:'/api/fetchallteamCreatedbyuser' })
-    const { errors: userExitsError } = useFetchData<any>({ url:'/api/findandcreateUser'})
+    const { errors: userExitsError } = useFetchData({ url:'/api/findandcreateUser'})
 
     if(userExitsError){
         console.log(`Error checking user exits: ${userExitsError}`)

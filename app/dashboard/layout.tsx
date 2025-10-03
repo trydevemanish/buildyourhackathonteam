@@ -61,8 +61,7 @@ const DashboardLayout: React.FC<Dashboardlayoutprops> = (props) => {
                         <Bell className='size-8 rounded cursor-pointer hover:bg-purple-300 p-2' onClick={() => router.push(`/notification`)} />
                       </div>
                       <Image
-                        // src={userProfileUrl || "/default-user.jpg"}
-                        src={user?.imageUrl! ?? DefaultImage}
+                        src={user ? user.imageUrl : DefaultImage}
                         alt="User Profile"
                         width={150}
                         height={50}

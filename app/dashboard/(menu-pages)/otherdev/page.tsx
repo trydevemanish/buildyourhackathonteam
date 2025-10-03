@@ -1,7 +1,5 @@
 "use client"
 import React, { Suspense, useState } from 'react'
-import { UserData } from '@/types/types'
-
 import {
   Select,
   SelectContent,

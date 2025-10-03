@@ -37,7 +37,7 @@ const teamCreatedAttributeNamen = [
 ]
 
 //to show all the members
-function TeamMemberDetail({teamMemberInfo,idx}:{teamMemberInfo:TeamMemberInfo,idx:any}){
+function TeamMemberDetail({teamMemberInfo,idx}:{teamMemberInfo:TeamMemberInfo,idx:number}){
     return (
         <div className='grid grid-cols-5  cursor-pointer items-center min-w-[600px] py-2 border-b'>
             <p className='col-start-1 col-end-2 text-center opacity-70 text-xs'>{idx + 1}</p>

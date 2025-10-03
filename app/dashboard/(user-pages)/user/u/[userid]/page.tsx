@@ -94,7 +94,7 @@ export default function Page() {
             }
         }
 
-        // fetchUserAndTeamData()
+        fetchUserAndTeamData()
     },[userid,user?.id])
 
     return (

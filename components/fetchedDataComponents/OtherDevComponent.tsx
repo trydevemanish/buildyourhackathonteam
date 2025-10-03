@@ -46,7 +46,7 @@ export default function OtherDevComponent({inputvalue,selectedRoleValue}:props){
             setfetchdevdata(data)
           }
     
-      },[data,inputvalue,shouldSearchforname,shouldSearchforRole,selectedRoleValue,fetchingOtherDevsDataWithRoleErrors,fetchingOtherDevsDataWithNameErrors])
+      },[data,inputvalue,shouldSearchforname,shouldSearchforRole,selectedRoleValue,fetchingOtherDevsDataWithRoleErrors,fetchingOtherDevsDataWithNameErrors,databyname,databyrole])
     
     
     
