@@ -55,9 +55,9 @@ const teamCreatedAttributeNamen = [
 function UserData(){
   const { user } = useUser()
   const descriptionupdated = useRef(false)
-  const { loading, data : userdata, errors } = useFetchData<WholeUserdata>({ url: `/api/finduserbyid/${user?.id}`, state: [descriptionupdated.current] })
+  const { data : userdata, errors } = useFetchData<WholeUserdata>({ url: `/api/finduserbyid/${user?.id}`, state: [descriptionupdated.current] })
 
-  if(loading){
+  if(!userdata){
     return (
       <LoadingComponent label='Feching profile data...' />
     )
@@ -149,7 +149,7 @@ function TeamDetail({userdata}:{userdata : WholeUserdata | undefined}) {
 
   if(userdata == null){
      <div>
-      <p className='text-center py-7'>You aren't related to any team!</p>
+      <p className='text-center py-7'>You {"aren't"} related to any team!</p>
     </div>
   }
 

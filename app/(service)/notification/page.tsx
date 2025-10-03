@@ -1,5 +1,5 @@
 "use client"
-import React,{ useState,useEffect } from 'react'
+import React,{ useState,useEffect, Suspense } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
@@ -20,10 +20,25 @@ type  userReqLeaderToJoinTeamNotification = {
 }
 
 export default function Page() {
+  return (
+    <div>
+      <div className='text-sm text-center py-2 border'>
+            <p className="font-bold xs:text-sm md:text-base">Notification page.</p>
+      </div>
+      <Suspense fallback={<LoadingComponent label='Fetching Notification of the users!' />}>
+        <UserNotification />
+      </Suspense>
+    </div>
+  )
+}
+
+
+function UserNotification(){
   // this resemble to store fetch data of notification where user req to team leader
   const [userReqTeamToJoinData,SetUserReqTeamToJoinData] = useState([])
   // this resemble to store fetch data of notification where leader invivtes user to join team
   const [leaderInviteUser,setLeaderInviteUser] = useState([])
+
 
   //checking loading state...
   const [loadingForReqType_U_t_L,setLoadingForReqType_U_t_L] = useState(false)
@@ -37,6 +52,8 @@ export default function Page() {
 
   const router = useRouter()
   const { user } = useUser()
+
+
 
   // this function will fetch all the notification where user is making req to team leader to join their team
   useEffect(() => {
@@ -170,9 +187,6 @@ export default function Page() {
       }
   }
 
-
-
-
   //handle reject req.
   async function handleRejectReq(reqid:string,userid:string,teamid:string,leaderid : string,status:string,reqType:string){
       try {
@@ -240,12 +254,9 @@ export default function Page() {
       }
   }
 
+
   return (
     <div>
-      <div className='text-sm text-center py-2 border'>
-            <p>Notification page.</p>
-      </div>
-
       {/* this section will show the req that user made to leader to join team . */}
       <section className='md:text-xs xs:text-base flex flex-col overflow-y-auto scrollbar-hide max-h-[calc(96vh-2rem)]'>
         {
@@ -342,3 +353,4 @@ export default function Page() {
     </div>
   )
 }
+
