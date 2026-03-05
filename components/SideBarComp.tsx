@@ -19,11 +19,11 @@ const layoutDataNavigationStructure = [
     pushto : '/dashboard/allteams',
     para : 'Other teams to join'
   },
-  // {
-  //   id:4,
-  //   pushto : '/dashboard/hackathonpage',
-  //   para : 'Upcoming Hackathons'
-  // },
+  {
+    id:4,
+    pushto : '/dashboard/hackathonpage',
+    para : 'Upcoming Hackathons'
+  },
   {
     id:5,
     pushto : '/dashboard/teamjoined',
@@ -47,9 +47,9 @@ export default function SideBarComp({closeSidebar}:props) {
     pathname == '/dashboard' ? 1 :
     pathname == '/dashboard/otherdev' ? 2 :
     pathname == '/dashboard/allteams' ? 3 :
-    // pathname == '/dashboard/hackathonpage' ? 4 :
+    pathname == '/dashboard/hackathonpage' ? 4 :
     5
-  )
+  ) 
 
   const router = useRouter()
 

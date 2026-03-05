@@ -22,11 +22,11 @@ export default function OtherDevComponent({inputvalue,selectedRoleValue}:props){
     
       // fetch when input val 
       const shouldSearchforname = inputvalue && inputvalue.trim() != "";
-      const { errors : fetchingOtherDevsDataWithNameErrors,data:databyname } = useFetchData<UserData[]>({ url:shouldSearchforname ? `/api/findUserbyname/${inputvalue}` : "" , state : shouldSearchforname && [inputvalue ]})
+      const { errors : fetchingOtherDevsDataWithNameErrors,data:databyname } = useFetchData<UserData[]>({ url:shouldSearchforname ? `/api/findUserbyname/${inputvalue}` : "" , state : [inputvalue]})
     
       // fetch when role 
       const shouldSearchforRole = selectedRoleValue && selectedRoleValue.trim() != "";
-      const { errors : fetchingOtherDevsDataWithRoleErrors,data:databyrole } = useFetchData<UserData[]>({ url:shouldSearchforRole ? `/api/findUserbyrole/?role=${selectedRoleValue}` : "", state: shouldSearchforRole && [selectedRoleValue]})
+      const { errors : fetchingOtherDevsDataWithRoleErrors,data:databyrole } = useFetchData<UserData[]>({ url:shouldSearchforRole ? `/api/findUserbyrole/?role=${selectedRoleValue}` : "", state: [selectedRoleValue]})
     
       useEffect(() => {
         

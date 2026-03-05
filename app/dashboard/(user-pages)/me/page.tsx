@@ -1,5 +1,5 @@
 "use client"
-import React, {useRef, Suspense } from 'react'
+import React, {Suspense, useState } from 'react'
 import { DialogDemoTextArea,DialogDemoInput,DialogDemoSelect } from '@/components/EditBox'
 import { useUser } from '@clerk/nextjs'
 import { WholeUserdata,teamCreatedData } from '@/types/types'
@@ -54,8 +54,9 @@ const teamCreatedAttributeNamen = [
 
 function UserData(){
   const { user } = useUser()
-  const descriptionupdated = useRef(false)
-  const { data : userdata, errors } = useFetchData<WholeUserdata>({ url: `/api/finduserbyid/${user?.id}`, state: [descriptionupdated.current] })
+  const [update, setUpdate] = useState(false)
+
+  const { data : userdata, errors } = useFetchData<WholeUserdata>({ url: `/api/finduserbyid/${user?.id}`, state: [update] })
 
   if(!userdata){
     return (
@@ -90,8 +91,7 @@ function UserData(){
 
     {/* shows bio  */}
     <div className='flex items-center pt-2 gap-2'>
-      <DialogDemoTextArea props={{ nameOfProp: 'Description',onUpdate: () => descriptionupdated.current = !descriptionupdated.current  }} />
-      {/* <DialogDemoTextArea props={{ nameOfProp: 'Description' }} /> */}
+      <DialogDemoTextArea props={{ nameOfProp: 'Description', onUpdate: () => setUpdate(!update)}} />
       <p className='font-opensans'>
           {userdata?.bio ? userdata?.bio : 'Add a small intro of yourself .'}
       </p>
@@ -99,7 +99,7 @@ function UserData(){
 
     {/* shows role  */}
     <div className='flex items-center pt-2 gap-2'>
-      <DialogDemoSelect props={{ nameOfProp: 'Role' }} />
+      <DialogDemoSelect props={{ nameOfProp: 'Role', onUpdate: () => setUpdate(!update) }} />
       <p className='font-opensans'>Role: {userdata?.role ? userdata?.role : 'undefined role'}</p>
     </div>
 
@@ -109,7 +109,7 @@ function UserData(){
         {
           socialMediaObject.map((data:socialMediaObjecttype,idx:number) => (
             <div className='flex items-center gap-2' key={idx}>
-              <DialogDemoInput props={{ nameOfProp: data.nameOfProp }} />
+              <DialogDemoInput props={{ nameOfProp: data.nameOfProp, onUpdate: () => setUpdate(!update) }} />
               <div>
                 {
                   data?.nameOfProp == 'Email' ? 
@@ -207,3 +207,13 @@ function TeamDetail({userdata}:{userdata : WholeUserdata | undefined}) {
     </div>
   )
 }
+
+
+
+/*
+two update that need to be fixed in /me
+are:-
+  1-> after updating turant refresh nhi ho rha
+  2-> or texxt box is also not closing
+  4-> the issue of prisma connection pool 
+*/

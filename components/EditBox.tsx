@@ -27,6 +27,7 @@ import { useUser } from "@clerk/nextjs"
 
 type propsProperties = {
   nameOfProp : string;
+  onUpdate: () => void;
 }
 
 type propsPropertiesfordesc = {
@@ -38,11 +39,14 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
   const [email,setEmail] = useState('')
   const [github,setGithub] = useState('')
   const [linkedin,setLinkedin] = useState('')
+  const [open, setOpen] = useState(false)
   const { user } = useUser()
+  const [saving, setSaving] = useState(false);
 
   async function handleEmailUpdate(){
     try {
-
+      
+      setSaving(true);
       toast.dismiss('updating email.')
 
       const res =  await fetch('/api/updateEmail',{
@@ -61,7 +65,9 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
       const data = await res.json()
 
       toast.success(data?.message)
-
+      setSaving(false);
+      setOpen(false)
+      props.onUpdate()
     } catch (error) {
       console.log(`Issue Ocuured while updating email : ${error}.`)
       return
@@ -72,6 +78,7 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
     try {
 
       toast.dismiss('updating github.')
+      setSaving(true);
 
       const res =  await fetch('/api/updateGithub',{
         method: 'PUT',
@@ -89,6 +96,9 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
       const data = await res.json()
 
       toast.success(data?.message)
+      setSaving(false);
+      setOpen(false);
+      props.onUpdate();
 
     } catch (error) {
       console.log(`Issue Ocuured while updating github. ${error}`)
@@ -99,7 +109,8 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
   async function handleLinkedinUpdate() {
     try {
 
-      toast.loading('updating Linkedin.')
+      toast.dismiss('updating Linkedin.')
+      setSaving(true);
 
       const res =  await fetch('/api/updateLinkedin',{
         method: 'PUT',
@@ -117,6 +128,10 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
       const data = await res.json()
 
       toast.success(data?.message)
+      setSaving(false);
+      setOpen(false);
+      props.onUpdate();
+
 
     } catch (error) {
       console.log(`Issue Ocuured while updating linkedin. :${error}`)
@@ -136,7 +151,7 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
 
   return (
     <div className="cursor-pointer">
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Edit3 className="size-[10px]"/>
       </DialogTrigger>
@@ -176,7 +191,13 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
             />
         </div>
         <DialogFooter>
-          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" onClick={handleInputFunction}>Save changes</button>
+          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" onClick={handleInputFunction}>
+            {
+              saving ?
+              'updating,..' :
+              'update'
+            }
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -188,12 +209,15 @@ export function DialogDemoInput({props} : {props : propsProperties}) {
 export function DialogDemoTextArea({props} : {props : propsPropertiesfordesc}) {
 
   const [description, setDescription] = useState('')
+  const [saving, setSaving] = useState(false);
+  const [open, setOpen] = useState(false)
   const { user } = useUser()
 
   async function handledescriptionChanges(description:string){
     try {
 
       toast.dismiss('updating description.')
+      setSaving(true);
 
       const res =  await fetch('/api/updatedesc',{
         method: 'PUT',
@@ -211,6 +235,8 @@ export function DialogDemoTextArea({props} : {props : propsPropertiesfordesc}) {
       const data = await res.json()
 
       toast.success(data?.message)
+      setSaving(false);
+      setOpen(false)
       props.onUpdate()
 
     } catch (error) {
@@ -222,7 +248,7 @@ export function DialogDemoTextArea({props} : {props : propsPropertiesfordesc}) {
 
   return (
     <div className="cursor-pointer">
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Edit3 className="size-[10px]"/>
       </DialogTrigger>
@@ -245,7 +271,13 @@ export function DialogDemoTextArea({props} : {props : propsPropertiesfordesc}) {
             />
         </div>
         <DialogFooter>
-          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" onClick={() => handledescriptionChanges(description)} >Save changes</button>
+          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" onClick={() => handledescriptionChanges(description)} >
+          {
+            saving ?
+            'saving,..' :
+            'Save changes'
+          }
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -256,11 +288,14 @@ export function DialogDemoTextArea({props} : {props : propsPropertiesfordesc}) {
 
 export function DialogDemoSelect({props} : {props : propsProperties}) {
   const {user} = useUser()
+  const [open, setOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   async function updateRole(role:'Helper' | 'ML_eng' | 'Frontend_dev' | 'Backend_dev' | 'Design') {
     try {
 
       toast.dismiss('updating role.')
+      setSaving(true);
 
       const res =  await fetch('/api/changeUserRole',{
         method: 'PUT',
@@ -278,6 +313,9 @@ export function DialogDemoSelect({props} : {props : propsProperties}) {
       const data = await res.json()
 
       toast.success(data?.message)
+      setSaving(false);
+      setOpen(false)
+      props.onUpdate();
 
     } catch (error) {
       console.log(`Issue Ocuured while updating Role. :${error}`)
@@ -287,7 +325,7 @@ export function DialogDemoSelect({props} : {props : propsProperties}) {
 
   return (
     <div className="cursor-pointer">
-    <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Edit3 className="size-[10px]"/>
       </DialogTrigger>
@@ -323,7 +361,13 @@ export function DialogDemoSelect({props} : {props : propsProperties}) {
             </Select>
         </div>
         <DialogFooter>
-          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" >Save changes</button>
+          <button type="submit" className="bg-black text-white px-6 py-2 text-xs rounded" >
+            {
+              saving ? 
+              'updating,..' :
+              'update'
+            }
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

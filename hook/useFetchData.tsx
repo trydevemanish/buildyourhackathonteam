@@ -11,7 +11,6 @@ type props = {
 
 export function useFetchData<T>({url,state}:props){
     const [data, setData] = useState<T>()    
-    const isFetchedOnce = useRef(false)
     const [errors,setErrors] = useState(null)
     const [loading,setLoading] = useState(false)
 
@@ -20,8 +19,8 @@ export function useFetchData<T>({url,state}:props){
         const getData = async() => {
             try {
 
-                if(isFetchedOnce.current) return false;
-                isFetchedOnce.current = true;
+                // if(isFetchedOnce.current) return false;
+                // isFetchedOnce.current = true;
 
                 setLoading(true)
 
