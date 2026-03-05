@@ -213,7 +213,6 @@ function TeamDetail({userdata}:{userdata : WholeUserdata | undefined}) {
 /*
 two update that need to be fixed in /me
 are:-
-  1-> after updating turant refresh nhi ho rha
-  2-> or texxt box is also not closing
   4-> the issue of prisma connection pool 
+  5-> update hackathon part 
 */
