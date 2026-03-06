@@ -42,6 +42,6 @@ next-env.d.ts
 NOTES.txt
 *other
 track-folder.txt
-hackathonpage
+# hackathonpage
 # hook
-useFetchHackathonData.tsx
+# useFetchHackathonData.tsx
