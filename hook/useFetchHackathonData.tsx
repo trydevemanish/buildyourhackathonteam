@@ -33,15 +33,22 @@ type unstopDataType = {
 
 type devpostDataType= {
     id:number;
-    source: 'devpost';
     title : string;
+    submission_period_dates:string;
+    prize_amount:string;
+    url:string;
 }
 
 type unstopDataType = {
     id:number;
-    source : 'unstop';
     title : string;
+    approved_date:string;
+    prizes : {
+        cash:number;
+    };
+    seo_url:string;
 }
+
 
 // type data = {
 //     devpost:devpostDataType,
@@ -78,7 +85,7 @@ export function useFetchHackathonData ({uri1,uri2}:props) {
                     setError('Issue Occured Fetching these data')
                     return;
                 }
-                    */
+                */
                 
                 const res = await fetch('/api/fetchHackathon', {
                     method: 'POST',
@@ -98,15 +105,18 @@ export function useFetchHackathonData ({uri1,uri2}:props) {
 
                 const data = await res.json();
 
-                console.log("data from the hackathon", data);
- 
-                const devpostdatafromapi = data.devpost
-                const unstopdatafromapi  = data.unstop
+                const devpostdatafromapi = data.data[0].hackathons
+                const unstopdatafromapi  = data.data[1].data.data
+
+                console.log(devpostdatafromapi);
+                console.log(unstopdatafromapi)
 
                 if(!devpostdatafromapi || !unstopdatafromapi){
                     setError('Data is Possibly undefined!')
                     return
                 }
+
+                /** 
 
                 // console.log("devpostdatafromapi?.hackathons", devpostdatafromapi?.hackathons);
                 // console.log("unstopdatafromapi?.data?.data", unstopdatafromapi?.data?.data);
@@ -115,7 +125,10 @@ export function useFetchHackathonData ({uri1,uri2}:props) {
                 // setFetchDevpostData(devpostdatafromapi?.hackathons)
                 // setFetchUnStopData(unstopdatafromapi?.data?.data)
                 // setFetchDorahackData(dorahackdatafromapi?.results)
+                */
 
+                setFetchDevpostData(devpostdatafromapi);
+                setFetchUnStopData(unstopdatafromapi);
             } catch (error) {
                 setError(`Issue Occured while fetching data: ${error}`)
             } finally {
