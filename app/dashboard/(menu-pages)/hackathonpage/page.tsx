@@ -39,8 +39,8 @@ export default function Page() {
     )
   }
 
-  let minLength = Math.min(fetchdevpostData?.length!,fetchunStopData?.length!)
-  let arrData : (devpostDataType | unstopDataType)[] = [];
+  let minLength = Math.min(fetchdevpostData.length, fetchunStopData.length)
+  const arrData : (devpostDataType | unstopDataType)[] = [];
 
   if(minLength > 20){
     minLength = 10;
